@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
 import React from 'react';
 import NavBar from '@/components/NavBar';
-import PageInfo from '@/components/PageInfo'
+import PageInfro from '@/components/PageInfro';
 import VectorComponent from '@/components/VectorComponent';
+import StartGameButton from '@/components/StartGameButton';
 
 const App = () => {
-
-
 
   return (
     <React.Fragment>
       <NavBar />
-      <PageInfo />
+      <PageInfro />
+      <StartGameButton />
       <VectorComponent />
     </React.Fragment>
   );

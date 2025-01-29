@@ -1,19 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-
 const NavBar = () => {
-
-
-
     return (
         <View style={styles.nav}>
             <Icon
                 name="bars"
                 color="#000000"
                 size={30}
-            >  </Icon>
+            />
             <Text style={styles.text}>
                 CLIENT LOGO
             </Text>
@@ -21,9 +17,9 @@ const NavBar = () => {
                 name="setting"
                 color="#000000"
                 size={30}
-            >  </Icon>
+            />
         </View>
-    )
+    );
 }
 
 export default NavBar;
@@ -43,9 +39,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#00A2B4',
-        fontWeight: 600,
+        fontWeight: '600',
         gap: 20,
         fontSize: 35,
     }
-
 });
