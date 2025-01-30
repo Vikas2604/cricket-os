@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Switch, } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Switch, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 export default function MatchInfo() {
@@ -16,83 +16,95 @@ export default function MatchInfo() {
     { id: 4, name: 'Shakib', image: '' },
   ];
 
+  const screenWidth = Dimensions.get('window').width;
+
   return (
     <SafeAreaView style={styles.container}>
 
       <View style={styles.content}>
         <Text style={styles.title}>MATCH INFO</Text>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Choose your Category</Text>
-          <View style={styles.radioGroup}>
-            <TouchableOpacity
-              style={[styles.radio, category === 'adults' && styles.radioSelected]}
-              onPress={() => setCategory('adults')}>
-              <Text style={styles.radioText}>Adults</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.radio, category === 'kids' && styles.radioSelected]}
-              onPress={() => setCategory('kids')}>
-              <Text style={styles.radioText}>Kids</Text>
-            </TouchableOpacity>
+        <View style={styles.row}>
+          <View style={styles.column}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Choose your Category</Text>
+              <View style={styles.radioGroup}>
+                <TouchableOpacity
+                  style={[styles.radio, category === 'adults' && styles.radioSelected]}
+                  onPress={() => setCategory('adults')}>
+                  <Text style={styles.radioText}>Adults</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.radio, category === 'kids' && styles.radioSelected]}
+                  onPress={() => setCategory('kids')}>
+                  <Text style={styles.radioText}>Kids</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Choose Game Difficulty</Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={difficulty}
+                  onValueChange={(value) => setDifficulty(value)}
+                  style={styles.picker}>
+                  <Picker.Item label="Backyard" value="Backyard" />
+                  <Picker.Item label="Beginner" value="Beginner" />
+                  <Picker.Item label="Intermediate" value="Intermediate" />
+                  <Picker.Item label="Expert" value="Expert" />
+                </Picker>
+              </View>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Select No. of Overs</Text>
+              <View style={styles.oversSelector}>
+                <TouchableOpacity
+                  style={styles.oversButton}
+                  onPress={() => setOvers(Math.max(1, overs - 1))}>
+                  <Text style={styles.oversButtonText}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.oversCount}>{overs}</Text>
+                <TouchableOpacity
+                  style={styles.oversButton}
+                  onPress={() => setOvers(overs + 1)}>
+                  <Text style={styles.oversButtonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+          {/* Right Column */}
+          <View style={styles.column}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Bowler Selection Type</Text>
+              <View style={styles.toggleContainer}>
+                <Text style={styles.toggleText}>Auto</Text>
+                <Switch
+                  value={isAutoSelection}
+                  onValueChange={setIsAutoSelection}
+                  trackColor={{ false: '#767577', true: '#00A3B4' }}
+                  thumbColor={isAutoSelection ? '#fff' : '#f4f3f4'}
+                />
+                <Text style={styles.toggleText}>Manual</Text>
+              </View>
+            </View>
+
+            <View style={styles.scoreContainer}>
+              <View style={styles.scoreBox}>
+                <Text style={styles.scoreLabel}>Target</Text>
+                <Text style={styles.scoreValue}>20</Text>
+              </View>
+              <View style={styles.scoreBox}>
+                <Text style={styles.scoreLabel}>Balls</Text>
+                <Text style={styles.scoreValue}>18</Text>
+              </View>
+            </View>
           </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Choose Game Difficulty</Text>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={difficulty}
-              onValueChange={(value) => setDifficulty(value)}
-              style={styles.picker}>
-              <Picker.Item label="Backyard" value="Backyard" />
-              <Picker.Item label="Beginner" value="Beginner" />
-              <Picker.Item label="Intermediate" value="Intermediate" />
-              <Picker.Item label="Expert" value="Expert" />
-            </Picker>
-          </View>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Select No. of Overs</Text>
-          <View style={styles.oversSelector}>
-            <TouchableOpacity
-              style={styles.oversButton}
-              onPress={() => setOvers(Math.max(1, overs - 1))}>
-              <Text style={styles.oversButtonText}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.oversCount}>{overs}</Text>
-            <TouchableOpacity
-              style={styles.oversButton}
-              onPress={() => setOvers(overs + 1)}>
-              <Text style={styles.oversButtonText}>+</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Bowler Selection Type</Text>
-          <View style={styles.toggleContainer}>
-            <Text style={styles.toggleText}>Auto</Text>
-            <Switch
-              value={isAutoSelection}
-              onValueChange={setIsAutoSelection}
-              trackColor={{ false: '#767577', true: '#00A3B4' }}
-              thumbColor={isAutoSelection ? '#fff' : '#f4f3f4'}
-            />
-            <Text style={styles.toggleText}>Manual</Text>
-          </View>
-        </View>
-
-        <View style={styles.scoreContainer}>
-          <View style={styles.scoreBox}>
-            <Text style={styles.scoreLabel}>Target</Text>
-            <Text style={styles.scoreValue}>20</Text>
-          </View>
-          <View style={styles.scoreBox}>
-            <Text style={styles.scoreLabel}>Balls</Text>
-            <Text style={styles.scoreValue}>18</Text>
-          </View>
-        </View>
-
+        {/* Select Bowlers & Action Buttons */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Select Bowlers</Text>
           <View style={styles.bowlersGrid}>
@@ -132,24 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-  },
-  menuIcon: {
-    fontSize: 24,
-  },
-  logo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#00A3B4',
-  },
-  settingsIcon: {
-    fontSize: 24,
-  },
   content: {
     flex: 1,
     padding: 16,
@@ -161,6 +155,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#00A3B4',
     padding: 16,
     textAlign: 'center',
+    marginBottom: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap', // This allows items to wrap onto the next line if necessary
+  },
+  column: {
+    width: '48%', // Adjust based on screen size
     marginBottom: 20,
   },
   section: {
