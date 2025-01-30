@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Switch, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Switch, ScrollView, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 export default function MatchInfo() {
@@ -8,13 +8,19 @@ export default function MatchInfo() {
   const [overs, setOvers] = useState(3);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
   const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
+  const [target, setTarget] = useState(20);
 
-  const bowlers = [
-    { id: 1, name: 'Aswin', image: 'https://s3-alpha-sig.figma.com/img/06d7/eb42/bc32e31670510c58a73c382f45d5a835?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lc-O2XW0sdVb23dMj-fkJJX1SLbU1Ef13VL1HxEDRNlLDG8dQp~isc~czXqxSb3NnJ2JH83VAxNvpzrN-TqFdIy~jlGVXfrIHE2FY0Im-YdjIdeq962sFpw46LQFtBDi4RCL8icaXzRVeHd7zQbk9ZE9ILc0kyHEU6spN2fn8r7jyDpj45N5E5ma74CU4SRbBqPRfhTS8XjLF0Z26IxferSx3F~X4YR1VEkNHHNB3Ul-E3JkkkHqHqGws5uV8L86sSpqKbUNe3ADsKOG4LO52lXSwCXJw~Qq~U0512OA4ZcffQbqA099mKDGRnRt1fZ63xE43bxoPorAhMPQl8pDhA__' },
-    { id: 2, name: 'Ishant', image: 'https://s3-alpha-sig.figma.com/img/3633/d9a3/a51b7c2952b662aff20c36e7cbe25ec9?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KolY9EJbHeBPQkjgodFBb6mwl2JEpiN2RtXt0HNv90XBgxDDfebz--bFtYhdbW-8AqUN2greDUSh3JgJAYrEu4eTvj5LbUtsR07qIJTYC3yU4TL~nKz9MjvNYsKF~-5kZEKNn~zU48~1sTX8O7DkGLtw1yq79W47FCK1NeC0Vee3H0F2eRUiP5Kz1hkcx36R8cM9JLMHRmw9-5nCh85NBC4BpOvRaptjSP0y4WLQFyHEAIB3Mn5oIbx0leHG9glUanbH6iBMxmjhlP34qojCLlzGR9qqS7lb5LTqKhbz82c8btbQKLv9GbyHDdrEtTh8hLzs3Qm90a8W5aYGT-7Gyg__' },
-    { id: 3, name: 'Deepak', image: 'https://s3-alpha-sig.figma.com/img/32b6/6c9d/4a3bb662f0c29b884693b649b19754ea?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=R1mrotDNNqkdQ977ACjr4wy9rNQ0V3EycD~QnSVIzsqwYSxgLqNYmdD6wIMTnZ0LXlz9LV~U~SaQCHRz6URrwcBgaN51ks-P-4MaTLvSCos5gcZ~bYwMWOnREa1iKzeAvr17Ha9OJ0Wyg9onxV6zkdIbxzDSERuWx63ZgRONmkmTyhY4BYHh3PTkbfcurx5o5EpLrYso4EmqFJoN7ubd~NvK-sz~NHAwJGufr0FrQxkqfkKaCSxTnQuBsw9MLSfH-bXNLc2-s-87hh6HEtYIPjs2vH1YgrxXZ2D97TDeW09ev3WTsCVPA5lo9jFWvI9PqM8OKUjer4vtAH-nE4Irfg__' },
-    { id: 4, name: 'Shakib', image: 'https://s3-alpha-sig.figma.com/img/91a8/d13b/22e18bfda83e874482f206e2adde113a?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HDo2xGEVwGyCA1lv0-3OLt8ujANaSTO7DF5n6G4~fisI8gJ1NOEeezVcen3pNoetwWIZ11Jc-nIWwMCxxdTBpUunUl~4neWmjac-LgnNcb3qIYgK388YJNpUENxR7Hvhfpg2Lzg7-8ooQtdN9YzwKL205PjGLWUpsyzPPFcsoOXrj9FT6Q0U19mdmpSr3-PkR-ZMZgeq2115w1WhtzjzJ1GoG18PpF3JE1JbPgbAV71jf9Ln9cVPkaKEUWJrQNmVq9H83SUyXLSM32QBAGDiLVH2wkb9AeOMMyG68d-vHogNexa4lqtctc3t0bJC7sfe7mYWoJbbnhvxa0l-c3QatQ__' },
-  ];
+  const bowlers = category === 'kids'
+    ? [
+      { id: 1, name: 'PANDA', image: 'https://s3-alpha-sig.figma.com/img/3243/63d5/a8b5e3bd3a5cae0a1718d06b0bd4aa37?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Bb4jQpFn9NG7bU~Eg9e4YM48bB1HNTv-42-m19I-z3N0SZys84XGJqTLmY2QlOMnTUYyEaZo~UOE-WE75ojtnhxX~XuNQrhjNlHAQtylar-gkB5YPRFmBZdSvNjxKPbAYVzBZ34LR22l7xUrdWTmjT95Mgfh-JGOnDxQVG~Qik-2QjSXcxH8o3CLvywjw5KYwQLwooh092Lk4D37gXL9vOY4j4pG11xdXZDI-CWUMFkVHEeTGOdTvw~jfNzHng8Afl5XvBAYha8K9NQvT5DfeLPpViFN~W9SBBQLt-Y3tKUtVZgij~NDx0UHHLNhgo5wOGkUOuSnMInhsF-1c77KlQ__' },
+      { id: 2, name: 'SANTA', image: 'https://s3-alpha-sig.figma.com/img/9f6d/45e1/56a2182ff04d2da79acc0626acdb8037?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VJBQ8ERbeAzIBFQLlogADj9~V9CeDZrpSZWX8WFVtRVeHJhN-A5IEb6hF5a5mNoldnHHd9k~8XqRJI7SjDumDPVt5XC4yirjYTUmjxj79Yv6H-oASsmoq7TQKUDDyoW5lJfttBLl-GsR2sRp66mfHzkihXJrrPGXsSbYVPRq7ItVkkbW6~jC7aEg9sHDA25x-JSZ2TuCLSiN38E79Rv9gX79tQJQi~8xH3LQZDXnxEItonM60b6HsrqK2dGR~dydMzUez1C824NmIewri1R3Sy91twEYWM0kUXuL0EIFWLhuYELlLSOUA19ijXOTxqk~GIu158mxnamtW5qsPg0NTg__' },
+    ]
+    : [
+      { id: 1, name: 'Aswin', image: 'https://s3-alpha-sig.figma.com/img/06d7/eb42/bc32e31670510c58a73c382f45d5a835?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lc-O2XW0sdVb23dMj-fkJJX1SLbU1Ef13VL1HxEDRNlLDG8dQp~isc~czXqxSb3NnJ2JH83VAxNvpzrN-TqFdIy~jlGVXfrIHE2FY0Im-YdjIdeq962sFpw46LQFtBDi4RCL8icaXzRVeHd7zQbk9ZE9ILc0kyHEU6spN2fn8r7jyDpj45N5E5ma74CU4SRbBqPRfhTS8XjLF0Z26IxferSx3F~X4YR1VEkNHHNB3Ul-E3JkkkHqHqGws5uV8L86sSpqKbUNe3ADsKOG4LO52lXSwCXJw~Qq~U0512OA4ZcffQbqA099mKDGRnRt1fZ63xE43bxoPorAhMPQl8pDhA__' },
+      { id: 2, name: 'Ishant', image: 'https://s3-alpha-sig.figma.com/img/3633/d9a3/a51b7c2952b662aff20c36e7cbe25ec9?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KolY9EJbHeBPQkjgodFBb6mwl2JEpiN2RtXt0HNv90XBgxDDfebz--bFtYhdbW-8AqUN2greDUSh3JgJAYrEu4eTvj5LbUtsR07qIJTYC3yU4TL~nKz9MjvNYsKF~-5kZEKNn~zU48~1sTX8O7DkGLtw1yq79W47FCK1NeC0Vee3H0F2eRUiP5Kz1hkcx36R8cM9JLMHRmw9-5nCh85NBC4BpOvRaptjSP0y4WLQFyHEAIB3Mn5oIbx0leHG9glUanbH6iBMxmjhlP34qojCLlzGR9qqS7lb5LTqKhbz82c8btbQKLv9GbyHDdrEtTh8hLzs3Qm90a8W5aYGT-7Gyg__' },
+      { id: 3, name: 'Deepak', image: 'https://s3-alpha-sig.figma.com/img/32b6/6c9d/4a3bb662f0c29b884693b649b19754ea?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=R1mrotDNNqkdQ977ACjr4wy9rNQ0V3EycD~QnSVIzsqwYSxgLqNYmdD6wIMTnZ0LXlz9LV~U~SaQCHRz6URrwcBgaN51ks-P-4MaTLvSCos5gcZ~bYwMWOnREa1iKzeAvr17Ha9OJ0Wyg9onxV6zkdIbxzDSERuWx63ZgRONmkmTyhY4BYHh3PTkbfcurx5o5EpLrYso4EmqFJoN7ubd~NvK-sz~NHAwJGufr0FrQxkqfkKaCSxTnQuBsw9MLSfH-bXNLc2-s-87hh6HEtYIPjs2vH1YgrxXZ2D97TDeW09ev3WTsCVPA5lo9jFWvI9PqM8OKUjer4vtAH-nE4Irfg__' },
+      { id: 4, name: 'Shakib', image: 'https://s3-alpha-sig.figma.com/img/91a8/d13b/22e18bfda83e874482f206e2adde113a?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HDo2xGEVwGyCA1lv0-3OLt8ujANaSTO7DF5n6G4~fisI8gJ1NOEeezVcen3pNoetwWIZ11Jc-nIWwMCxxdTBpUunUl~4neWmjac-LgnNcb3qIYgK388YJNpUENxR7Hvhfpg2Lzg7-8ooQtdN9YzwKL205PjGLWUpsyzPPFcsoOXrj9FT6Q0U19mdmpSr3-PkR-ZMZgeq2115w1WhtzjzJ1GoG18PpF3JE1JbPgbAV71jf9Ln9cVPkaKEUWJrQNmVq9H83SUyXLSM32QBAGDiLVH2wkb9AeOMMyG68d-vHogNexa4lqtctc3t0bJC7sfe7mYWoJbbnhvxa0l-c3QatQ__' },
+    ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -94,15 +100,20 @@ export default function MatchInfo() {
           </View>
 
           <View style={styles.column}>
-            <View style={[styles.section, styles.scoreSection]}>
+            <View style={styles.section}>
               <View style={styles.scoreContainer}>
                 <View style={styles.scoreBox}>
                   <Text style={styles.scoreLabel}>Target</Text>
-                  <Text style={styles.scoreValue}>20</Text>
+                  <TextInput
+                    style={styles.targetInput}
+                    value={target.toString()}
+                    onChangeText={(value) => setTarget(Number(value))}
+                    keyboardType="numeric"
+                  />
                 </View>
                 <View style={styles.scoreBox}>
                   <Text style={styles.scoreLabel}>Balls</Text>
-                  <Text style={styles.scoreValue}>18</Text>
+                  <Text style={styles.scoreValue}>{overs * 6}</Text>
                 </View>
               </View>
             </View>
@@ -185,7 +196,8 @@ const styles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap: 200,
   },
   radio: {
     paddingVertical: 8,
@@ -211,7 +223,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    width: 355,
+    maxWidth: 355,
     borderColor: '#00A3B4',
     borderWidth: 1,
     borderRadius: 8,
@@ -220,7 +232,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingRight: 300,
     gap: 20,
   },
   oversButton: {
@@ -245,15 +256,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingRight: 550,
     gap: 15,
   },
   toggleText: {
     fontSize: 16,
     color: '#2D3748',
-  },
-  scoreSection: {
-    marginTop: 10,
   },
   scoreContainer: {
     flexDirection: 'row',
@@ -263,13 +270,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#00A3B4',
     borderRadius: 8,
-    padding: 16,
+    height: 150,
     width: '45%',
   },
   scoreLabel: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 24,
     color: '#FFFFFF',
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
     backgroundColor: '#00A2B4',
     padding: 8,
   },
@@ -278,6 +287,13 @@ const styles = StyleSheet.create({
     fontSize: 55,
     fontWeight: 700,
     color: '#2D3748',
+  },
+  targetInput: {
+    textAlign: 'center',
+    fontSize: 55,
+    fontWeight: 700,
+    color: '#2D3748',
+    height: 150,
   },
   bowlersGrid: {
     flexDirection: 'row',
@@ -292,6 +308,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
+    borderWidth: 1,
+    borderColor: '#00A2B4',
   },
   bowlerName: {
     fontSize: 24,
