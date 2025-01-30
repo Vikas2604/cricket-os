@@ -1,17 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import NavBar from '@/components/NavBar';
-import PageInfro from '@/components/PageInfro';
-import VectorComponent from '@/components/VectorComponent';
-
+import PlayerInfoScreen from './PlayerInfoScreen';
+import MatchInfoScreen from './MatchInfoScreen';
 
 const App = () => {
 
   return (
     <React.Fragment>
       <NavBar />
-      <PageInfro />
-      <VectorComponent />
+      <MatchInfoScreen />
+      {/* <PlayerInfoScreen /> */}
     </React.Fragment>
   );
 };

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const PageInfro = () => {
+const PageInfo = () => {
   return (
     <View style={styles.infoPageBanner}>
       <Text style={styles.infoPageText}>Player Info</Text>
@@ -9,7 +9,7 @@ const PageInfro = () => {
   )
 }
 
-export default PageInfro
+export default PageInfo
 
 const styles = StyleSheet.create({
   infoPageBanner: {

@@ -1,38 +1,88 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/AntDesign'
+import React, { useCallback } from 'react';
+import { Pressable, Text, View, StyleSheet, Animated } from 'react-native';
+import { ChevronRight } from 'lucide-react-native';
 
-const StartGameButton = () => {
+export default function StartGameButton() {
+  const translateX = new Animated.Value(0);
+
+  const handlePressIn = useCallback(() => {
+    Animated.spring(translateX, {
+      toValue: 2,
+      useNativeDriver: true,
+      friction: 5,
+    }).start();
+  }, [translateX]);
+
+  const handlePressOut = useCallback(() => {
+    Animated.spring(translateX, {
+      toValue: 0,
+      useNativeDriver: true,
+      friction: 5,
+    }).start();
+  }, [translateX]);
+
   return (
-    <View style={styles.strtGameBtn}>
-      <Icon
-        name="right"
-        color="#FFFFFF"
-        size={43}
-      />
-      <Text style={styles.strtGameBtnText}>Start Game</Text>
-    </View>
-  )
+    <Pressable
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      style={({ pressed }) => [
+        styles.button,
+        pressed && styles.pressed,
+      ]}
+    >
+      <View style={styles.gradient}>
+        <Animated.View
+          style={[
+            styles.iconContainer,
+            { transform: [{ translateX }] }
+          ]}
+        >
+          <ChevronRight
+            size={24}
+            color="#FFFFFF"
+            strokeWidth={2.5}
+          />
+        </Animated.View>
+        <Text style={styles.text}>Start Game</Text>
+      </View>
+    </Pressable>
+  );
 }
 
-export default StartGameButton
-
 const styles = StyleSheet.create({
-  strtGameBtn: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: '#00A2B4',
+  button: {
+    borderRadius: 9999,
+    width: 396,
+    overflow: 'hidden',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
     alignItems: 'center',
-    height: 84,
-    width: 398,
-    borderRadius: 96,
-    justifyContent: 'center',
-    gap: 10
+    backgroundColor: '#00A2B4',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
-  strtGameBtnText: {
+  pressed: {
+    elevation: 4,
+    shadowOpacity: 0.35,
+    shadowRadius: 4.84,
+  },
+  gradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+    paddingVertical: 24,
+    backgroundColor: '#00A2B4',
+  },
+  iconContainer: {
+    marginRight: 8,
+  },
+  text: {
     color: '#FFFFFF',
-    fontSize: 32,
-    fontWeight: 500,
-
-  }
-})
+    fontSize: 24,
+    fontWeight: '500',
+  },
+});
