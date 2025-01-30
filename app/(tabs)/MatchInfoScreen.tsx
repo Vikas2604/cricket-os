@@ -118,10 +118,7 @@ export default function MatchInfo() {
                 {bowlers.map((bowler) => (
                   <TouchableOpacity
                     key={bowler.id}
-                    style={[
-                      styles.bowlerCard,
-                      selectedBowler === bowler.id && styles.bowlerCardSelected,
-                    ]}
+                    style={styles.bowlerCard}
                     onPress={() => setSelectedBowler(bowler.id)}>
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
                     <Text style={[
@@ -181,11 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   sectionTitle: {
     fontSize: 16,
@@ -286,31 +278,25 @@ const styles = StyleSheet.create({
   },
   bowlersGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 100,
   },
   bowlerCard: {
-    width: '48%',
+    width: '80%',
     alignItems: 'center',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#00A3B4',
-    borderRadius: 8,
-    backgroundColor: '#fff',
-  },
-  bowlerCardSelected: {
-    backgroundColor: '#00A3B4',
+    marginBottom: 10,
   },
   bowlerImage: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginBottom: 8,
   },
   bowlerName: {
     fontSize: 16,
-    color: '#00A3B4',
+    color: '#FFFFFF',
+    backgroundColor: '#00A2B4',
+    padding: 5,
+    borderRadius: 10,
   },
   bowlerNameSelected: {
     color: '#FFFFFF',
