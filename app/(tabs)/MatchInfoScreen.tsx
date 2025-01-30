@@ -4,10 +4,10 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function MatchInfo() {
   const [category, setCategory] = useState('adults');
-  const [difficulty, setDifficulty] = useState('beginner');
+  const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(3);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowler, setSelectedBowler] = useState(null);
+  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
 
   const bowlers = [
     { id: 1, name: 'Aswin', image: 'https://s3-alpha-sig.figma.com/img/06d7/eb42/bc32e31670510c58a73c382f45d5a835?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lc-O2XW0sdVb23dMj-fkJJX1SLbU1Ef13VL1HxEDRNlLDG8dQp~isc~czXqxSb3NnJ2JH83VAxNvpzrN-TqFdIy~jlGVXfrIHE2FY0Im-YdjIdeq962sFpw46LQFtBDi4RCL8icaXzRVeHd7zQbk9ZE9ILc0kyHEU6spN2fn8r7jyDpj45N5E5ma74CU4SRbBqPRfhTS8XjLF0Z26IxferSx3F~X4YR1VEkNHHNB3Ul-E3JkkkHqHqGws5uV8L86sSpqKbUNe3ADsKOG4LO52lXSwCXJw~Qq~U0512OA4ZcffQbqA099mKDGRnRt1fZ63xE43bxoPorAhMPQl8pDhA__' },
@@ -20,7 +20,6 @@ export default function MatchInfo() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>MATCH INFO</Text>
-
         <View style={styles.row}>
           <View style={styles.column}>
             <View style={styles.section}>
@@ -134,10 +133,10 @@ export default function MatchInfo() {
           <View style={styles.column}>
             <View style={styles.actionButtons}>
               <TouchableOpacity style={styles.goBackButton}>
-                <Text style={styles.buttonText}>← Go Back</Text>
+                <Text style={styles.buttonText}>Go Back</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.startGameButton}>
-                <Text style={styles.buttonText}>Start Game →</Text>
+                <Text style={styles.buttonText}>Start Game</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 700,
     color: '#fff',
     backgroundColor: '#00A3B4',
     padding: 16,
@@ -168,7 +167,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
   },
   column: {
     flex: 1,
@@ -181,7 +179,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 700,
     marginBottom: 15,
     color: '#2D3748',
   },
@@ -208,18 +206,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#00A3B4',
-    borderRadius: 8,
     overflow: 'hidden',
+    width: 355,
   },
   picker: {
     height: 50,
+    width: 355,
+    borderColor: '#00A3B4',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   oversSelector: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 300,
     gap: 20,
   },
   oversButton: {
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
   },
   oversCount: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: 700,
     minWidth: 30,
     textAlign: 'center',
   },
@@ -244,6 +245,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 550,
     gap: 15,
   },
   toggleText: {
@@ -267,24 +269,24 @@ const styles = StyleSheet.create({
   scoreLabel: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#00A3B4',
-    marginBottom: 8,
+    color: '#FFFFFF',
+    backgroundColor: '#00A2B4',
+    padding: 8,
   },
   scoreValue: {
     textAlign: 'center',
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 55,
+    fontWeight: 700,
     color: '#2D3748',
   },
   bowlersGrid: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 100,
+    width: 150,
   },
   bowlerCard: {
     width: '80%',
     alignItems: 'center',
-    marginBottom: 10,
   },
   bowlerImage: {
     width: 60,
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   bowlerName: {
-    fontSize: 16,
+    fontSize: 24,
     color: '#FFFFFF',
     backgroundColor: '#00A2B4',
     padding: 5,
@@ -302,27 +304,25 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   actionButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    width: 398,
     gap: 10,
   },
   goBackButton: {
     backgroundColor: '#00A3B4',
     padding: 16,
-    borderRadius: 8,
-    flex: 1,
+    borderRadius: 50,
     alignItems: 'center',
   },
   startGameButton: {
     backgroundColor: '#00A3B4',
     padding: 16,
-    borderRadius: 8,
-    flex: 1,
+    borderRadius: 50,
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 32,
+    fontWeight: 700,
   },
 });
