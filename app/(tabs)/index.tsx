@@ -7,7 +7,7 @@ import MatchDetailsScreen from './MatchDetailsScreen';
 import SideBarComponent from '../../components/SideBarComponent';
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("3"); // Default to "MATCH DETAILS"
+  const [activeTab, setActiveTab] = useState("1"); // Default to "MATCH DETAILS"
 
   const handleTabSelect = (tab: string) => {
     setActiveTab(tab);

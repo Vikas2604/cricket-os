@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   playerListContainer: {
     flex: 1,
     alignItems: 'center',
+
   },
   rightContainer: {
     flexDirection: 'column',
@@ -216,3 +217,4 @@ const styles = StyleSheet.create({
 
   }
 });
+// Move Number of players, go back button & continue button to the right side of the screen move Enter Your Name, Batting Style & Player ID to the left side of the screen, Dont change anythign else in the code even the styles and header should remain the same.

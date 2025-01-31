@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons"
+
 export default function MatchDetailsScreen() {
   const [isAutoMode, setIsAutoMode] = useState(true)
 
@@ -10,11 +11,11 @@ export default function MatchDetailsScreen() {
     </View>
   )
 
-  const renderScoreButton = (value: string) => (
+  const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
       style={[
         styles.scoreButton,
-        value === "2" ? styles.scoreButtonRed : value === "4" ? styles.scoreButtonGreen : styles.scoreButtonBlue,
+        rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
       ]}
       onPress={() => renderBall(value)}
     >
@@ -87,19 +88,19 @@ export default function MatchDetailsScreen() {
               {/* Score Buttons */}
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("2")}
-                  {renderScoreButton("2")}
-                  {renderScoreButton("2")}
+                  {renderScoreButton("2", 0)}
+                  {renderScoreButton("2", 0)}
+                  {renderScoreButton("2", 0)}
                 </View>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("4")}
-                  {renderScoreButton("4")}
-                  {renderScoreButton("4")}
+                  {renderScoreButton("4", 1)}
+                  {renderScoreButton("4", 1)}
+                  {renderScoreButton("4", 1)}
                 </View>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("6")}
-                  {renderScoreButton("6")}
-                  {renderScoreButton("6")}
+                  {renderScoreButton("6", 2)}
+                  {renderScoreButton("6", 2)}
+                  {renderScoreButton("6", 2)}
                 </View>
               </View>
               {/* Action Buttons */}
@@ -421,4 +422,3 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 });
-
