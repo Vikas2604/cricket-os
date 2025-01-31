@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons"
-
 export default function MatchDetailsScreen() {
   const [isAutoMode, setIsAutoMode] = useState(true)
 
@@ -28,9 +27,8 @@ export default function MatchDetailsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>MATCH DETAILS</Text>
-
+    <View style={styles.MatchDetailsScreenContainer}>
+      <Text style={styles.MatchDetailsScreenHeader}>MATCH DETAILS</Text>
       <View style={styles.content}>
         <ScrollView style={styles.scrollContent}>
           {/* Nikhil's Row */}
@@ -180,11 +178,11 @@ export default function MatchDetailsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  MatchDetailsScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
+  MatchDetailsScreenHeader: {
     backgroundColor: "#00A3B4",
     color: "#fff",
     padding: 16,

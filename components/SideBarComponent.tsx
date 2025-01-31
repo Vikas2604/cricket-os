@@ -1,27 +1,36 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react'
+import React from 'react';
 
-const SideBarComponent = () => {
-  const renderSideTab = (number: string, text: string, isActive: boolean = false) => (
-    <TouchableOpacity style={[styles.sideTab, isActive && styles.sideTabActive]}>
-      <Text style={[styles.sideTabNumber, isActive && styles.sideTabTextActive]}>{number}</Text>
-      <Text style={[styles.sideTabText, isActive && styles.sideTabTextActive]}>{text}</Text>
+interface SideBarComponentProps {
+  activeTab: string;
+  onTabSelect: (tab: string) => void;
+}
+
+const SideBarComponent: React.FC<SideBarComponentProps> = ({ activeTab, onTabSelect }) => {
+  const renderSideTab = (number: string, text: string) => (
+    <TouchableOpacity
+      style={[styles.sideTab, activeTab === number && styles.sideTabActive]}
+      onPress={() => onTabSelect(number)}
+    >
+      <Text style={[styles.sideTabNumber, activeTab === number && styles.sideTabTextActive]}>{number}</Text>
+      <Text style={[styles.sideTabText, activeTab === number && styles.sideTabTextActive]}>{text}</Text>
     </TouchableOpacity>
   );
+
   return (
     <View style={styles.sidebar}>
       {renderSideTab("1", "PLAYER INFO")}
       {renderSideTab("2", "MATCH INFO")}
-      {renderSideTab("3", "MATCH DETAILS", true)}
+      {renderSideTab("3", "MATCH DETAILS")}
     </View>
-  )
-}
+  );
+};
 
 export default SideBarComponent;
 
 const styles = StyleSheet.create({
   sidebar: {
-    width: 80,
+    width: '10%',
     backgroundColor: '#00A3B4',
   },
   sideTab: {
@@ -48,4 +57,4 @@ const styles = StyleSheet.create({
   sideTabTextActive: {
     color: '#00A3B4',
   },
-})
+});

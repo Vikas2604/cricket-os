@@ -22,7 +22,9 @@ const PlayerInfoScreen = () => {
   };
 
   return (
+
     <View style={styles.playerInfoContainer}>
+      <Text style={styles.playerInfoContainerHeader}>MATCH DETAILS</Text>
       <View style={styles.playerListContainer}>
         <View style={styles.playerInfoHeadersTitle}>
           <Text style={styles.playerInfoHeadersText}>Enter Your Name</Text>
@@ -87,10 +89,16 @@ export default PlayerInfoScreen;
 
 const styles = StyleSheet.create({
   playerInfoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  playerInfoContainerHeader: {
+    backgroundColor: "#00A3B4",
+    color: "#fff",
+    padding: 16,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   playerListContainer: {
     flex: 1,

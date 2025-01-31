@@ -23,8 +23,8 @@ export default function MatchInfo() {
     ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.scrollContent}>
+    <View style={styles.matchInfoScreenContainer}>
+      <View>
         <Text style={styles.title}>MATCH INFO</Text>
         <View style={styles.row}>
           <View style={styles.column}>
@@ -158,13 +158,11 @@ export default function MatchInfo() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  matchInfoScreenContainer: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  scrollContent: {
-    padding: 16,
-  },
+
   title: {
     fontSize: 24,
     fontWeight: 700,

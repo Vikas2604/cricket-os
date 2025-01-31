@@ -1,18 +1,29 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
-import NavBar from '@/components/NavBar';
+import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import NavBar from '../../components/NavBar';
 import PlayerInfoScreen from './PlayerInfoScreen';
 import MatchInfoScreen from './MatchInfoScreen';
 import MatchDetailsScreen from './MatchDetailsScreen';
+import SideBarComponent from '../../components/SideBarComponent';
 
-const App = () => {
+const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("3"); // Default to "MATCH DETAILS"
+
+  const handleTabSelect = (tab: string) => {
+    setActiveTab(tab);
+  };
 
   return (
     <React.Fragment>
       <NavBar />
-      <MatchDetailsScreen />
-      {/* <MatchInfoScreen /> */}
-      {/* <PlayerInfoScreen /> */}
+      <View style={styles.container}>
+        <SideBarComponent activeTab={activeTab} onTabSelect={handleTabSelect} />
+        <View style={styles.tabContent}>
+          {activeTab === "1" && <PlayerInfoScreen />}
+          {activeTab === "2" && <MatchInfoScreen />}
+          {activeTab === "3" && <MatchDetailsScreen />}
+        </View>
+      </View>
     </React.Fragment>
   );
 };
@@ -20,5 +31,10 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
-
-})
+  container: {
+    flexDirection: 'row',
+  },
+  tabContent: {
+    flex: 1, // This will allow the tab content to take the remaining space
+  },
+});
