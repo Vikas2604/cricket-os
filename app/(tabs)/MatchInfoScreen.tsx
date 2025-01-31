@@ -23,8 +23,8 @@ export default function MatchInfo() {
     ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <View style={styles.container}>
+      <View style={styles.scrollContent}>
         <Text style={styles.title}>MATCH INFO</Text>
         <View style={styles.row}>
           <View style={styles.column}>
@@ -152,9 +152,8 @@ export default function MatchInfo() {
             </View>
           </View>
         </View>
-
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 }
 

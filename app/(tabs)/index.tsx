@@ -3,13 +3,15 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import PlayerInfoScreen from './PlayerInfoScreen';
 import MatchInfoScreen from './MatchInfoScreen';
+import MatchDetailsScreen from './MatchDetailsScreen';
 
 const App = () => {
 
   return (
     <React.Fragment>
       <NavBar />
-      <MatchInfoScreen />
+      <MatchDetailsScreen />
+      {/* <MatchInfoScreen /> */}
       {/* <PlayerInfoScreen /> */}
     </React.Fragment>
   );
