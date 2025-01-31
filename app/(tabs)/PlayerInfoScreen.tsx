@@ -2,7 +2,11 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const PlayerInfoScreen = () => {
+interface PlayerInfoScreenProps {
+  setActiveTab: (tab: string) => void;
+}
+
+const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab }) => {
   const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '' }]);
 
   const addPlayer = () => {
@@ -22,63 +26,67 @@ const PlayerInfoScreen = () => {
   };
 
   return (
-
     <View style={styles.playerInfoContainer}>
-      <Text style={styles.playerInfoContainerHeader}>MATCH DETAILS</Text>
-      <View style={styles.playerListContainer}>
-        <View style={styles.playerInfoHeadersTitle}>
-          <Text style={styles.playerInfoHeadersText}>Enter Your Name</Text>
-          <Text style={styles.playerInfoHeadersText}>Batting Style</Text>
-          <Text style={styles.playerInfoHeadersText}>Player ID</Text>
-        </View>
-        {players.map((player) => (
-          <View key={player.id} style={styles.playerInfoHeaders}>
-            <TextInput
-              style={styles.playerInfoInput}
-              onChangeText={(text) => updatePlayerName(player.id, text)}
-              value={player.name}
-              placeholder="Player Name"
-            />
-            <View style={styles.battingStyleContainer}>
-              <TouchableOpacity
-                style={[styles.battingButton, player.battingStyle === 'L' && styles.activeButton]}
-                onPress={() => updateBattingStyle(player.id, 'L')}
-              >
-                <Text style={styles.battingButtonText}>L</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.battingButton, player.battingStyle === 'R' && styles.activeButton]}
-                onPress={() => updateBattingStyle(player.id, 'R')}
-              >
-                <Text style={styles.battingButtonText}>R</Text>
+      <Text style={styles.playerInfoContainerHeader}>PLAYER INFO</Text>
+
+      <View style={styles.mainContainer}>
+        {/* Left section for player details */}
+        <View style={styles.playerListContainer}>
+          <View style={styles.playerInfoHeadersTitle}>
+            <Text style={styles.playerInfoHeadersText}>Enter Your Name</Text>
+            <Text style={styles.playerInfoHeadersText}>Batting Style</Text>
+            <Text style={styles.playerInfoHeadersText}>Player ID</Text>
+          </View>
+          {players.map((player) => (
+            <View key={player.id} style={styles.playerInfoHeaders}>
+              <TextInput
+                style={styles.playerInfoInput}
+                onChangeText={(text) => updatePlayerName(player.id, text)}
+                value={player.name}
+                placeholder="Player Name"
+              />
+              <View style={styles.battingStyleContainer}>
+                <TouchableOpacity
+                  style={[styles.battingButton, player.battingStyle === 'L' && styles.activeButton]}
+                  onPress={() => updateBattingStyle(player.id, 'L')}
+                >
+                  <Text style={styles.battingButtonText}>L</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.battingButton, player.battingStyle === 'R' && styles.activeButton]}
+                  onPress={() => updateBattingStyle(player.id, 'R')}
+                >
+                  <Text style={styles.battingButtonText}>R</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={() => removePlayer(player.id)}>
+                <Icon name="minuscircle" color="#F67676" size={30} />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => removePlayer(player.id)}>
-              <Icon name="minuscircle" color="#F67676" size={30} />
-            </TouchableOpacity>
+          ))}
+          <TouchableOpacity onPress={addPlayer} style={styles.addButtonContainer}>
+            <Icon name="pluscircleo" color="#00A2B4" size={40} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.verticalLine}></View>
+        {/* Right section for number of players and buttons */}
+        <View style={styles.rightContainer}>
+          <View style={styles.numberOfPlayersInfoContainer}>
+            <Text style={styles.numberOfPlayersInfo}>Number of Players</Text>
+            <Text style={styles.numberOfPlayers}>{players.length}</Text>
           </View>
-        ))}
-        <TouchableOpacity onPress={addPlayer} style={styles.addButtonContainer}>
-          <Icon name="pluscircleo" color="#00A2B4" size={40} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.rightContainer}>
-        <View style={styles.numberOfPlayersContainer}>
-          <Text style={styles.numberOfPlayersInfo}>Number of Players</Text>
-          <Text style={styles.numberOfPlayers}>{players.length}</Text>
-        </View>
-        <View style={styles.backBtn}>
-          <Icon
-            name="arrowleft"
-            color="#FFFFFF"
-            size={43}
-          />
-          <Text style={styles.backBtnText}>Go Back</Text>
-        </View>
-        <View style={styles.continueBtn}>
-          <Text style={styles.continueBtnText}>Continue</Text>
-          <Icon name="arrowright" color="#FFFFFF" size={43} />
+          <TouchableOpacity style={styles.backBtn} disabled>
+            <Icon
+              name="arrowleft"
+              color="#FFFFFF"
+              size={43}
+            />
+            <Text style={styles.backBtnText}>Go Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.continueBtn} onPress={() => setActiveTab("2")}>
+            <Text style={styles.continueBtnText}>Continue</Text>
+            <Icon name="arrowright" color="#FFFFFF" size={43} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -96,32 +104,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#00A3B4",
     color: "#fff",
     padding: 16,
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
   },
+  mainContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
   playerListContainer: {
     flex: 1,
-    alignItems: 'center',
-
+    alignItems: 'flex-start',
+    paddingLeft: 20,
   },
   rightContainer: {
-    flexDirection: 'column',
     alignItems: 'center',
-    marginLeft: 10,
-  },
-  numberOfPlayersContainer: {
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#000000',
-    borderRadius: 14,
-    marginBottom: 20,
+    marginLeft: 'auto',
+    paddingRight: 20,
+    paddingTop: 100,
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '60%',
+    width: '70%',
   },
   playerInfoHeadersText: {
     fontWeight: '600',
@@ -131,21 +137,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '60%',
+    width: '70%',
     paddingVertical: 10,
   },
   playerInfoInput: {
     height: 40,
-    width: 200,
+    width: 110,
     borderWidth: 1,
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
   },
   battingStyleContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 200,
-    paddingRight: 100,
   },
   battingButton: {
     padding: 10,
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     alignSelf: 'flex-start',
     marginTop: 20,
-    marginLeft: '26%',
+    marginLeft: 40,
   },
   numberOfPlayersInfo: {
     backgroundColor: '#00A2B4',
@@ -178,17 +182,23 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 14,
     borderTopRightRadius: 14,
   },
+  numberOfPlayersInfoContainer: {
+    borderWidth: 1,
+    borderRadius: 14,
+    marginBottom: 30,
+  },
   numberOfPlayers: {
     fontWeight: 700,
     fontSize: 73,
+    textAlign: 'center',
+    marginBottom: 30,
   },
   continueBtn: {
-    display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#00A2B4',
     alignItems: 'center',
-    height: 84,
-    width: 398,
+    height: 64,
+    width: 300,
     borderRadius: 96,
     justifyContent: 'center',
     gap: 10,
@@ -203,18 +213,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#0000001A',
     alignItems: 'center',
-    height: 84,
-    width: 398,
+    height: 64,
+    width: 300,
     marginBottom: 30,
     borderRadius: 96,
     justifyContent: 'center',
-    gap: 10
+    gap: 10,
+    opacity: 0.5,
   },
   backBtnText: {
     color: '#FFFFFF',
     fontSize: 32,
     fontWeight: 500,
-
+  },
+  verticalLine: {
+    borderLeftWidth: 3,
+    height: 500,
+    marginTop: 20,
+    paddingRight: 40,
   }
 });
-// Move Number of players, go back button & continue button to the right side of the screen move Enter Your Name, Batting Style & Player ID to the left side of the screen, Dont change anythign else in the code even the styles and header should remain the same.

@@ -19,8 +19,8 @@ const App: React.FC = () => {
       <View style={styles.container}>
         <SideBarComponent activeTab={activeTab} onTabSelect={handleTabSelect} />
         <View style={styles.tabContent}>
-          {activeTab === "1" && <PlayerInfoScreen />}
-          {activeTab === "2" && <MatchInfoScreen />}
+          {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} />}
+          {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} />}
           {activeTab === "3" && <MatchDetailsScreen />}
         </View>
       </View>

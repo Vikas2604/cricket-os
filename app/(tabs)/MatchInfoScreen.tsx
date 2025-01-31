@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, Switch, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-export default function MatchInfo() {
+interface MatchInfoProps {
+  setActiveTab: (tab: string) => void;
+}
+
+export default function MatchInfo({ setActiveTab }: MatchInfoProps) {
   const [category, setCategory] = useState('adults');
   const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(3);
@@ -143,10 +148,12 @@ export default function MatchInfo() {
 
           <View style={styles.column}>
             <View style={styles.actionButtons}>
-              <TouchableOpacity style={styles.goBackButton}>
+              <TouchableOpacity style={styles.goBackButton} onPress={() => setActiveTab("1")}>
+                <Icon style={styles.startGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.startGameButton}>
+              <TouchableOpacity style={styles.startGameButton} onPress={() => setActiveTab("3")}>
+                <Icon style={styles.startGameButtonSlider} name="rightcircleo" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Start Game</Text>
               </TouchableOpacity>
             </View>
@@ -162,7 +169,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-
   title: {
     fontSize: 24,
     fontWeight: 700,
@@ -333,7 +339,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#00A3B4',
     padding: 16,
     borderRadius: 50,
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  startGameButtonSlider: {
+    position: 'absolute',
+    left: 10,
   },
   buttonText: {
     color: '#fff',
