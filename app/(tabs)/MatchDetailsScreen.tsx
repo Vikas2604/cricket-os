@@ -422,5 +422,5 @@ const styles = StyleSheet.create({
     color: "#00A3B4",
     marginRight: 8,
   },
-})
+});
 
