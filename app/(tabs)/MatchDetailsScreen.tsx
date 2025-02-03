@@ -161,13 +161,25 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
           </View>
 
           <View style={styles.controlsSection}>
+
             <View style={styles.cameraControls}>
-              <Text style={styles.controlLabel}>Tilt</Text>
-              <Text style={styles.controlValue}>Short</Text>
-              <Text style={styles.controlLabel}>Pan</Text>
-              <Text style={styles.controlValue}>Line 1</Text>
-              <Text style={styles.controlLabel}>Speed</Text>
-              <Text style={styles.controlValue}>80 (km/h)</Text>
+              <TouchableOpacity style={styles.cameraButton}>
+                <Icon name="left" size={24} color="#fff" />
+              </TouchableOpacity>
+              <View style={styles.cameraControlValues}>
+                <View style={styles.cameraControlValuesDisplay}>
+                  <Text style={styles.controlLabel}>Tilt</Text>
+                  <Text style={styles.controlValue}>Short</Text>
+                </View>
+                <View style={styles.cameraControlValuesDisplay}>
+                  <Text style={styles.controlLabel}>Pan</Text>
+                  <Text style={styles.controlValue}>Line 1</Text>
+                </View>
+                <View style={styles.cameraControlValuesDisplay}>
+                  <Text style={styles.controlLabel}>Speed</Text>
+                  <Text style={styles.controlValue}>80 (km/h)</Text>
+                </View>
+              </View>
             </View>
 
             <TouchableOpacity style={styles.pauseButton}>
@@ -381,23 +393,41 @@ const styles = StyleSheet.create({
   },
   cameraControls: {
     flexDirection: "row",
-    flexWrap: "wrap",
     marginBottom: 20,
-    borderWidth: 1,
+    borderWidth: 3,
+    borderRadius: 10,
     borderColor: "#00A2B4",
-    paddingLeft: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+  },
+  cameraButton: {
+    width: 45,
+    height: 115,
+    borderTopLeftRadius: 7,
+    borderBottomLeftRadius: 7,
+    backgroundColor: "#00A3B4",
+    justifyContent: "center",
   },
   controlLabel: {
-    width: "30%",
-    color: "#666",
-    marginBottom: 10,
+    width: "50%",
+    color: "#00A3B4",
+    fontWeight: 500,
+    paddingLeft: 10,
   },
   controlValue: {
     width: "70%",
     color: "#333",
-    marginBottom: 10,
+    fontWeight: 600,
+    fontSize: 15,
+    paddingLeft: 10,
+  },
+  cameraControlValues: {
+    flexDirection: "row",
+    justifyContent: "center",
+    flex: 1,
+  },
+  cameraControlValuesDisplay: {
+    flexDirection: "column",
+    justifyContent: "space-around",
+    flex: 1,
   },
   pauseButton: {
     backgroundColor: "#00A3B4",
