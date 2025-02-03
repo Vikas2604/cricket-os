@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import Icon from 'react-native-vector-icons/AntDesign';
-import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
+import React, { useState } from 'react'; // Import useState
+import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';  // Import Switch and TextInput
+import { Picker } from '@react-native-picker/picker'; // Import Picker from @react-native-picker/picker
+import Icon from 'react-native-vector-icons/AntDesign'; // Import AntDesign icon family
+import HeaderComponent from '../../components/HeaderComponent'; // Import HeaderComponent
 
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
@@ -11,12 +11,12 @@ interface MatchInfoProps {
 }
 
 export default function MatchInfo({ setActiveTab, navigation, setTarget }: MatchInfoProps) {
-  const [category, setCategory] = useState('adults');
-  const [difficulty, setDifficulty] = useState('Beginner');
-  const [overs, setOvers] = useState(0);
+  const [category, setCategory] = useState('adults'); // Changed category to adults
+  const [difficulty, setDifficulty] = useState('Beginner'); // Changed difficulty to Beginner
+  const [overs, setOvers] = useState(0);  // Changed overs to 0
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
-  const [target, setTargetState] = useState(0);
+  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);  // Changed selectedBowler to number | null
+  const [target, setTargetState] = useState(0); // Added target state
 
   const bowlers = category === 'kids'
     ? [
@@ -32,7 +32,8 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget }: Match
 
   return (
     <View style={styles.matchInfoScreenContainer}>
-      <HeaderComponent title="Match Info" /> {/* Adding HeaderComponent */}
+      <HeaderComponent title="Match Info" />
+      {/* Adding HeaderComponent */}
       <View>
         <View style={styles.row}>
           <View style={styles.column}>
