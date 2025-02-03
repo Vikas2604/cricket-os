@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     paddingLeft: 20,
-    overflowY: 'scroll',
+    overflowY: 'auto',
 
   },
   rightContainer: {
