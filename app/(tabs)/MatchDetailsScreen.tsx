@@ -3,13 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "re
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'; // Importing PanGestureHandler
+import MatchInfoScreen from './MatchInfoScreen'; // Import MatchInfoScreen to access overs
 
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string }>;
   target: number; // Added target prop
+  overs: number; // Added overs prop
 }
 
-export default function MatchDetailsScreen({ players, target }: MatchDetailsScreenProps) {
+export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
   const [iconPosition, setIconPosition] = useState(0); // State for icon position
   const [isAutoMode, setIsAutoMode] = useState(true);
   const [score, setScore] = useState(0); // State for current score
@@ -54,8 +56,13 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
     }
   };
 
-  const numberOfOvers = 20; // Assuming a fixed number of overs
-  const reqRate = (target / numberOfOvers).toFixed(2); // Calculate required rate
+  const totalBalls = overs * 6; // Total balls in the match
+  const ballsPlayed = balls.filter(ball => ball !== "").length; // Count of balls played
+  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"; // Calculate strike rate
+
+  // Calculate required run rate
+  const oversRemaining = overs - (ballsPlayed / 6);
+  const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A";
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
@@ -137,7 +144,7 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
             <Text style={styles.mainScore}>
               <Text style={styles.scoreNumber}>{score}</Text>
               <Text style={styles.scoreSlash}> / </Text>
-              <Text style={styles.maxScore}>{target}</Text> {/* Updated to use target */}
+              <Text style={styles.maxScore}>{target}</Text>
             </Text>
 
             <View style={styles.statsGrid}>
@@ -147,15 +154,15 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Balls Left</Text>
-                <Text style={styles.statValue}>1</Text>
+                <Text style={styles.statValue}>{Math.max(0, totalBalls - ballsPlayed)}</Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Req. Rate</Text>
-                <Text style={styles.statValue}>{reqRate}/over</Text> {/* Updated to use calculated reqRate */}
+                <Text style={styles.statValue}>{requiredRunRate}/over</Text> {/*reqRate*/}
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Strike Rate</Text>
-                <Text style={styles.statValue}>183.33</Text>
+                <Text style={styles.statValue}>{strikeRate}</Text> {/*strike rate*/}
               </View>
             </View>
           </View>

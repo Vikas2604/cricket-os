@@ -233,6 +233,7 @@ const styles = StyleSheet.create({
   oversSelector: {
     flexDirection: 'row',
     alignItems: 'center',
+
     justifyContent: 'flex-start',
     gap: 20,
   },
@@ -241,8 +242,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    textAlign: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   oversButtonText: {
     color: '#FFFFFF',

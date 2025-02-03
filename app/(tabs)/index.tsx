@@ -70,7 +70,7 @@ const App: React.FC = () => {
           <View style={styles.tabContent}>
             {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} players={players} setPlayers={setPlayers} />}
             {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} />} {/* Pass route params */}
-            {activeTab === "3" && <MatchDetailsScreen players={players} target={target} />} {/* Pass players and target here */}
+            {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} />} {/* Pass players, target, and overs here */}
           </View>
         </View>
       </React.Fragment>
