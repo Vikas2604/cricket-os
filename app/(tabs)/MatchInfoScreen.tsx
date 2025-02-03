@@ -233,26 +233,28 @@ const styles = StyleSheet.create({
   oversSelector: {
     flexDirection: 'row',
     alignItems: 'center',
-
     justifyContent: 'flex-start',
-    gap: 20,
+    gap: 10,
   },
   oversButton: {
     backgroundColor: '#00A3B4',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 70,
+    height: 70,
     textAlign: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   oversButtonText: {
     color: '#FFFFFF',
     fontSize: 24,
   },
   oversCount: {
-    fontSize: 20,
-    fontWeight: '700',
-    minWidth: 20,
+    fontSize: 22,
+    fontWeight: 400,
+    borderWidth: 1,
+    width: 100,
+    height: 70,
+    alignContent: 'center',
     textAlign: 'center',
   },
   toggleContainer: {

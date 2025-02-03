@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   playerName: {
-    fontSize: 18,
+    fontSize: 24,
     marginBottom: 10,
   },
   overContainer: {
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     borderColor: "#00A3B4",
   },
   ballText: {
-    fontSize: 16,
+    fontSize: 24,
     color: "#666",
   },
   activeBallText: {
@@ -340,32 +340,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#E0F7FA",
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
     borderRadius: 100,
-    width: 204,
+    width: 200,
+    marginLeft: 10,
+    alignItems: "center",
   },
   actionButtonText: {
     color: "#00A3B4",
     textAlign: "center",
     fontSize: 23,
-    width: 100,
   },
   actionButtonRow: {
     flexDirection: "row",
   },
   scoreButtonsContainer: {
     flex: 1,
-
   },
   scoreEntryContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
-
   },
   scorePanel: {
-    width: "40%",
+    width: "39%",
     backgroundColor: "#f5f5f5",
     padding: 20,
   },
