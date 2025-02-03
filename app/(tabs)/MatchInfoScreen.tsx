@@ -8,9 +8,11 @@ interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
   navigation: any; // Add navigation prop
   setTarget: (target: number) => void; // Added setTarget prop
+  playerOnStrike: number | null; // Added playerOnStrike prop
+  setPlayerOnStrike: (id: number | null) => void; // Added setter for playerOnStrike
 }
 
-export default function MatchInfo({ setActiveTab, navigation, setTarget }: MatchInfoProps) {
+export default function MatchInfo({ setActiveTab, navigation, setTarget, playerOnStrike, setPlayerOnStrike }: MatchInfoProps) {
   const [category, setCategory] = useState('adults'); // Changed category to adults
   const [difficulty, setDifficulty] = useState('Beginner'); // Changed difficulty to Beginner
   const [overs, setOvers] = useState(0);  // Changed overs to 0
@@ -142,7 +144,10 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget }: Match
                   <TouchableOpacity
                     key={bowler.id}
                     style={styles.bowlerCard}
-                    onPress={() => setSelectedBowler(bowler.id)}>
+                    onPress={() => {
+                      setSelectedBowler(bowler.id);
+                      setPlayerOnStrike(bowler.id); // Set the player on strike when selected
+                    }}>
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
                     <Text style={[styles.bowlerName, selectedBowler === bowler.id && styles.bowlerNameSelected]}>
                       {bowler.name}
@@ -248,25 +253,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 24,
   },
-  oversCount: {
-    fontSize: 22,
-    fontWeight: 400,
-    borderWidth: 1,
-    width: 100,
-    height: 70,
-    alignContent: 'center',
-    textAlign: 'center',
-  },
-  toggleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    gap: 15,
-  },
-  toggleText: {
-    fontSize: 16,
-    color: '#2D3748',
-  },
   scoreContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -358,5 +344,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 32,
     fontWeight: '700',
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 15,
+  },
+  toggleText: {
+    fontSize: 16,
+    color: '#2D3748',
+  },
+  oversCount: {
+    fontSize: 22,
+    fontWeight: 400,
+    borderWidth: 1,
+    width: 100,
+    height: 70,
+    alignContent: 'center',
+    textAlign: 'center',
   },
 });

@@ -16,6 +16,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [isAutoMode, setIsAutoMode] = useState(true);
   const [score, setScore] = useState(0); // State for current score
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]); // State for ball values
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null); // State for player on strike
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
@@ -72,11 +73,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         <View >
           <View style={styles.scrollContent}>
             {players.map((player) => (
-              <View key={player.id} style={[styles.playerRow, styles.inactiveRow]}>
+              <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>1st{"\n"}Over</Text>
-                  {balls.map((ball, index) => renderBall(ball, ball !== ""))}
+                  {balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
                 <View style={styles.disputeBox}>
                   <TouchableOpacity onPress={handleDispute}>
@@ -464,7 +465,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginLeft: 8,
     fontSize: 29,
-    fontWeight: "500",
+    fontWeight: 500,
     flexDirection: "row",
     justifyContent: "center",
     textAlign: "center",
