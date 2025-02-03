@@ -122,6 +122,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                       const newTarget = Number(value);
                       setTarget(newTarget);
                       setTargetState(newTarget);
+                      setTarget(newTarget); // Ensure target is updated
                     }}
                     keyboardType="numeric"
                   />
