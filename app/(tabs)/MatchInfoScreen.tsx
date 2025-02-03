@@ -1,24 +1,56 @@
-import React, { useState } from 'react'; // Import useState
-import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';  // Import Switch and TextInput
-import { Picker } from '@react-native-picker/picker'; // Import Picker from @react-native-picker/picker
-import Icon from 'react-native-vector-icons/AntDesign'; // Import AntDesign icon family
-import HeaderComponent from '../../components/HeaderComponent'; // Import HeaderComponent
+import React, { useState, useEffect } from 'react'; // Import useEffect
+import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/AntDesign';
+import HeaderComponent from '../../components/HeaderComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
-  navigation: any; // Add navigation prop
-  setTarget: (target: number) => void; // Added setTarget prop
-  playerOnStrike: number | null; // Added playerOnStrike prop
-  setPlayerOnStrike: (id: number | null) => void; // Added setter for playerOnStrike
+  navigation: any;
+  setTarget: (target: number) => void;
+  playerOnStrike: number | null;
+  setPlayerOnStrike: (id: number | null) => void;
 }
 
 export default function MatchInfo({ setActiveTab, navigation, setTarget, playerOnStrike, setPlayerOnStrike }: MatchInfoProps) {
-  const [category, setCategory] = useState('adults'); // Changed category to adults
-  const [difficulty, setDifficulty] = useState('Beginner'); // Changed difficulty to Beginner
-  const [overs, setOvers] = useState(0);  // Changed overs to 0
+  const [category, setCategory] = useState('adults');
+  const [difficulty, setDifficulty] = useState('Beginner');
+  const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);  // Changed selectedBowler to number | null
-  const [target, setTargetState] = useState(0); // Added target state
+  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
+  const [target, setTargetState] = useState(0);
+
+  // Load state from local storage
+  useEffect(() => {
+    const loadState = async () => {
+      const savedCategory = await AsyncStorage.getItem('category');
+      const savedDifficulty = await AsyncStorage.getItem('difficulty');
+      const savedOvers = await AsyncStorage.getItem('overs');
+      const savedIsAutoSelection = await AsyncStorage.getItem('isAutoSelection');
+      const savedSelectedBowler = await AsyncStorage.getItem('selectedBowler');
+      const savedTarget = await AsyncStorage.getItem('target');
+
+      if (savedCategory) setCategory(savedCategory);
+      if (savedDifficulty) setDifficulty(savedDifficulty);
+      if (savedOvers) setOvers(Number(savedOvers));
+      if (savedIsAutoSelection) setIsAutoSelection(savedIsAutoSelection === 'true');
+      if (savedSelectedBowler) setSelectedBowler(Number(savedSelectedBowler));
+      if (savedTarget) setTargetState(Number(savedTarget));
+    };
+
+    loadState();
+  }, []);
+
+  // Save state to local storage
+  useEffect(() => {
+    AsyncStorage.setItem('category', category);
+    AsyncStorage.setItem('difficulty', difficulty);
+    AsyncStorage.setItem('overs', overs.toString());
+    AsyncStorage.setItem('isAutoSelection', JSON.stringify(isAutoSelection));
+    AsyncStorage.setItem('selectedBowler', selectedBowler ? selectedBowler.toString() : '');
+    AsyncStorage.setItem('target', target.toString());
+  }, [category, difficulty, overs, isAutoSelection, selectedBowler, target]);
 
   const bowlers = category === 'kids'
     ? [
@@ -35,7 +67,6 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
   return (
     <View style={styles.matchInfoScreenContainer}>
       <HeaderComponent title="Match Info" />
-      {/* Adding HeaderComponent */}
       <View>
         <View style={styles.row}>
           <View style={styles.column}>
@@ -122,7 +153,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                       const newTarget = Number(value);
                       setTarget(newTarget);
                       setTargetState(newTarget);
-                      setTarget(newTarget); // Ensure target is updated
+                      setTarget(newTarget);
                     }}
                     keyboardType="numeric"
                   />
@@ -147,7 +178,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                     style={styles.bowlerCard}
                     onPress={() => {
                       setSelectedBowler(bowler.id);
-                      setPlayerOnStrike(bowler.id); // Set the player on strike when selected
+                      setPlayerOnStrike(bowler.id);
                     }}>
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
                     <Text style={[styles.bowlerName, selectedBowler === bowler.id && styles.bowlerNameSelected]}>
