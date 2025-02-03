@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'; // Importing PanGestureHandler
@@ -17,6 +17,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [score, setScore] = useState(0); // State for current score
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]); // State for ball values
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null); // State for player on strike
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3)); // State for disputes
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
@@ -45,8 +46,17 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     </TouchableOpacity>
   );
 
-  const handleDispute = () => {
-    console.log("Dispute raised");
+  const handleDispute = (index: number) => {
+    console.log(`Dispute before: ${disputes[index]}`); // Log current dispute count
+    if (disputes[index] > 0) {
+      const newDisputes = [...disputes];
+      newDisputes[index] -= 1;
+      setDisputes(newDisputes);
+      console.log(`Dispute after: ${newDisputes[index]}`); // Log updated dispute count
+      if (newDisputes[index] == 0) {
+        Alert.alert("You're out of disputes");
+      }
+    }
   };
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
@@ -72,7 +82,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       <View style={styles.content}>
         <View >
           <View style={styles.scrollContent}>
-            {players.map((player) => (
+            {players.map((player, index) => (
               <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
@@ -80,8 +90,8 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                   {balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
                 <View style={styles.disputeBox}>
-                  <TouchableOpacity onPress={handleDispute}>
-                    <Text style={styles.disputeText}>Dispute: 3</Text>
+                  <TouchableOpacity onPress={() => handleDispute(index)}>
+                    <Text style={styles.disputeText}>Dispute: {disputes[index]}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -217,12 +227,10 @@ const styles = StyleSheet.create({
   MatchDetailsScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
-
   },
   content: {
     flex: 1,
     flexDirection: "row",
-
   },
   scrollContent: {
     flex: 1,
