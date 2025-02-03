@@ -120,18 +120,22 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
               {/* Action Buttons */}
               <View style={styles.actionButtonsContainer}>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Text style={styles.actionButtonText}>Out</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Text style={styles.actionButtonText}>No Ball</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Text style={styles.actionButtonText}>No Runs</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Text style={styles.actionButtonText}>Wide</Text>
-                </TouchableOpacity>
+                <View style={styles.actionButtonRow}>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Text style={styles.actionButtonText}>Out</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Text style={styles.actionButtonText}>No Ball</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.actionButtonRow}>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Text style={styles.actionButtonText}>No Runs</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Text style={styles.actionButtonText}>Wide</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
@@ -320,23 +324,29 @@ const styles = StyleSheet.create({
   scoreButtonText: {
     color: "#fff",
     fontSize: 33,
-    fontWeight: "500",
+    fontWeight: 500,
   },
   actionButtonsContainer: {
-    justifyContent: "space-between",
-    gap: 10,
-    flex: 1,
-    marginRight: 10,
+    marginVertical: 20,
+    justifyContent: "space-around",
   },
   actionButton: {
     backgroundColor: "#E0F7FA",
-    padding: 10,
-    borderRadius: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 100,
+    marginLeft: 10,
   },
   actionButtonText: {
     color: "#00A3B4",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 33,
+    width: 130,
+  },
+  actionButtonRow: {
+    flexDirection: "row",
   },
   scoreButtonsContainer: {
     flex: 2,
