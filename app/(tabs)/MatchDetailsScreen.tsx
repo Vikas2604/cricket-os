@@ -54,6 +54,9 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
     }
   };
 
+  const numberOfOvers = 20; // Assuming a fixed number of overs
+  const reqRate = (target / numberOfOvers).toFixed(2); // Calculate required rate
+
   return (
     <View style={styles.MatchDetailsScreenContainer}>
       <HeaderComponent title="Match Details" />
@@ -148,7 +151,7 @@ export default function MatchDetailsScreen({ players, target }: MatchDetailsScre
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Req. Rate</Text>
-                <Text style={styles.statValue}>8.0/over</Text>
+                <Text style={styles.statValue}>{reqRate}/over</Text> {/* Updated to use calculated reqRate */}
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Strike Rate</Text>
@@ -414,7 +417,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
-
   stopGameButton: {
     backgroundColor: '#00A3B4',
     padding: 16,
