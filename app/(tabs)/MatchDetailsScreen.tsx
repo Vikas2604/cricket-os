@@ -69,22 +69,23 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       <HeaderComponent title="Match Details" />
 
       <View style={styles.content}>
-        <ScrollView style={styles.scrollContent}>
-          {players.map((player) => (
-            <View key={player.id} style={[styles.playerRow, styles.inactiveRow]}>
-              <Text style={styles.playerName}>{player.name}'s</Text>
-              <View style={styles.overContainer}>
-                <Text style={styles.overText}>1st{"\n"}Over</Text>
-                {balls.map((ball, index) => renderBall(ball, ball !== ""))}
+        <View >
+          <View style={styles.scrollContent}>
+            {players.map((player) => (
+              <View key={player.id} style={[styles.playerRow, styles.inactiveRow]}>
+                <Text style={styles.playerName}>{player.name}'s</Text>
+                <View style={styles.overContainer}>
+                  <Text style={styles.overText}>1st{"\n"}Over</Text>
+                  {balls.map((ball, index) => renderBall(ball, ball !== ""))}
+                </View>
+                <View style={styles.disputeBox}>
+                  <TouchableOpacity onPress={handleDispute}>
+                    <Text style={styles.disputeText}>Dispute: 3</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.disputeBox}>
-                <TouchableOpacity onPress={handleDispute}>
-                  <Text style={styles.disputeText}>Dispute: 3</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-
+            ))}
+          </View>
           {/* Score Entry Section */}
           <View style={styles.scoreEntrySection}>
             <View style={styles.autoManualSwitch}>
@@ -139,7 +140,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             </View>
           </View>
-        </ScrollView>
+        </View>
 
         {/* Right Side Score Panel */}
         <View style={styles.scorePanel}>
@@ -215,13 +216,16 @@ const styles = StyleSheet.create({
   MatchDetailsScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
+
   },
   content: {
     flex: 1,
     flexDirection: "row",
+
   },
   scrollContent: {
     flex: 1,
+    overflowY: "auto",
   },
   playerRow: {
     marginBottom: 20,
@@ -288,8 +292,10 @@ const styles = StyleSheet.create({
     borderColor: "#F67676",
   },
   scoreEntrySection: {
-    paddingHorizontal: 15,
-    gap: 10,
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderColor: "#ddd",
+    paddingTop: 20,
   },
   autoManualSwitch: {
     flexDirection: "row",
@@ -337,24 +343,26 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     borderRadius: 100,
-    marginLeft: 10,
+    width: 204,
   },
   actionButtonText: {
     color: "#00A3B4",
     textAlign: "center",
-    fontSize: 33,
-    width: 130,
+    fontSize: 23,
+    width: 100,
   },
   actionButtonRow: {
     flexDirection: "row",
   },
   scoreButtonsContainer: {
-    flex: 2,
+    flex: 1,
+
   },
   scoreEntryContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
+
   },
   scorePanel: {
     width: "40%",
@@ -365,7 +373,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   nextTarget: {
-    fontSize: 16,
+    fontSize: 21,
     color: "#00A3B4",
     marginBottom: 10,
   },
