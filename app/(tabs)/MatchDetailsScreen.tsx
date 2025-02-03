@@ -1,73 +1,78 @@
-import { useState } from "react"
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native"
-import Icon from "react-native-vector-icons/MaterialIcons"
+import { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native";
+import Icon from 'react-native-vector-icons/AntDesign';
+import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'; // Importing PanGestureHandler
 
-export default function MatchDetailsScreen() {
-  const [isAutoMode, setIsAutoMode] = useState(true)
+interface MatchDetailsScreenProps {
+  players: Array<{ id: number; name: string; battingStyle: string }>;
+}
+
+export default function MatchDetailsScreen({ players }: MatchDetailsScreenProps) {
+  const [iconPosition, setIconPosition] = useState(0); // State for icon position
+  const [isAutoMode, setIsAutoMode] = useState(true);
+  const [score, setScore] = useState(0); // State for current score
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]); // State for ball values
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
       <Text style={[styles.ballText, active && styles.activeBallText]}>{value}</Text>
     </View>
-  )
+  );
 
   const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
-      style={[
-        styles.scoreButton,
-        rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
+      style={[styles.scoreButton,
+      rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
       ]}
-      onPress={() => renderBall(value)}
+      onPress={() => {
+        setScore(prevScore => prevScore + parseInt(value)); // Update score based on button clicked
+        setBalls(prevBalls => {
+          const newBalls = [...prevBalls];
+          const nextIndex = prevBalls.findIndex(ball => ball === ""); // Find the next empty ball
+          if (nextIndex !== -1) {
+            newBalls[nextIndex] = value; // Update the next empty ball with the score
+          }
+          return newBalls;
+        });
+      }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
     </TouchableOpacity>
-  )
+  );
 
   const handleDispute = () => {
-    console.log("Dispute raised")
-  }
+    console.log("Dispute raised");
+  };
+
+  const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
+    setIconPosition(event.nativeEvent.translationX);
+    // Log message when the right circle reaches the end
+    if (event.nativeEvent.translationX >= 100) { // Assuming 100 is the end position
+      console.log("game stopped");
+    }
+  };
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
-      <Text style={styles.MatchDetailsScreenHeader}>MATCH DETAILS</Text>
+      <HeaderComponent title="Match Details" />
+
       <View style={styles.content}>
         <ScrollView style={styles.scrollContent}>
-          {/* Nikhil's Row */}
-          <View style={[styles.playerRow, styles.inactiveRow]}>
-            <Text style={styles.playerName}>Nikhil's</Text>
-            <View style={styles.overContainer}>
-              <Text style={styles.overText}>1st{"\n"}Over</Text>
-              {renderBall(6)}
-              {renderBall(4)}
-              {renderBall(2)}
-              {renderBall("•")}
-              {renderBall("•")}
-              {renderBall(4)}
+          {players.map((player) => (
+            <View key={player.id} style={[styles.playerRow, styles.inactiveRow]}>
+              <Text style={styles.playerName}>{player.name}'s</Text>
+              <View style={styles.overContainer}>
+                <Text style={styles.overText}>1st{"\n"}Over</Text>
+                {balls.map((ball, index) => renderBall(ball, ball !== ""))}
+              </View>
+              <View style={styles.disputeBox}>
+                <TouchableOpacity onPress={handleDispute}>
+                  <Text style={styles.disputeText}>Dispute: 3</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.disputeBox}>
-              <TouchableOpacity onPress={handleDispute}>
-                <Text style={styles.disputeText}>Dispute: 3</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Sahil's Row */}
-          <View style={[styles.playerRow, styles.activeRow]}>
-            <Text style={styles.playerName}>Sahil's</Text>
-            <View style={styles.overContainer}>
-              <Text style={styles.overText}>1st{"\n"}Over</Text>
-              {renderBall(6, true)}
-              {renderBall(4, true)}
-              {renderBall(2, true)}
-              {renderBall("•", true)}
-              {renderBall("•", true)}
-            </View>
-            <View style={styles.disputeBox}>
-              <TouchableOpacity onPress={handleDispute}>
-                <Text style={styles.disputeText}>Dispute: 3</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          ))}
 
           {/* Score Entry Section */}
           <View style={styles.scoreEntrySection}>
@@ -84,7 +89,6 @@ export default function MatchDetailsScreen() {
               </View>
             </View>
             <View style={styles.scoreEntryContent}>
-
               {/* Score Buttons */}
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
@@ -127,7 +131,7 @@ export default function MatchDetailsScreen() {
           <View style={styles.scoreSection}>
             <Text style={styles.nextTarget}>Next Target : 60</Text>
             <Text style={styles.mainScore}>
-              <Text style={styles.scoreNumber}>12</Text>
+              <Text style={styles.scoreNumber}>{score}</Text>
               <Text style={styles.scoreSlash}> / </Text>
               <Text style={styles.maxScore}>20</Text>
             </Text>
@@ -163,33 +167,27 @@ export default function MatchDetailsScreen() {
             </View>
 
             <TouchableOpacity style={styles.pauseButton}>
-              <Icon name="pause" size={24} color="#fff" />
+              <Icon name="pausecircleo" size={24} color="#fff" />
               <Text style={styles.pauseButtonText}>Pause</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.slideButton}>
-              <Text style={styles.slideButtonText}>Slide to Stop</Text>
-              <Icon name="chevron-right" size={24} color="#00A3B4" />
-            </TouchableOpacity>
+            <PanGestureHandler onGestureEvent={onGestureEvent}>
+              <TouchableOpacity style={styles.stopGameButton}>
+                <Icon style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]} name="rightcircle" color="#FFFFFF" size={45} />
+                <Text style={styles.buttonText}>Slide to Stop</Text>
+              </TouchableOpacity>
+            </PanGestureHandler>
           </View>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   MatchDetailsScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  MatchDetailsScreenHeader: {
-    backgroundColor: "#00A3B4",
-    color: "#fff",
-    padding: 16,
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   content: {
     flex: 1,
@@ -264,6 +262,7 @@ const styles = StyleSheet.create({
   },
   scoreEntrySection: {
     paddingHorizontal: 15,
+    gap: 10,
   },
   autoManualSwitch: {
     flexDirection: "row",
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
   },
   switchContainer: {
     flexDirection: "row",
+    gap: 10,
   },
   scoreButtonRow: {
     flexDirection: "row",
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   scoreButtonText: {
     color: "#fff",
     fontSize: 33,
-    fontWeight: 500,
+    fontWeight: "500",
   },
   actionButtonsContainer: {
     justifyContent: "space-between",
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   scorePanel: {
-    width: "25%",
+    width: "40%",
     backgroundColor: "#f5f5f5",
     padding: 20,
   },
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   scoreNumber: {
     fontSize: 40,
     color: "#00A3B4",
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   scoreSlash: {
     fontSize: 40,
@@ -400,25 +400,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    padding: 12,
-    borderRadius: 8,
+    padding: 16,
+    borderRadius: 50,
     marginBottom: 10,
   },
   pauseButtonText: {
     color: "#fff",
     marginLeft: 8,
-    fontSize: 16,
-  },
-  slideButton: {
-    backgroundColor: "#E0F7FA",
+    fontSize: 29,
+    fontWeight: "500",
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "center",
-    padding: 12,
-    borderRadius: 8,
+    textAlign: "center",
   },
-  slideButtonText: {
-    color: "#00A3B4",
-    marginRight: 8,
+
+  stopGameButton: {
+    backgroundColor: '#00A3B4',
+    padding: 16,
+    borderRadius: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  stopGameButtonSlider: {
+    position: 'absolute',
+    left: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: '700',
   },
 });

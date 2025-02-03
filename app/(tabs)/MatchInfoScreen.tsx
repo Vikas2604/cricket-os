@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/AntDesign';
+import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
 
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
+  navigation: any; // Add navigation prop
 }
 
-export default function MatchInfo({ setActiveTab }: MatchInfoProps) {
+export default function MatchInfo({ setActiveTab, navigation }: MatchInfoProps) {
   const [category, setCategory] = useState('adults');
   const [difficulty, setDifficulty] = useState('Beginner');
-  const [overs, setOvers] = useState(3);
+  const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
   const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
-  const [target, setTarget] = useState(20);
+  const [target, setTarget] = useState(0);
 
   const bowlers = category === 'kids'
     ? [
@@ -29,8 +31,8 @@ export default function MatchInfo({ setActiveTab }: MatchInfoProps) {
 
   return (
     <View style={styles.matchInfoScreenContainer}>
+      <HeaderComponent title="Match Info" /> {/* Adding HeaderComponent */}
       <View>
-        <Text style={styles.title}>MATCH INFO</Text>
         <View style={styles.row}>
           <View style={styles.column}>
             <View style={styles.section}>
@@ -136,10 +138,9 @@ export default function MatchInfo({ setActiveTab }: MatchInfoProps) {
                     style={styles.bowlerCard}
                     onPress={() => setSelectedBowler(bowler.id)}>
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
-                    <Text style={[
-                      styles.bowlerName,
-                      selectedBowler === bowler.id && styles.bowlerNameSelected
-                    ]}>{bowler.name}</Text>
+                    <Text style={[styles.bowlerName, selectedBowler === bowler.id && styles.bowlerNameSelected]}>
+                      {bowler.name}
+                    </Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -152,8 +153,8 @@ export default function MatchInfo({ setActiveTab }: MatchInfoProps) {
                 <Icon style={styles.startGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.startGameButton} onPress={() => setActiveTab("3")}>
-                <Icon style={styles.startGameButtonSlider} name="rightcircleo" color="#FFFFFF" size={45} />
+              <TouchableOpacity style={styles.startGameButton} onPress={() => navigation.navigate('MatchDetailsScreen')}>
+                <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Start Game</Text>
               </TouchableOpacity>
             </View>
@@ -169,15 +170,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 700,
-    color: '#fff',
-    backgroundColor: '#00A3B4',
-    padding: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -185,6 +177,7 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     marginHorizontal: 8,
+    marginTop: 20,
   },
   section: {
     backgroundColor: '#fff',
@@ -193,14 +186,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: 700,
+    fontWeight: '700',
     marginBottom: 15,
     color: '#2D3748',
   },
   radioGroup: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 200,
+    justifyContent: 'flex-start',
+    gap: 5,
   },
   radio: {
     paddingVertical: 8,
@@ -222,11 +215,11 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     overflow: 'hidden',
-    width: 355,
+    width: 200,
   },
   picker: {
     height: 50,
-    maxWidth: 355,
+    maxWidth: 200,
     borderColor: '#00A3B4',
     borderWidth: 1,
     borderRadius: 8,
@@ -234,7 +227,7 @@ const styles = StyleSheet.create({
   oversSelector: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     gap: 20,
   },
   oversButton: {
@@ -251,14 +244,14 @@ const styles = StyleSheet.create({
   },
   oversCount: {
     fontSize: 20,
-    fontWeight: 700,
-    minWidth: 30,
+    fontWeight: '700',
+    minWidth: 20,
     textAlign: 'center',
   },
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     gap: 15,
   },
   toggleText: {
@@ -288,20 +281,20 @@ const styles = StyleSheet.create({
   scoreValue: {
     textAlign: 'center',
     fontSize: 55,
-    fontWeight: 700,
+    fontWeight: '700',
     color: '#2D3748',
   },
   targetInput: {
     textAlign: 'center',
     fontSize: 55,
-    fontWeight: 700,
+    fontWeight: '700',
     color: '#2D3748',
     height: 150,
   },
   bowlersGrid: {
     flexDirection: 'row',
-    alignItems: 'center',
     width: 150,
+    gap: 10,
   },
   bowlerCard: {
     width: '80%',
@@ -311,14 +304,16 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    borderWidth: 1,
+    borderWidth: 5,
     borderColor: '#00A2B4',
   },
   bowlerName: {
-    fontSize: 24,
+    fontSize: 26,
+    fontWeight: '500',
     color: '#FFFFFF',
     backgroundColor: '#00A2B4',
-    padding: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderRadius: 10,
   },
   bowlerNameSelected: {
@@ -326,8 +321,12 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'flex-end',
     width: 398,
     gap: 10,
+    marginTop: 100,
+    marginLeft: 100,
   },
   goBackButton: {
     backgroundColor: '#00A3B4',
@@ -349,6 +348,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 32,
-    fontWeight: 700,
+    fontWeight: '700',
   },
 });

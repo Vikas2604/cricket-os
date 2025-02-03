@@ -31,30 +31,32 @@ export default SideBarComponent;
 const styles = StyleSheet.create({
   sidebar: {
     width: '10%',
+    height: 742,
     backgroundColor: '#00A3B4',
   },
   sideTab: {
-    height: 120,
+    height: 150,
+    marginTop: 62,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#008c9e',
+    borderBottomColor: '#00A3B4',
   },
   sideTabActive: {
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   sideTabNumber: {
     fontSize: 24,
+    fontWeight: '600',
     color: '#fff',
-    marginBottom: 8,
   },
   sideTabText: {
-    fontSize: 12,
+    fontSize: 24,
+    fontWeight: '600',
     color: '#fff',
     textAlign: 'center',
-    width: 60,
   },
   sideTabTextActive: {
-    color: '#00A3B4',
+    // color: '#00A3B4',
   },
 });

@@ -1,16 +1,25 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
+import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
 
 interface PlayerInfoScreenProps {
   setActiveTab: (tab: string) => void;
+  players: Array<{ id: number; name: string; battingStyle: string }>;
+  setPlayers: (players: Array<{ id: number; name: string; battingStyle: string }>) => void;
 }
 
-const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab }) => {
-  const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '' }]);
+const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, players, setPlayers }) => {
+  const generatePlayerId = () => {
+    let id: number; // Explicitly declare id as a number
+    do {
+      id = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit number
+    } while (id === 1 || players.some(player => player.id === id)); // Ensure uniqueness and that id is not 1
+    return id;
+  };
 
   const addPlayer = () => {
-    setPlayers([...players, { id: Date.now(), name: '', battingStyle: '' }]);
+    setPlayers([...players, { id: generatePlayerId(), name: '', battingStyle: '' }]);
   };
 
   const removePlayer = (id: number) => {
@@ -25,9 +34,19 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab }) => 
     setPlayers(players.map(player => (player.id === id ? { ...player, battingStyle: style } : player)));
   };
 
+  useEffect(() => {
+    // Ensure that the player IDs are not 1 when the component mounts
+    setPlayers(players.map(player => {
+      if (player.id === 1) {
+        return { ...player, id: generatePlayerId() }; // Regenerate ID if it's 1
+      }
+      return player;
+    }));
+  }, []);
+
   return (
     <View style={styles.playerInfoContainer}>
-      <Text style={styles.playerInfoContainerHeader}>PLAYER INFO</Text>
+      <HeaderComponent title="Player Info" /> {/* Adding HeaderComponent */}
 
       <View style={styles.mainContainer}>
         {/* Left section for player details */}
@@ -59,15 +78,19 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab }) => 
                   <Text style={styles.battingButtonText}>R</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={() => removePlayer(player.id)}>
-                <Icon name="minuscircle" color="#F67676" size={30} />
-              </TouchableOpacity>
+              <View style={styles.playerIdContent} >
+                <Text>{player.id}</Text> {/* Display Player ID */}
+                <TouchableOpacity onPress={() => removePlayer(player.id)}>
+                  <Icon name="minuscircle" color="#F67676" size={30} />
+                </TouchableOpacity>
+              </View>
             </View>
           ))}
           <TouchableOpacity onPress={addPlayer} style={styles.addButtonContainer}>
             <Icon name="pluscircleo" color="#00A2B4" size={40} />
           </TouchableOpacity>
         </View>
+
         <View style={styles.verticalLine}></View>
         {/* Right section for number of players and buttons */}
         <View style={styles.rightContainer}>
@@ -89,7 +112,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab }) => 
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </View >
   );
 };
 
@@ -99,14 +122,6 @@ const styles = StyleSheet.create({
   playerInfoContainer: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  playerInfoContainerHeader: {
-    backgroundColor: "#00A3B4",
-    color: "#fff",
-    padding: 16,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   mainContainer: {
     flexDirection: 'row',
@@ -120,36 +135,40 @@ const styles = StyleSheet.create({
   rightContainer: {
     alignItems: 'center',
     marginLeft: 'auto',
-    paddingRight: 20,
     paddingTop: 100,
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '70%',
+    width: '80%',
   },
   playerInfoHeadersText: {
-    fontWeight: '600',
-    fontSize: 18,
+    fontWeight: 700,
+    fontSize: 24,
+    marginTop: 30,
+    marginLeft: 10,
   },
   playerInfoHeaders: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '70%',
-    paddingVertical: 10,
+    width: '80%',
+    marginTop: 20,
+    marginLeft: 10,
   },
   playerInfoInput: {
     height: 40,
-    width: 110,
+    width: 150,
     borderWidth: 1,
     padding: 5,
     borderRadius: 5,
   },
   battingStyleContainer: {
     flexDirection: 'row',
+    display: 'flex',
     justifyContent: 'center',
+    // marginLeft: ,
   },
   battingButton: {
     padding: 10,
@@ -167,10 +186,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  playerIdContent: {
+    fontSize: 24,
+    fontWeight: 400,
+    flexDirection: 'row',
+    gap: 20,
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   addButtonContainer: {
     alignSelf: 'flex-start',
     marginTop: 20,
-    marginLeft: 40,
+    marginLeft: 50,
   },
   numberOfPlayersInfo: {
     backgroundColor: '#00A2B4',
@@ -178,20 +206,22 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     fontSize: 23,
     paddingVertical: 16,
-    paddingHorizontal: 55,
+    paddingHorizontal: 50,
     borderTopLeftRadius: 14,
     borderTopRightRadius: 14,
+
   },
   numberOfPlayersInfoContainer: {
     borderWidth: 1,
     borderRadius: 14,
     marginBottom: 30,
+    marginRight: 40,
   },
   numberOfPlayers: {
     fontWeight: 700,
     fontSize: 73,
     textAlign: 'center',
-    marginBottom: 30,
+    paddingBottom: 30,
   },
   continueBtn: {
     flexDirection: 'row',
@@ -202,6 +232,7 @@ const styles = StyleSheet.create({
     borderRadius: 96,
     justifyContent: 'center',
     gap: 10,
+    marginRight: 40,
   },
   continueBtnText: {
     color: '#FFFFFF',
@@ -211,7 +242,7 @@ const styles = StyleSheet.create({
   backBtn: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#0000001A',
+    backgroundColor: '#000000',
     alignItems: 'center',
     height: 64,
     width: 300,
@@ -220,6 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 10,
     opacity: 0.5,
+    marginRight: 40,
   },
   backBtnText: {
     color: '#FFFFFF',
@@ -228,8 +260,8 @@ const styles = StyleSheet.create({
   },
   verticalLine: {
     borderLeftWidth: 3,
-    height: 500,
+    height: 600,
     marginTop: 20,
-    paddingRight: 40,
+    paddingRight: 20,
   }
 });
