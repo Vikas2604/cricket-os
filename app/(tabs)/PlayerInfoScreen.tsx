@@ -50,6 +50,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
 
       <View style={styles.mainContainer}>
         {/* Left section for player details */}
+
         <View style={styles.playerListContainer}>
           <View style={styles.playerInfoHeadersTitle}>
             <Text style={styles.playerInfoHeadersText}>Enter Your Name</Text>
@@ -131,6 +132,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     paddingLeft: 20,
+    overflowY: 'scroll',
+
   },
   rightContainer: {
     alignItems: 'center',
@@ -168,7 +171,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     display: 'flex',
     justifyContent: 'center',
-    // marginLeft: ,
   },
   battingButton: {
     padding: 10,
@@ -198,7 +200,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     alignSelf: 'flex-start',
     marginTop: 20,
-    marginLeft: 50,
+    marginLeft: 70,
   },
   numberOfPlayersInfo: {
     backgroundColor: '#00A2B4',
@@ -209,7 +211,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     borderTopLeftRadius: 14,
     borderTopRightRadius: 14,
-
   },
   numberOfPlayersInfoContainer: {
     borderWidth: 1,

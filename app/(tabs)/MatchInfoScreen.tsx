@@ -7,15 +7,16 @@ import HeaderComponent from '../../components/HeaderComponent'; // Importing Hea
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
   navigation: any; // Add navigation prop
+  setTarget: (target: number) => void; // Added setTarget prop
 }
 
-export default function MatchInfo({ setActiveTab, navigation }: MatchInfoProps) {
+export default function MatchInfo({ setActiveTab, navigation, setTarget }: MatchInfoProps) {
   const [category, setCategory] = useState('adults');
   const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
   const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
-  const [target, setTarget] = useState(0);
+  const [target, setTargetState] = useState(0);
 
   const bowlers = category === 'kids'
     ? [
@@ -114,7 +115,11 @@ export default function MatchInfo({ setActiveTab, navigation }: MatchInfoProps) 
                   <TextInput
                     style={styles.targetInput}
                     value={target.toString()}
-                    onChangeText={(value) => setTarget(Number(value))}
+                    onChangeText={(value) => {
+                      const newTarget = Number(value);
+                      setTarget(newTarget);
+                      setTargetState(newTarget);
+                    }}
                     keyboardType="numeric"
                   />
                 </View>

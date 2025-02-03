@@ -9,6 +9,7 @@ import SideBarComponent from '../../components/SideBarComponent';
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState("1"); // Default to "MATCH DETAILS"
   const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '' }]); // Lifted state
+  const [target, setTarget] = useState(0); // Added target state
 
   const handleTabSelect = (tab: string) => {
     setActiveTab(tab);
@@ -21,8 +22,8 @@ const App: React.FC = () => {
         <SideBarComponent activeTab={activeTab} onTabSelect={handleTabSelect} />
         <View style={styles.tabContent}>
           {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} players={players} setPlayers={setPlayers} />}
-          {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} />}
-          {activeTab === "3" && <MatchDetailsScreen players={players} />} {/* Pass players here */}
+          {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} />} {/* Pass setTarget to MatchInfoScreen */}
+          {activeTab === "3" && <MatchDetailsScreen players={players} target={target} />} {/* Pass players and target here */}
         </View>
       </View>
     </React.Fragment>

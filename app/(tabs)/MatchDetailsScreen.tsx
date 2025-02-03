@@ -6,9 +6,10 @@ import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-g
 
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string }>;
+  target: number; // Added target prop
 }
 
-export default function MatchDetailsScreen({ players }: MatchDetailsScreenProps) {
+export default function MatchDetailsScreen({ players, target }: MatchDetailsScreenProps) {
   const [iconPosition, setIconPosition] = useState(0); // State for icon position
   const [isAutoMode, setIsAutoMode] = useState(true);
   const [score, setScore] = useState(0); // State for current score
@@ -129,11 +130,11 @@ export default function MatchDetailsScreen({ players }: MatchDetailsScreenProps)
         {/* Right Side Score Panel */}
         <View style={styles.scorePanel}>
           <View style={styles.scoreSection}>
-            <Text style={styles.nextTarget}>Next Target : 60</Text>
+            <Text style={styles.nextTarget}>Next Target : {target}</Text>
             <Text style={styles.mainScore}>
               <Text style={styles.scoreNumber}>{score}</Text>
               <Text style={styles.scoreSlash}> / </Text>
-              <Text style={styles.maxScore}>20</Text>
+              <Text style={styles.maxScore}>{target}</Text> {/* Updated to use target */}
             </Text>
 
             <View style={styles.statsGrid}>
