@@ -45,20 +45,20 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       <Text style={styles.scoreButtonText}>{value}</Text>
     </TouchableOpacity>
   );
+
   const handleDispute = (index: number) => {
-    console.log(`Dispute before: ${disputes[index]}`); // Log current dispute count
+    console.log(`Before Dispute count: ${disputes[index]}`); // Log current dispute count
     if (disputes[index] > 0) {
       const newDisputes = [...disputes];
       newDisputes[index] -= 1;
       setDisputes(newDisputes);
-      console.log(`Dispute after: ${newDisputes[index]}`); // Log updated dispute count
+      console.log(`After Dispute count: ${newDisputes[index]}`); // Log updated dispute count
       if (newDisputes[index] == 0) {
         console.log("Alert condition met");
         Alert.alert("You're out of disputes");
       }
     }
   };
-
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
     setIconPosition(event.nativeEvent.translationX);
