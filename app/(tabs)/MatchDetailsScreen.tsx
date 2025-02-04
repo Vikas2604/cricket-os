@@ -32,11 +32,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0)); // Track overs for each player
   const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0)); // Track balls faced by each player
   const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]); // Track completed overs
-
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
   const [disputes, setDisputes] = useState(Array(players.length).fill(3))
   const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
+  const [outPlayers, setOutPlayers] = useState<Array<number>>([]); // Track players who are out
 
   useEffect(() => {
     // Set Player 1 as the player on strike when the match starts
@@ -128,6 +128,8 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const handleActionButtonPress = (action: string) => {
     switch (action) {
       case "Out":
+        console.log(`${players[currentPlayerIndex].name} got out`); // Print player out message
+        setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id]); // Add player to out list
         setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
         setScore(0); // Reset score for the next player
         setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
@@ -182,11 +184,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                     <Text style={styles.disputeText}>Dispute: {disputes[index]}</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-            ))}
-            {completedOvers.map((over, index) => (
-              <View key={index} style={styles.playerRow}>
-                <Text style={styles.playerName}>{over.player}'s {over.balls.length}{getOrdinalSuffix(over.balls.length)} Over: {over.balls.join(", ")}</Text>
               </View>
             ))}
           </View>
@@ -249,7 +246,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Extras</Text>
-                <Text style={styles.statValue}>{extras}</Text> {/* Updated to display extras */}
+                <Text style={styles.statValue}>{extras}</Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Balls Left</Text>
