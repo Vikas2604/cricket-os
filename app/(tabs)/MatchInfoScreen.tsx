@@ -186,7 +186,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
                     {selectedBowlers.includes(bowler.id) && (
                       <View style={styles.checkCircleBackground}>
-                        <Icon name="checkcircleo" size={24} color="green" />
+                        <Icon name="checkcircleo" size={35} color="green" />
                       </View>
                     )}
                     <Text style={[styles.bowlerName, selectedBowlers.includes(bowler.id) && styles.bowlerNameSelected]}>
@@ -212,7 +212,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
           </View>
         </View>
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -227,7 +227,6 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    marginHorizontal: 8,
     marginTop: 20,
   },
   section: {
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#00A3B4',
-    minWidth: 100,
+    width: 100,
     alignItems: 'center',
   },
   radioSelected: {
@@ -270,7 +269,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    maxWidth: 200,
+    width: 150,
     borderColor: '#00A3B4',
     borderWidth: 1,
     borderRadius: 8,
@@ -295,7 +294,7 @@ const styles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   scoreBox: {
     borderWidth: 1,
@@ -319,6 +318,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#2D3748',
   },
+  oversCount: {
+    fontSize: 22,
+    fontWeight: 400,
+    borderWidth: 1,
+    width: 100,
+    height: 70,
+    alignContent: 'center',
+    textAlign: 'center',
+  },
   targetInput: {
     textAlign: 'center',
     fontSize: 55,
@@ -339,7 +347,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    borderWidth: 5,
+    borderWidth: 4,
     borderColor: '#00A2B4',
   },
   checkCircleBackground: {
@@ -404,16 +412,8 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   toggleText: {
-    fontSize: 16,
-    color: '#2D3748',
-  },
-  oversCount: {
     fontSize: 22,
-    fontWeight: 400,
-    borderWidth: 1,
-    width: 100,
-    height: 70,
-    alignContent: 'center',
-    textAlign: 'center',
+    color: '#000000',
   },
+
 });

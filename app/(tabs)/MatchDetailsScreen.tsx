@@ -15,6 +15,9 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [iconPosition, setIconPosition] = useState(0)
   const [isAutoMode, setIsAutoMode] = useState(true)
   const [score, setScore] = useState(0)
+  const [extras, setExtras] = useState(0); // New state variable for extras
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
+
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
   const [disputes, setDisputes] = useState(Array(players.length).fill(3))
@@ -49,8 +52,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     if (disputes[index] > 0) {
       const newDisputes = [...disputes]
       newDisputes[index] -= 1
+      console.log("Current Disputes: ", newDisputes);
+
       setDisputes(newDisputes)
-      if (newDisputes[index] == 0) {
+      if (newDisputes[index] === 0) {
+        console.log("You're out of disputes");
         Alert.alert("You're out of disputes")
       }
     }
@@ -64,19 +70,24 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   }
 
   const totalBalls = overs * 6
-  const ballsPlayed = balls.filter((ball) => ball !== "").length
+  const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
-  const oversRemaining = overs - ballsPlayed / 6
+  const oversRemaining = overs * 6 - ballsPlayed
   const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A"
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
       case "Out":
         setPlayerOnStrike(null); // End player's turn
+        setScore(0); // Reset score for the next player
+        setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+
         break;
       case "No Ball":
       case "Wide":
         setScore((prevScore) => prevScore + 1); // Increment score by 1
+        setExtras((prevExtras) => prevExtras + 1); // Increment extras
+        // Do not increment ballsPlayed for No Ball and Wide
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
           const nextIndex = prevBalls.findIndex((ball) => ball === "")
@@ -179,7 +190,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Extras</Text>
-                <Text style={styles.statValue}>0</Text>
+                <Text style={styles.statValue}>{extras}</Text> {/* Updated to display extras */}
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Balls Left</Text>
