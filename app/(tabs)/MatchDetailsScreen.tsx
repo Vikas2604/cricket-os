@@ -11,6 +11,12 @@ interface MatchDetailsScreenProps {
   overs: number
 }
 
+interface CompletedOver {
+  player: string;
+  score: number;
+  balls: string[];
+}
+
 const getOrdinalSuffix = (number: number) => {
   const suffixes = ["th", "st", "nd", "rd"];
   const value = number % 100;
@@ -25,6 +31,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
   const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0)); // Track overs for each player
   const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0)); // Track balls faced by each player
+  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]); // Track completed overs
 
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
@@ -69,7 +76,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
 
         // Reset after every over
         if (ballsFaced[currentPlayerIndex] + 1 >= 6) {
-          setBalls(["", "", "", "", "", ""]); // Reset balls
+          setCompletedOvers((prevCompleted) => [
+            ...prevCompleted,
+            { player: players[currentPlayerIndex].name, score: score, balls: [...balls] }
+          ]);
+          setBalls(["", "", "", "", "", ""]); // Reset balls for the next player
           setBallsFaced((prevBallsFaced) => {
             const newBallsFaced = [...prevBallsFaced];
             newBallsFaced[currentPlayerIndex] = 0; // Reset balls faced for the current player
@@ -173,6 +184,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 </View>
               </View>
             ))}
+            {completedOvers.map((over, index) => (
+              <View key={index} style={styles.playerRow}>
+                <Text style={styles.playerName}>{over.player}'s {over.balls.length}{getOrdinalSuffix(over.balls.length)} Over: {over.balls.join(", ")}</Text>
+              </View>
+            ))}
           </View>
           <View style={styles.scoreEntrySection}>
             <View style={styles.autoManualSwitch}>
@@ -187,17 +203,17 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
                   {renderScoreButton("2", 0)}
-                  {renderScoreButton("2", 0)}
-                  {renderScoreButton("2", 0)}
+                  {renderScoreButton("2", 1)}
+                  {renderScoreButton("2", 2)}
                 </View>
                 <View style={styles.scoreButtonRow}>
+                  {renderScoreButton("4", 0)}
                   {renderScoreButton("4", 1)}
-                  {renderScoreButton("4", 1)}
-                  {renderScoreButton("4", 1)}
+                  {renderScoreButton("4", 2)}
                 </View>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("6", 2)}
-                  {renderScoreButton("6", 2)}
+                  {renderScoreButton("6", 0)}
+                  {renderScoreButton("6", 1)}
                   {renderScoreButton("6", 2)}
                 </View>
               </View>
@@ -300,7 +316,6 @@ const styles = StyleSheet.create({
     flex: 1,
     overflowY: "auto",
     padding: 5,
-
   },
   playerRow: {
     marginBottom: 20,
