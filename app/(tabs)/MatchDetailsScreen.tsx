@@ -1,90 +1,96 @@
-import { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Alert } from "react-native";
-import Icon from 'react-native-vector-icons/AntDesign';
-import HeaderComponent from '../../components/HeaderComponent'; // Importing HeaderComponent
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'; // Importing PanGestureHandler
-import MatchInfoScreen from './MatchInfoScreen'; // Import MatchInfoScreen to access overs
+import { useState } from "react"
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
+import Icon from "react-native-vector-icons/AntDesign"
+import HeaderComponent from "../../components/HeaderComponent" // Importing HeaderComponent
+import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler" // Importing PanGestureHandler
+import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string }>;
-  target: number; // Added target prop
-  overs: number; // Added overs prop
+  players: Array<{ id: number; name: string; battingStyle: string }>
+  target: number // Added target prop
+  overs: number // Added overs prop
 }
 
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
-  const [iconPosition, setIconPosition] = useState(0); // State for icon position
-  const [isAutoMode, setIsAutoMode] = useState(true);
-  const [score, setScore] = useState(0); // State for current score
-  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]); // State for ball values
-  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null); // State for player on strike
-  const [disputes, setDisputes] = useState(Array(players.length).fill(3)); // State for disputes
+  const [iconPosition, setIconPosition] = useState(0) // State for icon position
+  const [isAutoMode, setIsAutoMode] = useState(true)
+  const [score, setScore] = useState(0) // State for current score
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]) // State for ball values
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null) // State for player on strike
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3)) // State for disputes
+  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
       <Text style={[styles.ballText, active && styles.activeBallText]}>{value}</Text>
     </View>
-  );
+  )
 
   const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
-      style={[styles.scoreButton,
-      rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
+      style={[
+        styles.scoreButton,
+        rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
       ]}
       onPress={() => {
-        setScore(prevScore => prevScore + parseInt(value)); // Update score based on button clicked
-        setBalls(prevBalls => {
-          const newBalls = [...prevBalls];
-          const nextIndex = prevBalls.findIndex(ball => ball === ""); // Find the next empty ball
+        setScore((prevScore) => prevScore + Number.parseInt(value)) // Update score based on button clicked
+        setBalls((prevBalls) => {
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "") // Find the next empty ball
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = value; // Update the next empty ball with the score
+            newBalls[nextIndex] = value // Update the next empty ball with the score
           }
-          return newBalls;
-        });
+          return newBalls
+        })
       }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
     </TouchableOpacity>
-  );
+  )
 
   const handleDispute = (index: number) => {
-    console.log(`Before Dispute count: ${disputes[index]}`); // Log current dispute count
+    console.log(`Before Dispute count: ${disputes[index]}`) // Log current dispute count
     if (disputes[index] > 0) {
-      const newDisputes = [...disputes];
-      newDisputes[index] -= 1;
-      setDisputes(newDisputes);
-      console.log(`After Dispute count: ${newDisputes[index]}`); // Log updated dispute count
+      const newDisputes = [...disputes]
+      newDisputes[index] -= 1
+      setDisputes(newDisputes)
+      console.log(`After Dispute count: ${newDisputes[index]}`) // Log updated dispute count
       if (newDisputes[index] == 0) {
-        console.log("Alert condition met");
-        Alert.alert("You're out of disputes");
+        console.log("Alert condition met")
+        Alert.alert("You're out of disputes")
       }
     }
-  };
+  }
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
-    setIconPosition(event.nativeEvent.translationX);
+    setIconPosition(event.nativeEvent.translationX)
     // Log message when the right circle reaches the end
-    if (event.nativeEvent.translationX >= 100) { // Assuming 100 is the end position
-      console.log("game stopped");
+    if (event.nativeEvent.translationX >= 100) {
+      // Assuming 100 is the end position
+      console.log("game stopped")
     }
-  };
+  }
 
-  const totalBalls = overs * 6; // Total balls in the match
-  const ballsPlayed = balls.filter(ball => ball !== "").length; // Count of balls played
-  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"; // Calculate strike rate
+  const totalBalls = overs * 6 // Total balls in the match
+  const ballsPlayed = balls.filter((ball) => ball !== "").length // Count of balls played
+  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00" // Calculate strike rate
 
   // Calculate required run rate
-  const oversRemaining = overs - (ballsPlayed / 6);
-  const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A";
+  const oversRemaining = overs - ballsPlayed / 6
+  const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A"
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
       <HeaderComponent title="Match Details" />
 
       <View style={styles.content}>
-        <View >
+        <View>
           <View style={styles.scrollContent}>
             {players.map((player, index) => (
-              <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}>
+              <View
+                key={player.id}
+                style={[styles.playerRow, playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}
+              >
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>1st{"\n"}Over</Text>
@@ -185,9 +191,8 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           </View>
 
           <View style={styles.controlsSection}>
-
             <View style={styles.cameraControls}>
-              <TouchableOpacity style={styles.cameraButton}>
+              <TouchableOpacity style={styles.cameraButton} onPress={() => setIsCameraControlVisible(true)}>
                 <Icon name="left" size={24} color="#fff" />
               </TouchableOpacity>
               <View style={styles.cameraControlValues}>
@@ -213,15 +218,21 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
 
             <PanGestureHandler onGestureEvent={onGestureEvent}>
               <TouchableOpacity style={styles.stopGameButton}>
-                <Icon style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]} name="rightcircle" color="#FFFFFF" size={45} />
+                <Icon
+                  style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]}
+                  name="rightcircle"
+                  color="#FFFFFF"
+                  size={45}
+                />
                 <Text style={styles.buttonText}>Slide to Stop</Text>
               </TouchableOpacity>
             </PanGestureHandler>
           </View>
         </View>
+        <CameraControlModal isVisible={isCameraControlVisible} onClose={() => setIsCameraControlVisible(false)} />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -480,19 +491,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   stopGameButton: {
-    backgroundColor: '#00A3B4',
+    backgroundColor: "#00A3B4",
     padding: 16,
     borderRadius: 50,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
   },
   stopGameButtonSlider: {
-    position: 'absolute',
+    position: "absolute",
     left: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: "700",
   },
-});
+})
+
