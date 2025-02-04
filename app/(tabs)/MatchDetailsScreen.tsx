@@ -76,6 +76,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         break;
       case "No Ball":
       case "Wide":
+        setScore((prevScore) => prevScore + 1); // Increment score by 1
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
           const nextIndex = prevBalls.findIndex((ball) => ball === "")
@@ -149,18 +150,18 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <View style={styles.actionButtonsContainer}>
                 <View style={styles.actionButtonRow}>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Out")}>
-                    <Text style={[styles.actionButtonText, { color: 'red' }]}>W</Text>
+                    <Text style={styles.actionButtonText}>Out</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
-                    <Text style={styles.actionButtonText}>NB</Text>
+                    <Text style={styles.actionButtonText}>No Ball</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.actionButtonRow}>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Runs")}>
-                    <Text style={styles.actionButtonText}>•</Text>
+                    <Text style={styles.actionButtonText}>Dot</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Wide")}>
-                    <Text style={styles.actionButtonText}>+1</Text>
+                    <Text style={styles.actionButtonText}>Wide</Text>
                   </TouchableOpacity>
                 </View>
               </View>

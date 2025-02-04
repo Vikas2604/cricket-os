@@ -18,7 +18,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
   const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
+  const [selectedBowlers, setSelectedBowlers] = useState<number[]>([]); // Changed to array
   const [target, setTargetState] = useState(0);
 
   // Load state from local storage
@@ -28,14 +28,14 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
       const savedDifficulty = await AsyncStorage.getItem('difficulty');
       const savedOvers = await AsyncStorage.getItem('overs');
       const savedIsAutoSelection = await AsyncStorage.getItem('isAutoSelection');
-      const savedSelectedBowler = await AsyncStorage.getItem('selectedBowler');
+      const savedSelectedBowlers = await AsyncStorage.getItem('selectedBowlers'); // Updated key
       const savedTarget = await AsyncStorage.getItem('target');
 
       if (savedCategory) setCategory(savedCategory);
       if (savedDifficulty) setDifficulty(savedDifficulty);
       if (savedOvers) setOvers(Number(savedOvers));
       if (savedIsAutoSelection) setIsAutoSelection(savedIsAutoSelection === 'true');
-      if (savedSelectedBowler) setSelectedBowler(Number(savedSelectedBowler));
+      if (savedSelectedBowlers) setSelectedBowlers(JSON.parse(savedSelectedBowlers)); // Parse array
       if (savedTarget) setTargetState(Number(savedTarget));
     };
 
@@ -48,9 +48,9 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
     AsyncStorage.setItem('difficulty', difficulty);
     AsyncStorage.setItem('overs', overs.toString());
     AsyncStorage.setItem('isAutoSelection', JSON.stringify(isAutoSelection));
-    AsyncStorage.setItem('selectedBowler', selectedBowler ? selectedBowler.toString() : '');
+    AsyncStorage.setItem('selectedBowlers', JSON.stringify(selectedBowlers)); // Save array
     AsyncStorage.setItem('target', target.toString());
-  }, [category, difficulty, overs, isAutoSelection, selectedBowler, target]);
+  }, [category, difficulty, overs, isAutoSelection, selectedBowlers, target]);
 
   const bowlers = category === 'kids'
     ? [
@@ -177,11 +177,19 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                     key={bowler.id}
                     style={styles.bowlerCard}
                     onPress={() => {
-                      setSelectedBowler(bowler.id);
-                      setPlayerOnStrike(bowler.id);
+                      setSelectedBowlers((prev) =>
+                        prev.includes(bowler.id)
+                          ? prev.filter(id => id !== bowler.id)
+                          : [...prev, bowler.id]
+                      );
                     }}>
                     <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
-                    <Text style={[styles.bowlerName, selectedBowler === bowler.id && styles.bowlerNameSelected]}>
+                    {selectedBowlers.includes(bowler.id) && (
+                      <View style={styles.checkCircleBackground}>
+                        <Icon name="checkcircleo" size={24} color="green" />
+                      </View>
+                    )}
+                    <Text style={[styles.bowlerName, selectedBowlers.includes(bowler.id) && styles.bowlerNameSelected]}>
                       {bowler.name}
                     </Text>
                   </TouchableOpacity>
@@ -333,6 +341,18 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 5,
     borderColor: '#00A2B4',
+  },
+  checkCircleBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 35,
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Opaque background
+    borderRadius: 30,
   },
   bowlerName: {
     fontSize: 26,
