@@ -1,23 +1,23 @@
 import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
-import HeaderComponent from "../../components/HeaderComponent" // Importing HeaderComponent
-import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler" // Importing PanGestureHandler
+import HeaderComponent from "../../components/HeaderComponent"
+import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
 import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string }>
-  target: number // Added target prop
-  overs: number // Added overs prop
+  target: number
+  overs: number
 }
 
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
-  const [iconPosition, setIconPosition] = useState(0) // State for icon position
+  const [iconPosition, setIconPosition] = useState(0)
   const [isAutoMode, setIsAutoMode] = useState(true)
-  const [score, setScore] = useState(0) // State for current score
-  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]) // State for ball values
-  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null) // State for player on strike
-  const [disputes, setDisputes] = useState(Array(players.length).fill(3)) // State for disputes
+  const [score, setScore] = useState(0)
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3))
   const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
 
   const renderBall = (value: string | number, active = false) => (
@@ -28,17 +28,14 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
 
   const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
-      style={[
-        styles.scoreButton,
-        rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
-      ]}
+      style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
       onPress={() => {
-        setScore((prevScore) => prevScore + Number.parseInt(value)) // Update score based on button clicked
+        setScore((prevScore) => prevScore + Number.parseInt(value))
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
-          const nextIndex = prevBalls.findIndex((ball) => ball === "") // Find the next empty ball
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = value // Update the next empty ball with the score
+            newBalls[nextIndex] = value
           }
           return newBalls
         })
@@ -49,14 +46,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   )
 
   const handleDispute = (index: number) => {
-    console.log(`Before Dispute count: ${disputes[index]}`) // Log current dispute count
     if (disputes[index] > 0) {
       const newDisputes = [...disputes]
       newDisputes[index] -= 1
       setDisputes(newDisputes)
-      console.log(`After Dispute count: ${newDisputes[index]}`) // Log updated dispute count
       if (newDisputes[index] == 0) {
-        console.log("Alert condition met")
         Alert.alert("You're out of disputes")
       }
     }
@@ -64,33 +58,54 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
     setIconPosition(event.nativeEvent.translationX)
-    // Log message when the right circle reaches the end
     if (event.nativeEvent.translationX >= 100) {
-      // Assuming 100 is the end position
       console.log("game stopped")
     }
   }
 
-  const totalBalls = overs * 6 // Total balls in the match
-  const ballsPlayed = balls.filter((ball) => ball !== "").length // Count of balls played
-  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00" // Calculate strike rate
-
-  // Calculate required run rate
+  const totalBalls = overs * 6
+  const ballsPlayed = balls.filter((ball) => ball !== "").length
+  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
   const oversRemaining = overs - ballsPlayed / 6
   const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A"
+
+  const handleActionButtonPress = (action: string) => {
+    switch (action) {
+      case "Out":
+        setPlayerOnStrike(null); // End player's turn
+        break;
+      case "No Ball":
+      case "Wide":
+        setBalls((prevBalls) => {
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
+          if (nextIndex !== -1) {
+            newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1"
+          }
+          return newBalls
+        });
+        break;
+      case "No Runs":
+        setBalls((prevBalls) => {
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
+          if (nextIndex !== -1) {
+            newBalls[nextIndex] = "•"
+          }
+          return newBalls
+        });
+        break;
+    }
+  }
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
       <HeaderComponent title="Match Details" />
-
       <View style={styles.content}>
         <View>
           <View style={styles.scrollContent}>
             {players.map((player, index) => (
-              <View
-                key={player.id}
-                style={[styles.playerRow, playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}
-              >
+              <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? [styles.activeRow, styles.glowingEffect] : styles.inactiveRow]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>1st{"\n"}Over</Text>
@@ -104,22 +119,16 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             ))}
           </View>
-          {/* Score Entry Section */}
           <View style={styles.scoreEntrySection}>
             <View style={styles.autoManualSwitch}>
               <Text>Score Entry</Text>
               <View style={styles.switchContainer}>
                 <Text>Auto</Text>
-                <Switch
-                  value={isAutoMode}
-                  onValueChange={setIsAutoMode}
-                  trackColor={{ false: "#767577", true: "#00A3B4" }}
-                />
+                <Switch value={isAutoMode} onValueChange={setIsAutoMode} trackColor={{ false: "#767577", true: "#00A3B4" }} />
                 <Text>Manual</Text>
               </View>
             </View>
             <View style={styles.scoreEntryContent}>
-              {/* Score Buttons */}
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
                   {renderScoreButton("2", 0)}
@@ -137,30 +146,27 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                   {renderScoreButton("6", 2)}
                 </View>
               </View>
-              {/* Action Buttons */}
               <View style={styles.actionButtonsContainer}>
                 <View style={styles.actionButtonRow}>
-                  <TouchableOpacity style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>Out</Text>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Out")}>
+                    <Text style={[styles.actionButtonText, { color: 'red' }]}>W</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>No Ball</Text>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
+                    <Text style={styles.actionButtonText}>NB</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.actionButtonRow}>
-                  <TouchableOpacity style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>No Runs</Text>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Runs")}>
+                    <Text style={styles.actionButtonText}>•</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>Wide</Text>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Wide")}>
+                    <Text style={styles.actionButtonText}>+1</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </View>
         </View>
-
-        {/* Right Side Score Panel */}
         <View style={styles.scorePanel}>
           <View style={styles.scoreSection}>
             <Text style={styles.nextTarget}>Next Target : {target}</Text>
@@ -169,7 +175,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <Text style={styles.scoreSlash}> / </Text>
               <Text style={styles.maxScore}>{target}</Text>
             </Text>
-
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Extras</Text>
@@ -181,15 +186,14 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Req. Rate</Text>
-                <Text style={styles.statValue}>{requiredRunRate}/over</Text> {/*reqRate*/}
+                <Text style={styles.statValue}>{requiredRunRate}/over</Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Strike Rate</Text>
-                <Text style={styles.statValue}>{strikeRate}</Text> {/*strike rate*/}
+                <Text style={styles.statValue}>{strikeRate}</Text>
               </View>
             </View>
           </View>
-
           <View style={styles.controlsSection}>
             <View style={styles.cameraControls}>
               <TouchableOpacity style={styles.cameraButton} onPress={() => setIsCameraControlVisible(true)}>
@@ -210,20 +214,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 </View>
               </View>
             </View>
-
             <TouchableOpacity style={styles.pauseButton}>
               <Icon name="pausecircleo" size={24} color="#fff" />
               <Text style={styles.pauseButtonText}>Pause</Text>
             </TouchableOpacity>
-
             <PanGestureHandler onGestureEvent={onGestureEvent}>
               <TouchableOpacity style={styles.stopGameButton}>
-                <Icon
-                  style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]}
-                  name="rightcircle"
-                  color="#FFFFFF"
-                  size={45}
-                />
+                <Icon style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]} name="rightcircle" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Slide to Stop</Text>
               </TouchableOpacity>
             </PanGestureHandler>
@@ -258,6 +255,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  glowingEffect: {
+    borderColor: "#FFD700",
+    borderWidth: 2,
+    shadowColor: "#FFD700",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 5,
   },
   activeRow: {
     borderColor: "#00A3B4",
@@ -507,4 +513,3 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 })
-
