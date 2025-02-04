@@ -33,7 +33,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     <TouchableOpacity
       style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
       onPress={() => {
-        setScore((prevScore) => prevScore + Number.parseInt(value))
+        setScore((prevScore) => {
+          const newScore = prevScore + Number.parseInt(value);
+          if (newScore >= target) {
+            console.log(`${players[currentPlayerIndex].name} won!`);
+          }
+          return newScore;
+        });
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
           const nextIndex = prevBalls.findIndex((ball) => ball === "")
@@ -120,7 +126,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>1st{"\n"}Over</Text>
-                  {balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
+                  {playerOnStrike === player.id && balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
                 <View style={styles.disputeBox}>
                   <TouchableOpacity onPress={() => handleDispute(index)}>
