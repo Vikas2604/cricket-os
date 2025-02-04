@@ -78,10 +78,9 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const handleActionButtonPress = (action: string) => {
     switch (action) {
       case "Out":
-        setPlayerOnStrike(null); // End player's turn
+        setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
         setScore(0); // Reset score for the next player
         setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
-
         break;
       case "No Ball":
       case "Wide":
