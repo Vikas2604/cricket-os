@@ -39,7 +39,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [outPlayers, setOutPlayers] = useState<Array<number>>([]); // Track players who are out
 
   useEffect(() => {
-    // Set Player 1 as the player on strike when the match starts
     setPlayerOnStrike(players[0].id);
   }, [players]);
 
@@ -75,7 +74,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         });
 
         // Reset after every over
-        if (ballsFaced[currentPlayerIndex] + 1 >= 6) {
+        if (ballsFaced[currentPlayerIndex] + 1 > 6) {
           setCompletedOvers((prevCompleted) => [
             ...prevCompleted,
             { player: players[currentPlayerIndex].name, score: score, balls: [...balls] }
@@ -102,7 +101,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     if (disputes[index] > 0) {
       const newDisputes = [...disputes]
       newDisputes[index] -= 1
-      console.log("Current Disputes: ", newDisputes);
+      console.log("Current Disputes: ", disputes);
 
       setDisputes(newDisputes)
       if (newDisputes[index] === 0) {
@@ -143,7 +142,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       case "Wide":
         setScore((prevScore) => prevScore + 1); // Increment score by 1
         setExtras((prevExtras) => prevExtras + 1); // Increment extras
-        // Do not increment ballsPlayed for No Ball and Wide
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
           const nextIndex = prevBalls.findIndex((ball) => ball === "")
