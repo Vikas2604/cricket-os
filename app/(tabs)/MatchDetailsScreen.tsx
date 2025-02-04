@@ -66,6 +66,21 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           newBallsFaced[currentPlayerIndex] += 1; // Increment balls faced for the current player
           return newBallsFaced;
         });
+
+        // Reset after every over
+        if (ballsFaced[currentPlayerIndex] + 1 >= 6) {
+          setBalls(["", "", "", "", "", ""]); // Reset balls
+          setBallsFaced((prevBallsFaced) => {
+            const newBallsFaced = [...prevBallsFaced];
+            newBallsFaced[currentPlayerIndex] = 0; // Reset balls faced for the current player
+            setPlayerOvers((prevOvers) => {
+              const newOvers = [...prevOvers];
+              newOvers[currentPlayerIndex] += 1; // Increment the overs for the current player
+              return newOvers;
+            });
+            return newBallsFaced;
+          });
+        }
       }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
@@ -284,25 +299,19 @@ const styles = StyleSheet.create({
   scrollContent: {
     flex: 1,
     overflowY: "auto",
+    padding: 5,
+
   },
   playerRow: {
     marginBottom: 20,
     padding: 15,
     borderRadius: 8,
     backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     elevation: 3,
   },
   glowingEffect: {
-    borderColor: "#FFD700",
+    borderColor: "#00A3B4",
     borderWidth: 2,
-    shadowColor: "#FFD700",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 10,
     elevation: 5,
   },
   activeRow: {
