@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
 import HeaderComponent from "../../components/HeaderComponent"
@@ -11,17 +11,30 @@ interface MatchDetailsScreenProps {
   overs: number
 }
 
+const getOrdinalSuffix = (number: number) => {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const value = number % 100;
+  return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
+};
+
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
   const [iconPosition, setIconPosition] = useState(0)
   const [isAutoMode, setIsAutoMode] = useState(true)
   const [score, setScore] = useState(0)
   const [extras, setExtras] = useState(0); // New state variable for extras
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
+  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0)); // Track overs for each player
+  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0)); // Track balls faced by each player
 
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
   const [disputes, setDisputes] = useState(Array(players.length).fill(3))
   const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
+
+  useEffect(() => {
+    // Set Player 1 as the player on strike when the match starts
+    setPlayerOnStrike(players[0].id);
+  }, [players]);
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
@@ -35,7 +48,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       onPress={() => {
         setScore((prevScore) => {
           const newScore = prevScore + Number.parseInt(value);
-          if (newScore >= target) {
+          if (newScore > target) {
             console.log(`${players[currentPlayerIndex].name} won!`);
           }
           return newScore;
@@ -48,6 +61,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           }
           return newBalls
         })
+        setBallsFaced((prevBallsFaced) => {
+          const newBallsFaced = [...prevBallsFaced];
+          newBallsFaced[currentPlayerIndex] += 1; // Increment balls faced for the current player
+          return newBallsFaced;
+        });
       }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
@@ -87,6 +105,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
         setScore(0); // Reset score for the next player
         setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+        setPlayerOvers((prevOvers) => {
+          const newOvers = [...prevOvers];
+          newOvers[currentPlayerIndex] += 1; // Increment the overs for the current player
+          return newOvers;
+        });
         break;
       case "No Ball":
       case "Wide":
@@ -125,7 +148,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? [styles.activeRow, styles.glowingEffect] : styles.inactiveRow]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
-                  <Text style={styles.overText}>1st{"\n"}Over</Text>
+                  <Text style={styles.overText}>{playerOvers[index] + 1}{getOrdinalSuffix(playerOvers[index] + 1)} Over</Text>
                   {playerOnStrike === player.id && balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
                 <View style={styles.disputeBox}>
