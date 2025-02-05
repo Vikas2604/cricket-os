@@ -15,6 +15,7 @@ interface TabNavigatorProps {
   overs: number;
 }
 
+
 const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, players, setPlayers, target, setTarget, overs }) => {
   return (
     <View style={styles.container}>
