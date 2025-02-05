@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, TextInput } fr
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderComponent from '../../components/HeaderComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void;
@@ -18,7 +18,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
   const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowlers, setSelectedBowlers] = useState<number[]>([]); // Changed to array
+  const [selectedBowlers, setSelectedBowlers] = useState<number[]>([]);
   const [target, setTargetState] = useState(0);
 
   // Load state from local storage
@@ -28,14 +28,14 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
       const savedDifficulty = await AsyncStorage.getItem('difficulty');
       const savedOvers = await AsyncStorage.getItem('overs');
       const savedIsAutoSelection = await AsyncStorage.getItem('isAutoSelection');
-      const savedSelectedBowlers = await AsyncStorage.getItem('selectedBowlers'); // Updated key
+      const savedSelectedBowlers = await AsyncStorage.getItem('selectedBowlers');
       const savedTarget = await AsyncStorage.getItem('target');
 
       if (savedCategory) setCategory(savedCategory);
       if (savedDifficulty) setDifficulty(savedDifficulty);
       if (savedOvers) setOvers(Number(savedOvers));
       if (savedIsAutoSelection) setIsAutoSelection(savedIsAutoSelection === 'true');
-      if (savedSelectedBowlers) setSelectedBowlers(JSON.parse(savedSelectedBowlers)); // Parse array
+      if (savedSelectedBowlers) setSelectedBowlers(JSON.parse(savedSelectedBowlers));
       if (savedTarget) setTargetState(Number(savedTarget));
     };
 
@@ -48,7 +48,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
     AsyncStorage.setItem('difficulty', difficulty);
     AsyncStorage.setItem('overs', overs.toString());
     AsyncStorage.setItem('isAutoSelection', JSON.stringify(isAutoSelection));
-    AsyncStorage.setItem('selectedBowlers', JSON.stringify(selectedBowlers)); // Save array
+    AsyncStorage.setItem('selectedBowlers', JSON.stringify(selectedBowlers));
     AsyncStorage.setItem('target', target.toString());
   }, [category, difficulty, overs, isAutoSelection, selectedBowlers, target]);
 
