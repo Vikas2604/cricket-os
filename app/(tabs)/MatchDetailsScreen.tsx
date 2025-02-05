@@ -104,6 +104,10 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             });
             return newBallsFaced;
           });
+          // Switch to the next player after completing their overs
+          if (playerOvers[currentPlayerIndex] + 1 >= overs) {
+            setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+          }
         }
 
         // Debugging logs
@@ -425,36 +429,24 @@ const styles = StyleSheet.create({
   },
   scoreButtonRow: {
     flexDirection: "row",
-    gap: '1.5px',
+    gap: 10,
     marginBottom: 10,
   },
   scoreButton: {
-    width: 74,
-    height: 67,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 1 },
   },
   scoreButtonRed: {
     backgroundColor: "#ff7675",
-    borderTopLeftRadius: '33.94px',
-    borderBottomLeftRadius: '33.94px',
-    borderTopRightRadius: '6.17px',
-    borderBottomRightRadius: '6.17px',
   },
   scoreButtonGreen: {
     backgroundColor: "#00b894",
-    borderRadius: '6.17px',
   },
   scoreButtonBlue: {
     backgroundColor: "#0984e3",
-    borderTopRightRadius: '33.94px',
-    borderBottomRightRadius: '33.94px',
-    borderTopLeftRadius: '6.17px',
-    borderBottomLeftRadius: '6.17px',
   },
   scoreButtonText: {
     color: "#fff",
