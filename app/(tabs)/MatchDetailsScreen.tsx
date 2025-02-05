@@ -6,11 +6,10 @@ import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-nat
 import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string }>
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }> // Updated to include isOut
   target: number
   overs: number
 }
-
 
 interface CompletedOver {
   player: string;
@@ -67,7 +66,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     <TouchableOpacity
       style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
       onPress={() => {
-        if (outPlayers.includes(players[currentPlayerIndex].id)) {
+        if (players[currentPlayerIndex].isOut) {
           return; // Prevent scoring if the player is out
         }
         setScore((prevScore) => {
@@ -160,6 +159,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     switch (action) {
       case "Out":
         console.log(`${players[currentPlayerIndex].name} got out`); // Print player out message
+        players[currentPlayerIndex].isOut = true; // Set the current player as out
         setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id]); // Add player to out list
         setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
         setScore(0); // Reset score for the next player
@@ -254,7 +254,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
               <View style={styles.actionButtonsContainer}>
                 <View style={styles.actionButtonRow}>
-                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Out")}>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Out")} disabled={players[currentPlayerIndex].isOut}>
                     <Text style={styles.actionButtonText}>Out</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
@@ -613,6 +613,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 32,
-    fontWeight: "700",
+    fontWeight: 700,
   },
 })
