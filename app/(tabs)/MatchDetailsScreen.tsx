@@ -6,7 +6,7 @@ import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-nat
 import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }> // Updated to include isOut
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>
   target: number
   overs: number
 }
@@ -15,7 +15,7 @@ interface CompletedOver {
   player: string;
   score: number;
   balls: string[];
-  overNumber: number; // Added to track the over number
+  overNumber: number;
 }
 
 const getOrdinalSuffix = (number: number) => {
@@ -41,16 +41,16 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const [iconPosition, setIconPosition] = useState(0)
   const [isAutoMode, setIsAutoMode] = useState(true)
   const [score, setScore] = useState(0)
-  const [extras, setExtras] = useState(0); // New state variable for extras
+  const [extras, setExtras] = useState(0);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
-  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0)); // Track overs for each player
-  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0)); // Track balls faced by each player
-  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]); // Track completed overs
+  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0));
+  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0));
+  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]);
   const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
   const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
   const [disputes, setDisputes] = useState(Array(players.length).fill(3))
   const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
-  const [outPlayers, setOutPlayers] = useState<Array<number>>([]); // Track players who are out
+  const [outPlayers, setOutPlayers] = useState<Array<number>>([]);
 
   useEffect(() => {
     setPlayerOnStrike(players[0].id);
@@ -67,7 +67,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
       style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
       onPress={() => {
         if (players[currentPlayerIndex].isOut) {
-          return; // Prevent scoring if the player is out
+          return;
         }
         setScore((prevScore) => {
           const newScore = prevScore + Number.parseInt(value);
@@ -86,35 +86,32 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         })
         setBallsFaced((prevBallsFaced) => {
           const newBallsFaced = [...prevBallsFaced];
-          newBallsFaced[currentPlayerIndex] += 1; // Increment balls faced for the current player
+          newBallsFaced[currentPlayerIndex] += 1;
           return newBallsFaced;
         });
 
-        // Reset after every over
         if (ballsFaced[currentPlayerIndex] + 1 > 6) {
           setCompletedOvers((prevCompleted) => [
             ...prevCompleted,
             { player: players[currentPlayerIndex].name, score: score, balls: [...balls], overNumber: playerOvers[currentPlayerIndex] + 1 }
           ]);
-          setBalls(["", "", "", "", "", ""]); // Reset balls for the next player
+          setBalls(["", "", "", "", "", ""]);
           setBallsFaced((prevBallsFaced) => {
             const newBallsFaced = [...prevBallsFaced];
-            newBallsFaced[currentPlayerIndex] = 0; // Reset balls faced for the current player
+            newBallsFaced[currentPlayerIndex] = 0;
             setPlayerOvers((prevOvers) => {
               const newOvers = [...prevOvers];
-              newOvers[currentPlayerIndex] += 1; // Increment the overs for the current player
+              newOvers[currentPlayerIndex] += 1;
               return newOvers;
             });
-            // Switch to the next player after completing their overs
             if (playerOvers[currentPlayerIndex] + 1 >= overs) {
-              setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
-              setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
+              setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length);
+              setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id);
             }
             return newBallsFaced;
           });
         }
 
-        // Debugging logs
         const totalBalls = overs * 6;
         const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length;
         console.log(`Total Balls: ${totalBalls}, Balls Played: ${ballsPlayed}, Balls Left: ${Math.max(0, totalBalls - ballsPlayed)}`);
@@ -158,22 +155,22 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const handleActionButtonPress = (action: string) => {
     switch (action) {
       case "Out":
-        console.log(`${players[currentPlayerIndex].name} got out`); // Print player out message
-        players[currentPlayerIndex].isOut = true; // Set the current player as out
-        setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id]); // Add player to out list
-        setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
-        setScore(0); // Reset score for the next player
-        setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+        console.log(`${players[currentPlayerIndex].name} got out`);
+        players[currentPlayerIndex].isOut = true;
+        setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id]);
+        setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id);
+        setScore(0);
+        setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length);
         setPlayerOvers((prevOvers) => {
           const newOvers = [...prevOvers];
-          newOvers[currentPlayerIndex] += 1; // Increment the overs for the current player
+          newOvers[currentPlayerIndex] += 1;
           return newOvers;
         });
         break;
       case "No Ball":
       case "Wide":
-        setScore((prevScore) => prevScore + 1); // Increment score by 1
-        setExtras((prevExtras) => prevExtras + 1); // Increment extras
+        setScore((prevScore) => prevScore + 1);
+        setExtras((prevExtras) => prevExtras + 1);
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls]
           const nextIndex = prevBalls.findIndex((ball) => ball === "")
@@ -182,7 +179,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           }
           return newBalls
         });
-        // Add a new render ball for extras
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls, ""];
           return newBalls;
