@@ -109,7 +109,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             }
             return newBallsFaced;
           });
-
         }
 
         // Debugging logs
@@ -147,15 +146,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
   const oversRemaining = overs * 6 - ballsPlayed;
-  const ballsLeft = totalBalls - ballsPlayed;
-  const oversLeft = Math.floor(ballsLeft / 6) + (ballsLeft % 6) / 6; // Ensures correct fractional overs
-
-  const requiredRunRate = oversLeft > 0
-    ? ((target - score) / oversLeft).toFixed(2)
+  const requiredRunRate = oversRemaining > 0
+    ? ((target - score) / oversRemaining).toFixed(2)
     : score >= target
       ? "Target Achieved"
-      : "Game Over";
-
+      : "N/A";
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
