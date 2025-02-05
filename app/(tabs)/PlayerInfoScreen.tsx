@@ -7,8 +7,8 @@ import StyledButton from '../../components/StyledButton';
 
 interface PlayerInfoScreenProps {
   setActiveTab: (tab: string) => void;
-  players: Array<{ id: number; name: string; battingStyle: string }>;
-  setPlayers: (players: Array<{ id: number; name: string; battingStyle: string }>) => void;
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
+  setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
 }
 
 const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, players, setPlayers }) => {
@@ -23,7 +23,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
   useEffect(() => {
     setPlayers(players.map(player => {
       if (player.id === 1) {
-        return { ...player, id: generatePlayerId() };
+        return { ...player, id: generatePlayerId(), isOut: false };
       }
       return player;
     }));
@@ -41,7 +41,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             <Text style={styles.numberOfPlayers}>{players.length}</Text>
           </View>
 
-          {/* Use StyledButton for "Go Back" button */}
+          {/* StyledButton for "Go Back" button */}
           <StyledButton
             text="Go Back"
             icon="arrowleft"
@@ -52,7 +52,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             disabled={true}
           />
 
-          {/* Use StyledButton for "Continue" button */}
+          {/* StyledButton for "Continue" button */}
           <StyledButton
             text="Continue"
             icon="arrowright"
