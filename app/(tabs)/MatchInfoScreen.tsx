@@ -204,7 +204,7 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                 <Icon style={styles.startGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.startGameButton} onPress={() => navigation.navigate('MatchDetailsScreen')}>
+              <TouchableOpacity style={styles.startGameButton} onPress={() => navigation.navigate('MatchDetailsScreen', { overs })}>
                 <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Start Game</Text>
               </TouchableOpacity>
