@@ -15,6 +15,7 @@ interface CompletedOver {
   player: string;
   score: number;
   balls: string[];
+  overNumber: number; // Added to track the over number
 }
 
 const getOrdinalSuffix = (number: number) => {
@@ -23,9 +24,9 @@ const getOrdinalSuffix = (number: number) => {
   return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 };
 
-const PlayerRow = ({ playerName, balls }: { playerName: string; balls: string[] }) => (
+const PlayerRow = ({ playerName, balls, overNumber }: { playerName: string; balls: string[]; overNumber: number }) => (
   <View style={styles.playerRow}>
-    <Text style={styles.playerName}>{playerName}'s Over:</Text>
+    <Text style={styles.playerName}>{playerName}'s {overNumber}{getOrdinalSuffix(overNumber)} Over:</Text>
     <View style={styles.overContainer}>
       {balls.map((ball, index) => (
         <View key={index} style={styles.ball}>
@@ -90,7 +91,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         if (ballsFaced[currentPlayerIndex] + 1 > 6) {
           setCompletedOvers((prevCompleted) => [
             ...prevCompleted,
-            { player: players[currentPlayerIndex].name, score: score, balls: [...balls] }
+            { player: players[currentPlayerIndex].name, score: score, balls: [...balls], overNumber: playerOvers[currentPlayerIndex] + 1 }
           ]);
           setBalls(["", "", "", "", "", ""]); // Reset balls for the next player
           setBallsFaced((prevBallsFaced) => {
@@ -212,7 +213,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             ))}
             {completedOvers.map((over, index) => (
-              <PlayerRow key={index} playerName={over.player} balls={over.balls} />
+              <PlayerRow key={index} playerName={over.player} balls={over.balls} overNumber={over.overNumber} />
             ))}
           </View>
           <View style={styles.scoreEntrySection}>
@@ -424,24 +425,36 @@ const styles = StyleSheet.create({
   },
   scoreButtonRow: {
     flexDirection: "row",
-    gap: 10,
+    gap: '1.5px',
     marginBottom: 10,
   },
   scoreButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 74,
+    height: 67,
     alignItems: "center",
     justifyContent: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 1 },
   },
   scoreButtonRed: {
     backgroundColor: "#ff7675",
+    borderTopLeftRadius: '33.94px',
+    borderBottomLeftRadius: '33.94px',
+    borderTopRightRadius: '6.17px',
+    borderBottomRightRadius: '6.17px',
   },
   scoreButtonGreen: {
     backgroundColor: "#00b894",
+    borderRadius: '6.17px',
   },
   scoreButtonBlue: {
     backgroundColor: "#0984e3",
+    borderTopRightRadius: '33.94px',
+    borderBottomRightRadius: '33.94px',
+    borderTopLeftRadius: '6.17px',
+    borderBottomLeftRadius: '6.17px',
   },
   scoreButtonText: {
     color: "#fff",
