@@ -105,6 +105,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             // Switch to the next player after completing their overs
             if (playerOvers[currentPlayerIndex] + 1 >= overs) {
               setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+              setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id); // Set the next player on strike
             }
             return newBallsFaced;
           });
