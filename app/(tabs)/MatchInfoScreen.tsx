@@ -415,5 +415,4 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#000000',
   },
-
 });

@@ -91,6 +91,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             return newBallsFaced;
           });
         }
+
+        // Debugging logs
+        const totalBalls = overs * 6;
+        const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length;
+        console.log(`Total Balls: ${totalBalls}, Balls Played: ${ballsPlayed}, Balls Left: ${Math.max(0, totalBalls - ballsPlayed)}`);
       }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
@@ -121,8 +126,12 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const totalBalls = overs * 6
   const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
-  const oversRemaining = overs * 6 - ballsPlayed
-  const requiredRunRate = oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : "N/A"
+  const oversRemaining = overs * 6 - ballsPlayed;
+  const requiredRunRate = oversRemaining > 0
+    ? ((target - score) / oversRemaining).toFixed(2)
+    : score >= target
+      ? "Target Achieved"
+      : "N/A";
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
@@ -149,6 +158,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1"
           }
           return newBalls
+        });
+        // Add a new render ball for extras
+        setBalls((prevBalls) => {
+          const newBalls = [...prevBalls, ""];
+          return newBalls;
         });
         break;
       case "No Runs":
@@ -416,7 +430,7 @@ const styles = StyleSheet.create({
   scoreButtonText: {
     color: "#fff",
     fontSize: 33,
-    fontWeight: 500,
+    fontWeight: "500",
   },
   actionButtonsContainer: {
     marginVertical: 20,

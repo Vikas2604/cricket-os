@@ -1,10 +1,7 @@
 import { View, StyleSheet } from 'react-native';
-import React, { useState, createContext, useContext, ReactNode } from 'react';
+import React, { useState, createContext, ReactNode } from 'react';
 import NavBar from '../../components/NavBar';
-import PlayerInfoScreen from './PlayerInfoScreen';
-import MatchInfoScreen from './MatchInfoScreen';
-import MatchDetailsScreen from './MatchDetailsScreen';
-import SideBarComponent from '../../components/SideBarComponent';
+import TabNavigator from '../../components/TabNavigator';
 
 interface MatchInfoContextType {
   category: string;
@@ -65,14 +62,16 @@ const App: React.FC = () => {
     <MatchInfoProvider>
       <React.Fragment>
         <NavBar />
-        <View style={styles.container}>
-          <SideBarComponent activeTab={activeTab} onTabSelect={handleTabSelect} />
-          <View style={styles.tabContent}>
-            {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} players={players} setPlayers={setPlayers} />}
-            {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} />} {/* Pass route params */}
-            {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} />} {/* Pass players, target, and overs here */}
-          </View>
-        </View>
+        <TabNavigator
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          players={players}
+          setPlayers={setPlayers}
+          target={target}
+          setTarget={setTarget}
+          overs={overs}
+        />
+
       </React.Fragment>
     </MatchInfoProvider>
   );
