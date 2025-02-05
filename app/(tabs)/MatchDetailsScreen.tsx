@@ -24,8 +24,8 @@ const getOrdinalSuffix = (number: number) => {
   return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 };
 
-const PlayerRow = ({ playerName, balls, overNumber }: { playerName: string; balls: string[]; overNumber: number }) => (
-  <View style={styles.playerRow}>
+const PlayerRow = ({ playerName, balls, overNumber, isOut }: { playerName: string; balls: string[]; overNumber: number; isOut: boolean }) => (
+  <View style={[styles.playerRow, isOut && styles.disabledRow]}>
     <Text style={styles.playerName}>{playerName}'s {overNumber}{getOrdinalSuffix(overNumber)} Over:</Text>
     <View style={styles.overContainer}>
       {balls.map((ball, index) => (
@@ -66,6 +66,9 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     <TouchableOpacity
       style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
       onPress={() => {
+        if (outPlayers.includes(players[currentPlayerIndex].id)) {
+          return; // Prevent scoring if the player is out
+        }
         setScore((prevScore) => {
           const newScore = prevScore + Number.parseInt(value);
           if (newScore > target) {
@@ -204,7 +207,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         <View>
           <View style={styles.scrollContent}>
             {players.map((player, index) => (
-              <View key={player.id} style={[styles.playerRow, playerOnStrike === player.id ? [styles.activeRow, styles.glowingEffect] : styles.inactiveRow]}>
+              <View key={player.id} style={[styles.playerRow, outPlayers.includes(player.id) ? styles.disabledRow : playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>{playerOvers[index] + 1}{getOrdinalSuffix(playerOvers[index] + 1)} Over</Text>
@@ -218,7 +221,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             ))}
             {completedOvers.map((over, index) => (
-              <PlayerRow key={index} playerName={over.player} balls={over.balls} overNumber={over.overNumber} />
+              <PlayerRow key={index} playerName={over.player} balls={over.balls} overNumber={over.overNumber} isOut={false} />
             ))}
           </View>
           <View style={styles.scoreEntrySection}>
@@ -366,6 +369,10 @@ const styles = StyleSheet.create({
   },
   inactiveRow: {
     opacity: 0.7,
+  },
+  disabledRow: {
+    backgroundColor: "#f0f0f0",
+    opacity: 0.5,
   },
   playerName: {
     fontSize: 24,
