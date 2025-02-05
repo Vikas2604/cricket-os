@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
     margin: 100,
   },
   tabContent: {
-    flex: 1, // This will allow the tab content to take the remaining space
+    flex: 1,
   },
 });

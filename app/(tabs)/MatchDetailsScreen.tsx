@@ -11,6 +11,7 @@ interface MatchDetailsScreenProps {
   overs: number
 }
 
+
 interface CompletedOver {
   player: string;
   score: number;
