@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react"
-import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
-import Icon from "react-native-vector-icons/AntDesign"
-import HeaderComponent from "../../components/HeaderComponent"
-import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
-import CameraControlModal from "components/CameraControlModal"
+import { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
+import HeaderComponent from "../../components/HeaderComponent";
+import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler";
+import CameraControlModal from "components/CameraControlModal";
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>
-  target: number
-  overs: number
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
+  target: number;
+  overs: number; // Ensure overs prop is included
 }
 
 interface CompletedOver {
@@ -38,29 +38,30 @@ const PlayerRow = ({ playerName, balls, overNumber, isOut }: { playerName: strin
 );
 
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
-  const [iconPosition, setIconPosition] = useState(0)
-  const [isAutoMode, setIsAutoMode] = useState(true)
-  const [score, setScore] = useState(0)
+  const [iconPosition, setIconPosition] = useState(0);
+  const [isAutoMode, setIsAutoMode] = useState(true);
+  const [score, setScore] = useState(0);
   const [extras, setExtras] = useState(0);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0));
   const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0));
   const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]);
-  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
-  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
-  const [disputes, setDisputes] = useState(Array(players.length).fill(3))
-  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]);
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null);
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3));
+  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false);
   const [outPlayers, setOutPlayers] = useState<Array<number>>([]);
 
   useEffect(() => {
+    console.log("Overs received:", overs); // Log the overs prop
     setPlayerOnStrike(players[0].id);
-  }, [players]);
+  }, [players, overs]);
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
       <Text style={[styles.ballText, active && styles.activeBallText]}>{value}</Text>
     </View>
-  )
+  );
 
   const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
@@ -77,13 +78,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           return newScore;
         });
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls]
-          const nextIndex = prevBalls.findIndex((ball) => ball === "")
+          const newBalls = [...prevBalls];
+          const nextIndex = prevBalls.findIndex((ball) => ball === "");
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = value
+            newBalls[nextIndex] = value;
           }
-          return newBalls
-        })
+          return newBalls;
+        });
         setBallsFaced((prevBallsFaced) => {
           const newBallsFaced = [...prevBallsFaced];
           newBallsFaced[currentPlayerIndex] += 1;
@@ -119,32 +120,32 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
     </TouchableOpacity>
-  )
+  );
 
   const handleDispute = (index: number) => {
     if (disputes[index] > 0) {
-      const newDisputes = [...disputes]
-      newDisputes[index] -= 1
+      const newDisputes = [...disputes];
+      newDisputes[index] -= 1;
       console.log("Current Disputes: ", disputes);
 
-      setDisputes(newDisputes)
+      setDisputes(newDisputes);
       if (newDisputes[index] === 0) {
         console.log("You're out of disputes");
-        Alert.alert("You're out of disputes")
+        Alert.alert("You're out of disputes");
       }
     }
-  }
+  };
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
-    setIconPosition(event.nativeEvent.translationX)
+    setIconPosition(event.nativeEvent.translationX);
     if (event.nativeEvent.translationX >= 100) {
-      console.log("game stopped")
+      console.log("game stopped");
     }
-  }
+  };
 
-  const totalBalls = overs * 6
-  const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
-  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
+  const totalBalls = overs * 6;
+  const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length;
+  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00";
   const oversRemaining = overs * 6 - ballsPlayed;
   const requiredRunRate = oversRemaining > 0
     ? ((target - score) / oversRemaining).toFixed(2)
@@ -172,12 +173,12 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         setScore((prevScore) => prevScore + 1);
         setExtras((prevExtras) => prevExtras + 1);
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls]
-          const nextIndex = prevBalls.findIndex((ball) => ball === "")
+          const newBalls = [...prevBalls];
+          const nextIndex = prevBalls.findIndex((ball) => ball === "");
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1"
+            newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1";
           }
-          return newBalls
+          return newBalls;
         });
         setBalls((prevBalls) => {
           const newBalls = [...prevBalls, ""];
@@ -186,16 +187,16 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         break;
       case "No Runs":
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls]
-          const nextIndex = prevBalls.findIndex((ball) => ball === "")
+          const newBalls = [...prevBalls];
+          const nextIndex = prevBalls.findIndex((ball) => ball === "");
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = "•"
+            newBalls[nextIndex] = "•";
           }
-          return newBalls
+          return newBalls;
         });
         break;
     }
-  }
+  };
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
@@ -331,7 +332,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         <CameraControlModal isVisible={isCameraControlVisible} onClose={() => setIsCameraControlVisible(false)} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -611,4 +612,4 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 700,
   },
-})
+});

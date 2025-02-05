@@ -64,8 +64,6 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
       { id: 4, name: 'Shakib', image: 'https://s3-alpha-sig.figma.com/img/91a8/d13b/22e18bfda83e874482f206e2adde113a?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HDo2xGEVwGyCA1lv0-3OLt8ujANaSTO7DF5n6G4~fisI8gJ1NOEeezVcen3pNoetwWIZ11Jc-nIWwMCxxdTBpUunUl~4neWmjac-LgnNcb3qIYgK388YJNpUENxR7Hvhfpg2Lzg7-8ooQtdN9YzwKL205PjGLWUpsyzPPFcsoOXrj9FT6Q0U19mdmpSr3-PkR-ZMZgeq2115w1WhtzjzJ1GoG18PpF3JE1JbPgbAV71jf9Ln9cVPkaKEUWJrQNmVq9H83SUyXLSM32QBAGDiLVH2wkb9AeOMMyG68d-vHogNexa4lqtctc3t0bJC7sfe7mYWoJbbnhvxa0l-c3QatQ__' },
     ];
 
-
-
   return (
     <View style={styles.matchInfoScreenContainer}>
       <HeaderComponent title="Match Info" />
@@ -206,7 +204,10 @@ export default function MatchInfo({ setActiveTab, navigation, setTarget, playerO
                 <Icon style={styles.startGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Go Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.startGameButton} onPress={() => navigation.navigate('MatchDetailsScreen', { overs })}>
+              <TouchableOpacity style={styles.startGameButton} onPress={() => {
+                console.log("Overs before navigation:", overs); // Log the overs value
+                navigation.navigate('MatchDetailsScreen', { overs });
+              }}>
                 <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />
                 <Text style={styles.buttonText}>Start Game</Text>
               </TouchableOpacity>
