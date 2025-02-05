@@ -102,12 +102,12 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               newOvers[currentPlayerIndex] += 1; // Increment the overs for the current player
               return newOvers;
             });
+            // Switch to the next player after completing their overs
+            if (playerOvers[currentPlayerIndex] + 1 >= overs) {
+              setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
+            }
             return newBallsFaced;
           });
-          // Switch to the next player after completing their overs
-          if (playerOvers[currentPlayerIndex] + 1 >= overs) {
-            setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length); // Switch to the next player
-          }
         }
 
         // Debugging logs
