@@ -23,6 +23,19 @@ const getOrdinalSuffix = (number: number) => {
   return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 };
 
+const PlayerRow = ({ playerName, balls }: { playerName: string; balls: string[] }) => (
+  <View style={styles.playerRow}>
+    <Text style={styles.playerName}>{playerName}'s Over:</Text>
+    <View style={styles.overContainer}>
+      {balls.map((ball, index) => (
+        <View key={index} style={styles.ball}>
+          <Text style={styles.ballText}>{ball}</Text>
+        </View>
+      ))}
+    </View>
+  </View>
+);
+
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
   const [iconPosition, setIconPosition] = useState(0)
   const [isAutoMode, setIsAutoMode] = useState(true)
@@ -197,6 +210,9 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                   </TouchableOpacity>
                 </View>
               </View>
+            ))}
+            {completedOvers.map((over, index) => (
+              <PlayerRow key={index} playerName={over.player} balls={over.balls} />
             ))}
           </View>
           <View style={styles.scoreEntrySection}>
