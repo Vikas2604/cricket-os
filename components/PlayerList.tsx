@@ -6,6 +6,7 @@ interface Player {
   id: number;
   name: string;
   battingStyle: string;
+  isOut: boolean;
 }
 
 interface PlayerListProps {
@@ -24,7 +25,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
   };
 
   const addPlayer = () => {
-    setPlayers([...players, { id: generatePlayerId(), name: '', battingStyle: '' }]);
+    setPlayers([...players, { id: generatePlayerId(), name: '', battingStyle: '', isOut: false }]);
   };
 
   const removePlayer = (id: number) => {
@@ -40,7 +41,6 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
   };
 
   const BattingStyleSelector = ({ playerId, currentStyle }: { playerId: number; currentStyle: string }) => {
-    // Ensure renderBall is not disabled
     return (
       <View style={styles.battingStyleWrapper}>
         {['L', 'R'].map(style => (
