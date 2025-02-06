@@ -81,16 +81,18 @@ export default function MatchInfo({
                 <View style={styles.radioGroup}>
                   <TouchableOpacity
                     style={[styles.radio, category === "adults" && styles.radioSelected]}
-                    onPress={() => setCategory("adults")}
-                  >
-                    <Text style={[styles.radioText, category === "adults" && styles.radioTextSelected]}>Adults</Text>
+                    onPress={() => setCategory("adults")}>
+                    <View style={styles.insideRadioButton}></View>
                   </TouchableOpacity>
+                  <Text>Adults</Text>
+
                   <TouchableOpacity
                     style={[styles.radio, category === "kids" && styles.radioSelected]}
-                    onPress={() => setCategory("kids")}
-                  >
-                    <Text style={[styles.radioText, category === "kids" && styles.radioTextSelected]}>Kids</Text>
+                    onPress={() => setCategory("kids")}>
+                    <View style={styles.insideRadioButton}></View>
                   </TouchableOpacity>
+                  <Text>Kids</Text>
+
                 </View>
               </View>
             </View>
@@ -263,16 +265,24 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   radio: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    padding: 10,
+    borderRadius: 29,
+    borderWidth: 2,
+    borderColor: "#00A3B4",
+    width: 29,
+    height: 29,
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+  insideRadioButton: {
+    height: 20,
+    width: 20,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#00A3B4",
-    width: 100,
-    alignItems: "center",
+    borderColor: '#00000',
   },
   radioSelected: {
-    backgroundColor: "#00A3B4",
+    backgroundColor: "#FFFFFF",
   },
   radioText: {
     color: "#00A3B4",
@@ -341,7 +351,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 400,
     borderWidth: 1.5,
-    opacity: 0.5,
+    borderColor: 'rgba(158, 150, 150, .5)',
     width: 100,
     height: 70,
     alignContent: "center",
@@ -358,7 +368,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: 200,
     height: 150,
-    // gap: 10,
+    gap: 10,
   },
   bowlerCard: {
     width: "90%",
@@ -454,4 +464,3 @@ const styles = StyleSheet.create({
     marginLeft: 140,
   },
 })
-
