@@ -1,3 +1,4 @@
+import { ScrollView } from 'react-native';
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -64,26 +65,29 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
         <Text style={styles.headerText}>Batting Style</Text>
         <Text style={styles.headerText}>Player ID</Text>
       </View>
-      {players.map((player) => (
-        <View key={player.id} style={styles.playerInfoRow}>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => updatePlayerName(player.id, text)}
-            value={player.name}
-            placeholder="Enter Name"
-            editable={allowEditing}
-          />
-          <BattingStyleSelector playerId={player.id} currentStyle={player.battingStyle} />
-          <View style={styles.playerIdContent}>
-            <Text style={styles.playerIdText}>{player.id}</Text>
-            {allowEditing && (
-              <TouchableOpacity onPress={() => removePlayer(player.id)}>
-                <Icon name="minuscircle" color="#F67676" size={30} />
-              </TouchableOpacity>
-            )}
+      <ScrollView>
+        {players.map((player) => (
+          <View key={player.id} style={styles.playerInfoRow}>
+            <Text style={styles.playerNumberDisplay}>Player 1</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => updatePlayerName(player.id, text)}
+              value={player.name}
+              placeholder="Enter Name"
+              editable={allowEditing}
+            />
+            <BattingStyleSelector playerId={player.id} currentStyle={player.battingStyle} />
+            <View style={styles.playerIdContent}>
+              <Text style={styles.playerIdText}>{player.id}</Text>
+              {allowEditing && (
+                <TouchableOpacity onPress={() => removePlayer(player.id)}>
+                  <Icon name="minuscircle" color="#F67676" size={30} />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-        </View>
-      ))}
+        ))}
+      </ScrollView>
       {allowEditing && (
         <TouchableOpacity onPress={addPlayer} style={styles.addButtonContainer}>
           <Icon name="pluscircleo" color="#00A2B4" size={70} />
@@ -102,8 +106,6 @@ const styles = StyleSheet.create({
   playerInfoHeadersTitle: {
     flexDirection: 'row',
     gap: 70,
-    // width: 940,
-    // marginBottom: 10,
   },
   headerText: {
     fontWeight: '700',
@@ -120,12 +122,24 @@ const styles = StyleSheet.create({
   input: {
     height: 84,
     width: 273,
-    borderWidth: 1.5,
+    borderWidth: 2,
     padding: 5,
+    paddingLeft: 17,
     borderRadius: 5,
     fontSize: 23,
     marginTop: 26,
+    borderColor: 'rgba(158, 150, 150, .5)',
 
+  },
+  playerNumberDisplay: {
+    position: 'absolute',
+    backgroundColor: '#FFFFFF',
+    left: 20,
+    bottom: 72,
+    paddingLeft: 4,
+    paddingRight: 5,
+    fontSize: 17,
+    color: '#00A2B4'
   },
   battingStyleWrapper: {
     flexDirection: 'row',
