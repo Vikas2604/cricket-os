@@ -25,7 +25,7 @@ export default function MatchInfo({
   const [isAutoSelection, setIsAutoSelection] = useState(true)
   const [selectedBowlers, setSelectedBowlers] = useState<number[]>([])
   const [target, setTargetState] = useState(0)
-  const [isRadioButtonClicked, setIsRadioButtonClicked] = useState(false) // New state variable
+  const [selectedCategory, setSelectedCategory] = useState("adults") // Updated state variable
 
   const bowlers =
     category === "kids"
@@ -81,22 +81,22 @@ export default function MatchInfo({
                 <Text style={styles.sectionTitle}>Choose your Category</Text>
                 <View style={styles.radioGroup}>
                   <TouchableOpacity
-                    style={[styles.radio, category === "adults" && styles.radioSelected]}
+                    style={[styles.radio, selectedCategory === "adults" && styles.radioSelected]}
                     onPress={() => {
                       setCategory("adults");
-                      setIsRadioButtonClicked(true);
+                      setSelectedCategory("adults");
                     }}>
-                    {isRadioButtonClicked && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
+                    {selectedCategory === "adults" && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
                   </TouchableOpacity>
                   <Text>Adults</Text>
 
                   <TouchableOpacity
-                    style={[styles.radio, category === "kids" && styles.radioSelected]}
+                    style={[styles.radio, selectedCategory === "kids" && styles.radioSelected]}
                     onPress={() => {
                       setCategory("kids");
-                      setIsRadioButtonClicked(true);
+                      setSelectedCategory("kids");
                     }}>
-                    {isRadioButtonClicked && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
+                    {selectedCategory === "kids" && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
                   </TouchableOpacity>
                   <Text>Kids</Text>
 
@@ -108,6 +108,8 @@ export default function MatchInfo({
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Choose Game Difficulty</Text>
                 <View style={styles.pickerContainer}>
+                  <Text style={styles.pickerDifficultyText}> Game Difficulty</Text>
+
                   <Picker
                     selectedValue={difficulty}
                     onValueChange={(value) => setDifficulty(value)}
@@ -121,7 +123,6 @@ export default function MatchInfo({
                 </View>
               </View>
             </View>
-
             <View style={styles.column}>
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Select No. of Overs</Text>
@@ -147,8 +148,8 @@ export default function MatchInfo({
                   <Switch
                     value={isAutoSelection}
                     onValueChange={setIsAutoSelection}
-                    trackColor={{ false: "#767577", true: "#00A3B4" }}
-                    thumbColor={isAutoSelection ? "#fff" : "#f4f3f4"}
+                    trackColor={{ false: "rgba(0, 162, 180, 0.5)", true: "rgba(0, 162, 180, 0.5)" }}
+                    thumbColor={isAutoSelection ? "rgb(0, 162, 180)" : "rgb(0, 162, 180)"}
                   />
                   <Text style={styles.toggleText}>Manual</Text>
                 </View>
@@ -269,13 +270,14 @@ const styles = StyleSheet.create({
   radioGroup: {
     flexDirection: "row",
     justifyContent: "flex-start",
+    alignItems: 'center',
     gap: 5,
   },
   radio: {
     padding: 10,
     borderRadius: 29,
     borderWidth: 2,
-    borderColor: "#00000",
+    borderColor: 'rgba(158, 150, 150, .6)',
     width: 29,
     height: 29,
     alignItems: "center",
@@ -296,13 +298,26 @@ const styles = StyleSheet.create({
   pickerContainer: {
     overflow: "hidden",
     width: 356,
+    paddingTop: 20
+  },
+  pickerDifficultyText: {
+    position: 'absolute',
+    backgroundColor: '#FFFFFF',
+    left: 10,
+    bottom: 37,
+    paddingLeft: 4,
+    paddingRight: 5,
+    fontSize: 23,
+    fontWeight: 600,
+    color: '#00A2B4'
   },
   picker: {
     height: 50,
-    width: 356,
+    // width: 356,
     borderColor: "#00A3B4",
     borderWidth: 1.5,
     borderRadius: 8,
+    paddingLeft: 14,
   },
   oversSelector: {
     flexDirection: "row",
@@ -321,6 +336,16 @@ const styles = StyleSheet.create({
   oversButtonText: {
     color: "#FFFFFF",
     fontSize: 24,
+  },
+  toggleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 15,
+  },
+  toggleText: {
+    fontSize: 22,
+    color: "#000000",
   },
   scoreContainer: {
     flexDirection: "row",
@@ -448,16 +473,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 32,
     fontWeight: "700",
-  },
-  toggleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    gap: 15,
-  },
-  toggleText: {
-    fontSize: 22,
-    color: "#000000",
   },
   verticalLine: {
     borderLeftWidth: 3,
