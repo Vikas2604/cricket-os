@@ -6,10 +6,10 @@ import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-nat
 import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>
-  target: number
-  overs: number
-  route: { params: { overs: number } }
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
+  target: number;
+  overs: number;
+  route: { params: { overs: number } };
 }
 
 interface CompletedOver {
@@ -46,22 +46,25 @@ const PlayerRow = ({
   </View>
 )
 
-export default function MatchDetailsScreen({ players, target, route }: MatchDetailsScreenProps) {
-  const { overs } = route.params
-  console.log("Overs received in MatchDetailsScreen:", overs)
-  const [iconPosition, setIconPosition] = useState(0)
-  const [isAutoMode, setIsAutoMode] = useState(true)
-  const [score, setScore] = useState(0)
-  const [extras, setExtras] = useState(0)
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
-  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0))
-  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0))
-  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([])
-  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
-  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
-  const [disputes, setDisputes] = useState(Array(players.length).fill(3))
-  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
-  const [outPlayers, setOutPlayers] = useState<Array<number>>([])
+export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
+
+  if (typeof target !== 'number' || typeof overs !== 'number') {
+    Alert.alert("Error", "Target and overs must be valid numbers.");
+    return null;
+  }
+  const [iconPosition, setIconPosition] = useState(0);
+  const [isAutoMode, setIsAutoMode] = useState(true);
+  const [score, setScore] = useState(0);
+  const [extras, setExtras] = useState(0);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0));
+  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0));
+  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]);
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]);
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null);
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3));
+  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false);
+  const [outPlayers, setOutPlayers] = useState<Array<number>>([]);
 
   useEffect(() => {
     console.log("Overs received:", overs)
