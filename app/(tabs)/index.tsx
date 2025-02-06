@@ -52,11 +52,8 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState("1"); // Default to "MATCH DETAILS"
   const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '' }]); // Lifted state
   const [target, setTarget] = useState(0); // Added target state
-  const [overs, setOvers] = useState(0); // Added overs state
+  const [overs] = useState(0); // Added overs state
 
-  const handleTabSelect = (tab: string) => {
-    setActiveTab(tab);
-  };
 
   return (
     <MatchInfoProvider>

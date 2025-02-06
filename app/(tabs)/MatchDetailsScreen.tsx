@@ -3,7 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-n
 import Icon from "react-native-vector-icons/AntDesign"
 import HeaderComponent from "../../components/HeaderComponent"
 import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
-import CameraControlModal from "components/CameraControlModal"
+import CameraControlModal from "components/CameraControlModal";
+
+
 
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
@@ -170,7 +172,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const totalBalls = overs * 6
   const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
-  const oversRemaining = overs * 6 - ballsPlayed
+  const oversRemaining = (overs * 6) - ballsPlayed
   const requiredRunRate =
     oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "Target Achieved" : "N/A"
 
@@ -271,7 +273,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <Switch
                   value={isAutoMode}
                   onValueChange={setIsAutoMode}
-                  trackColor={{ false: "#767577", true: "#00A3B4" }}
+                  trackColor={{ false: "#00A3B4", true: "#00A3B4" }}
                 />
                 <Text>Manual</Text>
               </View>
@@ -489,24 +491,32 @@ const styles = StyleSheet.create({
   },
   scoreButtonRow: {
     flexDirection: "row",
-    gap: 10,
+    gap: 1.5,
     marginBottom: 10,
   },
   scoreButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 74,
+    height: 67,
     alignItems: "center",
     justifyContent: "center",
   },
   scoreButtonRed: {
-    backgroundColor: "#ff7675",
+    backgroundColor: '#F67676',
+    borderTopLeftRadius: 33,
+    borderBottomLeftRadius: 33,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
   },
   scoreButtonGreen: {
     backgroundColor: "#00b894",
+    borderRadius: 6,
   },
   scoreButtonBlue: {
     backgroundColor: "#0984e3",
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+    borderTopRightRadius: 33,
+    borderBottomRightRadius: 33,
   },
   scoreButtonText: {
     color: "#fff",
@@ -514,28 +524,33 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   actionButtonsContainer: {
-    marginVertical: 20,
-    justifyContent: "space-around",
+    // marginVertical: 20,
+    // justifyContent: "space-around",
+    marginTop: 67,
   },
   actionButton: {
-    backgroundColor: "#E0F7FA",
+    backgroundColor: "#6ABBC4",
     paddingTop: 10,
     paddingBottom: 10,
-    borderRadius: 100,
-    width: 200,
-    marginLeft: 10,
+    borderRadius: 33,
+    width: 228,
+    height: 68,
     alignItems: "center",
   },
   actionButtonText: {
-    color: "#00A3B4",
+    color: "#FFFFFF",
     textAlign: "center",
-    fontSize: 23,
+    fontSize: 33,
+    fontWeight: 500,
   },
   actionButtonRow: {
     flexDirection: "row",
+    gap: 10,
+    marginTop: 10,
+    marginLeft: 27,
   },
   scoreButtonsContainer: {
-    flex: 1,
+
   },
   scoreEntryContent: {
     flexDirection: "row",
@@ -546,6 +561,7 @@ const styles = StyleSheet.create({
     width: "39%",
     backgroundColor: "#f5f5f5",
     padding: 20,
+    borderRadius: 10,
   },
   scoreSection: {
     marginBottom: 30,

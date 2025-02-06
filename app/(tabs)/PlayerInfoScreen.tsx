@@ -11,6 +11,7 @@ interface PlayerInfoScreenProps {
   setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
 }
 
+
 const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, players, setPlayers }) => {
   const generatePlayerId = () => {
     let id: number;
