@@ -612,16 +612,17 @@ const styles = StyleSheet.create({
   },
   cameraControls: {
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: 57,
     borderWidth: 3,
     borderRadius: 10,
     borderColor: "#00A2B4",
+    height: 122,
+    width: 512,
   },
   cameraButton: {
-    width: 30,
-    height: 115,
-    borderTopLeftRadius: 7,
-    borderBottomLeftRadius: 7,
+    width: 43,
+    height: 118,
+    borderRadius: 10,
     backgroundColor: "#00A3B4",
     justifyContent: "center",
   },
@@ -632,10 +633,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   controlValue: {
-    width: "70%",
+    // width: "70%",
     color: "#333",
     fontWeight: 600,
-    fontSize: 15,
+    fontSize: 26,
     paddingLeft: 10,
   },
   cameraControlValues: {
@@ -656,6 +657,8 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 50,
     marginBottom: 10,
+    height: 77,
+    width: 400,
   },
   pauseButtonText: {
     color: "#fff",
@@ -672,6 +675,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     flexDirection: "row",
     justifyContent: "center",
+    height: 77,
+    width: 400,
   },
   stopGameButtonSlider: {
     position: "absolute",
