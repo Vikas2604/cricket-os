@@ -25,6 +25,7 @@ export default function MatchInfo({
   const [isAutoSelection, setIsAutoSelection] = useState(true)
   const [selectedBowlers, setSelectedBowlers] = useState<number[]>([])
   const [target, setTargetState] = useState(0)
+  const [isRadioButtonClicked, setIsRadioButtonClicked] = useState(false) // New state variable
 
   const bowlers =
     category === "kids"
@@ -81,15 +82,21 @@ export default function MatchInfo({
                 <View style={styles.radioGroup}>
                   <TouchableOpacity
                     style={[styles.radio, category === "adults" && styles.radioSelected]}
-                    onPress={() => setCategory("adults")}>
-                    <View style={styles.insideRadioButton}></View>
+                    onPress={() => {
+                      setCategory("adults");
+                      setIsRadioButtonClicked(true);
+                    }}>
+                    {isRadioButtonClicked && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
                   </TouchableOpacity>
                   <Text>Adults</Text>
 
                   <TouchableOpacity
                     style={[styles.radio, category === "kids" && styles.radioSelected]}
-                    onPress={() => setCategory("kids")}>
-                    <View style={styles.insideRadioButton}></View>
+                    onPress={() => {
+                      setCategory("kids");
+                      setIsRadioButtonClicked(true);
+                    }}>
+                    {isRadioButtonClicked && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
                   </TouchableOpacity>
                   <Text>Kids</Text>
 
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 29,
     borderWidth: 2,
-    borderColor: "#00A3B4",
+    borderColor: "#00000",
     width: 29,
     height: 29,
     alignItems: "center",
@@ -279,19 +286,16 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#00000',
+    borderColor: '#00A3B4',
+    backgroundColor: '#00A3B4'
   },
   radioSelected: {
     backgroundColor: "#FFFFFF",
-  },
-  radioText: {
-    color: "#00A3B4",
-  },
-  radioTextSelected: {
-    color: "#FFFFFF",
+    borderColor: '#00A3B4'
   },
   pickerContainer: {
     overflow: "hidden",
+    width: 356,
   },
   picker: {
     height: 50,
@@ -305,7 +309,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 11.5,
-
   },
   oversButton: {
     backgroundColor: "#00A3B4",
@@ -360,7 +363,7 @@ const styles = StyleSheet.create({
   targetInput: {
     textAlign: "center",
     fontSize: 55,
-    fontWeight: "700",
+    fontWeight: 700,
     color: "#2D3748",
     height: 150,
   },
