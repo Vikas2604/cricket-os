@@ -1,4 +1,3 @@
-import { View, StyleSheet } from 'react-native';
 import React, { useState, createContext, ReactNode } from 'react';
 import NavBar from '../../components/NavBar';
 import TabNavigator from '../../components/TabNavigator';
@@ -75,15 +74,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flex: 1,
-    borderWidth: 1,
-    margin: 100,
-  },
-  tabContent: {
-    flex: 1,
-  },
-});

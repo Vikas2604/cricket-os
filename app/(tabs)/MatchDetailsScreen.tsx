@@ -5,8 +5,6 @@ import HeaderComponent from "../../components/HeaderComponent"
 import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
 import CameraControlModal from "components/CameraControlModal";
 
-
-
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
   target: number;
@@ -267,13 +265,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           </View>
           <View style={styles.scoreEntrySection}>
             <View style={styles.autoManualSwitch}>
-              <Text>Score Entry</Text>
+              <Text style={styles.scoreEntryText}>Score Entry</Text>
               <View style={styles.switchContainer}>
                 <Text>Auto</Text>
                 <Switch
                   value={isAutoMode}
                   onValueChange={setIsAutoMode}
-                  trackColor={{ false: "#00A3B4", true: "#00A3B4" }}
+                  trackColor={{ false: "rgba(0, 162, 180, 0.5)", true: "rgba(0, 162, 180, 0.5)" }}
                 />
                 <Text>Manual</Text>
               </View>
@@ -399,27 +397,30 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "row",
+    marginLeft: 100,
   },
   scrollContent: {
     flex: 1,
     overflowY: "auto",
     padding: 5,
+    width: 831,
   },
   playerRow: {
     marginBottom: 20,
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 11,
     backgroundColor: "#fff",
     elevation: 3,
+    borderWidth: 3.43,
   },
   glowingEffect: {
     borderColor: "#00A3B4",
-    borderWidth: 2,
+    borderWidth: 3.43,
     elevation: 5,
   },
   activeRow: {
     borderColor: "#00A3B4",
-    borderWidth: 1,
+    borderWidth: 3.43,
   },
   inactiveRow: {
     opacity: 0.7,
@@ -475,7 +476,8 @@ const styles = StyleSheet.create({
     borderColor: "#F67676",
   },
   scoreEntrySection: {
-    paddingHorizontal: 10,
+    width: 783,
+    height: 329,
     borderTopWidth: 1,
     borderColor: "#ddd",
     paddingTop: 20,
@@ -485,18 +487,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  scoreEntryText: {
+    fontSize: 30,
+    fontWeight: 700
+  },
   switchContainer: {
     flexDirection: "row",
     gap: 10,
   },
   scoreButtonRow: {
     flexDirection: "row",
-    gap: 1.5,
-    marginBottom: 10,
+    gap: 2,
+    paddingBottom: 20
   },
   scoreButton: {
     width: 74,
-    height: 67,
+    height: 68,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -521,12 +527,12 @@ const styles = StyleSheet.create({
   scoreButtonText: {
     color: "#fff",
     fontSize: 33,
-    fontWeight: "500",
+    fontWeight: 500,
   },
   actionButtonsContainer: {
-    // marginVertical: 20,
+    marginVertical: 79,
+    gap: 10
     // justifyContent: "space-around",
-    marginTop: 67,
   },
   actionButton: {
     backgroundColor: "#6ABBC4",
@@ -545,9 +551,8 @@ const styles = StyleSheet.create({
   },
   actionButtonRow: {
     flexDirection: "row",
-    gap: 10,
+    gap: 17,
     marginTop: 10,
-    marginLeft: 27,
   },
   scoreButtonsContainer: {
 
@@ -558,7 +563,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   scorePanel: {
-    width: "39%",
+    width: "40%",
     backgroundColor: "#f5f5f5",
     padding: 20,
     borderRadius: 10,
@@ -593,7 +598,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   statItem: {
-    width: "48%",
+    width: "60%",
     marginBottom: 15,
   },
   statLabel: {
@@ -614,40 +619,44 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 57,
     borderWidth: 3,
-    borderRadius: 10,
+    borderRadius: 15,
     borderColor: "#00A2B4",
     height: 122,
     width: 512,
   },
   cameraButton: {
-    width: 43,
+    width: 44,
     height: 118,
     borderRadius: 10,
     backgroundColor: "#00A3B4",
     justifyContent: "center",
   },
   controlLabel: {
-    width: "50%",
+    fontSize: 24,
     color: "#00A3B4",
     fontWeight: 500,
-    paddingLeft: 10,
+    paddingLeft: 15,
   },
   controlValue: {
-    // width: "70%",
     color: "#333",
     fontWeight: 600,
-    fontSize: 26,
-    paddingLeft: 10,
+    fontSize: 28,
+    paddingLeft: 15,
   },
   cameraControlValues: {
     flexDirection: "row",
-    justifyContent: "center",
+    textAlign: 'center',
+    alignItems: 'center',
     flex: 1,
   },
   cameraControlValuesDisplay: {
-    flexDirection: "column",
-    justifyContent: "space-around",
-    flex: 1,
+    // flexDirection: "column",
+    // justifyContent: "flex-start",
+    // textAlign: 'center',
+    alignItems: 'center',
+    // flex: 1,
+    rowGap: 10,
+    padding: 20
   },
   pauseButton: {
     backgroundColor: "#00A3B4",

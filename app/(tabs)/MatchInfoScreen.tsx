@@ -86,9 +86,9 @@ export default function MatchInfo({
                       setCategory("adults");
                       setSelectedCategory("adults");
                     }}>
-                    {selectedCategory === "adults" && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
+                    {selectedCategory === "adults" && <View style={styles.insideRadioButton}></View>}
                   </TouchableOpacity>
-                  <Text>Adults</Text>
+                  <Text style={styles.radioButtonText}>Adults</Text>
 
                   <TouchableOpacity
                     style={[styles.radio, selectedCategory === "kids" && styles.radioSelected]}
@@ -96,9 +96,9 @@ export default function MatchInfo({
                       setCategory("kids");
                       setSelectedCategory("kids");
                     }}>
-                    {selectedCategory === "kids" && <View style={styles.insideRadioButton}></View>} {/* Conditional rendering */}
+                    {selectedCategory === "kids" && <View style={styles.insideRadioButton}></View>}
                   </TouchableOpacity>
-                  <Text>Kids</Text>
+                  <Text style={styles.radioButtonText}>Kids</Text>
 
                 </View>
               </View>
@@ -175,7 +175,7 @@ export default function MatchInfo({
                   </View>
                   <View style={styles.scoreBox}>
                     <Text style={styles.scoreLabel}>Balls</Text>
-                    <Text style={styles.scoreValue}>{overs * 6}</Text>
+                    <Text style={styles.targetInput}>{overs * 6}</Text>
                   </View>
                 </View>
               </View>
@@ -242,9 +242,11 @@ const styles = StyleSheet.create({
   matchInfoScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
+    fontFamily: 'Poppins',
+
   },
   matchInfoScreenEntity: {
-    marginTop: 111,
+    marginTop: 100,
     marginLeft: 40,
   },
   row: {
@@ -264,14 +266,16 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 30,
     fontWeight: "700",
-    marginBottom: 15,
+    marginBottom: 20,
     color: "#2D3748",
   },
   radioGroup: {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: 'center',
-    gap: 5,
+    gap: 16,
+    marginLeft: 10,
+    marginTop: 24
   },
   radio: {
     padding: 10,
@@ -284,12 +288,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   insideRadioButton: {
-    height: 20,
-    width: 20,
+    height: 15,
+    width: 15,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#00A3B4',
     backgroundColor: '#00A3B4'
+  },
+  radioButtonText: {
+    fontSize: 23,
   },
   radioSelected: {
     backgroundColor: "#FFFFFF",
@@ -304,7 +311,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#FFFFFF',
     left: 10,
-    bottom: 37,
+    bottom: 50,
     paddingLeft: 4,
     paddingRight: 5,
     fontSize: 23,
@@ -312,17 +319,19 @@ const styles = StyleSheet.create({
     color: '#00A2B4'
   },
   picker: {
-    height: 50,
-    // width: 356,
+    height: 66,
+    width: 356,
     borderColor: "#00A3B4",
     borderWidth: 1.5,
     borderRadius: 8,
     paddingLeft: 14,
+    fontSize: 21
   },
   oversSelector: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
+    marginTop: 20,
     gap: 11.5,
   },
   oversButton: {
@@ -342,6 +351,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 15,
+    marginLeft: 20,
+    marginTop: 24,
   },
   toggleText: {
     fontSize: 22,
@@ -349,31 +360,27 @@ const styles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: "row",
-    gap: 120,
+    gap: 101,
+    marginTop: 8,
   },
   scoreBox: {
     borderWidth: 1,
-    borderColor: "#00A3B4",
+    borderColor: "#000000",
     borderRadius: 8,
     height: 150,
     width: 355,
     position: "relative",
-    right: 255,
+    right: 254,
   },
   scoreLabel: {
     textAlign: "center",
     fontSize: 24,
+    fontWeight: 700,
     color: "#FFFFFF",
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     backgroundColor: "#00A2B4",
-    padding: 8,
-  },
-  scoreValue: {
-    textAlign: "center",
-    fontSize: 55,
-    fontWeight: "700",
-    color: "#2D3748",
+    height: 45,
   },
   oversCount: {
     fontSize: 22,
@@ -390,18 +397,19 @@ const styles = StyleSheet.create({
     fontSize: 55,
     fontWeight: 700,
     color: "#2D3748",
-    height: 150,
+    height: 105,
+    padding: 'auto',
+    alignItems: 'center',
   },
   bowlersGrid: {
     flexDirection: "row",
     width: 200,
     height: 150,
-    gap: 10,
+    gap: -10,
   },
   bowlerCard: {
-    width: "90%",
-    marginTop: 30,
-    alignItems: "center",
+    width: '100%',
+    alignItems: "flex-start",
   },
   bowlerImage: {
     width: 112,
@@ -423,14 +431,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   bowlerName: {
-    fontFamily: 'Poppins',
+    width: 120,
+    height: 36,
     fontSize: 26,
-    fontWeight: "500",
+    fontWeight: 500,
     color: "#FFFFFF",
     backgroundColor: "#00A2B4",
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 10,
+    textAlign: 'center',
+    borderRadius: 9,
   },
   bowlerNameSelected: {
     color: "#FFFFFF",
@@ -441,9 +449,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: 398,
     gap: 10,
-    marginTop: 100,
-    marginLeft: 100,
+    marginLeft: 110,
     textAlign: 'center',
+    marginBottom: 20,
   },
   goBackButton: {
     backgroundColor: "#00A3B4",
@@ -477,8 +485,7 @@ const styles = StyleSheet.create({
   verticalLine: {
     borderLeftWidth: 3,
     height: 270,
-    marginTop: 70,
-    marginRight: 76,
+    marginTop: 30,
     marginLeft: 140,
   },
 })

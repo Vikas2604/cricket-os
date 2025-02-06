@@ -68,7 +68,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
       <ScrollView>
         {players.map((player) => (
           <View key={player.id} style={styles.playerInfoRow}>
-            <Text style={styles.playerNumberDisplay}>Player 1</Text>
+            <Text style={styles.playerNumberDisplay}>Player {players.length}</Text>
             <TextInput
               style={styles.input}
               onChangeText={(text) => updatePlayerName(player.id, text)}
@@ -81,7 +81,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
               <Text style={styles.playerIdText}>{player.id}</Text>
               {allowEditing && (
                 <TouchableOpacity onPress={() => removePlayer(player.id)}>
-                  <Icon name="minuscircle" color="#F67676" size={30} />
+                  <Icon name="minuscircle" color="#F67676" size={37} />
                 </TouchableOpacity>
               )}
             </View>
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
-    gap: 70,
+    gap: 80,
+    marginBottom: 10,
   },
   headerText: {
     fontWeight: '700',
@@ -116,8 +117,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 75,
     marginVertical: 10,
-    marginTop: 34,
-
   },
   input: {
     height: 84,
@@ -127,9 +126,7 @@ const styles = StyleSheet.create({
     paddingLeft: 17,
     borderRadius: 5,
     fontSize: 23,
-    marginTop: 26,
     borderColor: 'rgba(158, 150, 150, .5)',
-
   },
   playerNumberDisplay: {
     position: 'absolute',
@@ -143,17 +140,18 @@ const styles = StyleSheet.create({
   },
   battingStyleWrapper: {
     flexDirection: 'row',
-    marginRight: 20,
+    marginRight: 30,
+    gap: 25
   },
   battingStyleButton: {
-    width: 46,
-    height: 46,
-    marginHorizontal: 6,
+    width: 50,
+    height: 50,
     borderWidth: 1,
     borderRadius: 46,
     borderColor: '#00A2B4',
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   activeStyleButton: {
     backgroundColor: '#00A2B4',
@@ -181,9 +179,8 @@ const styles = StyleSheet.create({
     fontWeight: 400,
   },
   addButtonContainer: {
-    marginTop: 10,
     marginLeft: 113,
-    // marginRight: 200,
+    marginRight: 200,
   },
 });
 
