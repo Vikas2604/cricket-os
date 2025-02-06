@@ -1,32 +1,43 @@
-import { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
-import HeaderComponent from "../../components/HeaderComponent";
-import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler";
-import CameraControlModal from "components/CameraControlModal";
+"use client"
+
+import { useState, useEffect } from "react"
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
+import Icon from "react-native-vector-icons/AntDesign"
+import HeaderComponent from "../../components/HeaderComponent"
+import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
+import CameraControlModal from "components/CameraControlModal"
 
 interface MatchDetailsScreenProps {
-  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
-  target: number;
-  overs: number; // Ensure overs prop is included
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>
+  target: number
+  overs: number
+  route: { params: { overs: number } }
 }
 
 interface CompletedOver {
-  player: string;
-  score: number;
-  balls: string[];
-  overNumber: number;
+  player: string
+  score: number
+  balls: string[]
+  overNumber: number
 }
 
 const getOrdinalSuffix = (number: number) => {
-  const suffixes = ["th", "st", "nd", "rd"];
-  const value = number % 100;
-  return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
-};
+  const suffixes = ["th", "st", "nd", "rd"]
+  const value = number % 100
+  return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]
+}
 
-const PlayerRow = ({ playerName, balls, overNumber, isOut }: { playerName: string; balls: string[]; overNumber: number; isOut: boolean }) => (
+const PlayerRow = ({
+  playerName,
+  balls,
+  overNumber,
+  isOut,
+}: { playerName: string; balls: string[]; overNumber: number; isOut: boolean }) => (
   <View style={[styles.playerRow, isOut && styles.disabledRow]}>
-    <Text style={styles.playerName}>{playerName}'s {overNumber}{getOrdinalSuffix(overNumber)} Over:</Text>
+    <Text style={styles.playerName}>
+      {playerName}'s {overNumber}
+      {getOrdinalSuffix(overNumber)} Over:
+    </Text>
     <View style={styles.overContainer}>
       {balls.map((ball, index) => (
         <View key={index} style={styles.ball}>
@@ -35,168 +46,177 @@ const PlayerRow = ({ playerName, balls, overNumber, isOut }: { playerName: strin
       ))}
     </View>
   </View>
-);
+)
 
-export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
-  const [iconPosition, setIconPosition] = useState(0);
-  const [isAutoMode, setIsAutoMode] = useState(true);
-  const [score, setScore] = useState(0);
-  const [extras, setExtras] = useState(0);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0));
-  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0));
-  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([]);
-  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""]);
-  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null);
-  const [disputes, setDisputes] = useState(Array(players.length).fill(3));
-  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false);
-  const [outPlayers, setOutPlayers] = useState<Array<number>>([]);
+export default function MatchDetailsScreen({ players, target, route }: MatchDetailsScreenProps) {
+  const { overs } = route.params
+  console.log("Overs received in MatchDetailsScreen:", overs)
+  const [iconPosition, setIconPosition] = useState(0)
+  const [isAutoMode, setIsAutoMode] = useState(true)
+  const [score, setScore] = useState(0)
+  const [extras, setExtras] = useState(0)
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
+  const [playerOvers, setPlayerOvers] = useState(Array(players.length).fill(0))
+  const [ballsFaced, setBallsFaced] = useState(Array(players.length).fill(0))
+  const [completedOvers, setCompletedOvers] = useState<CompletedOver[]>([])
+  const [balls, setBalls] = useState<string[]>(["", "", "", "", "", ""])
+  const [playerOnStrike, setPlayerOnStrike] = useState<number | null>(null)
+  const [disputes, setDisputes] = useState(Array(players.length).fill(3))
+  const [isCameraControlVisible, setIsCameraControlVisible] = useState(false)
+  const [outPlayers, setOutPlayers] = useState<Array<number>>([])
 
   useEffect(() => {
-    console.log("Overs received:", overs); // Log the overs prop
-    setPlayerOnStrike(players[0].id);
-  }, [players, overs]);
+    console.log("Overs received:", overs)
+    setPlayerOnStrike(players[0].id)
+  }, [players, overs])
 
   const renderBall = (value: string | number, active = false) => (
     <View style={[styles.ball, active && styles.activeBall]}>
       <Text style={[styles.ballText, active && styles.activeBallText]}>{value}</Text>
     </View>
-  );
+  )
 
   const renderScoreButton = (value: string, rowIndex: number) => (
     <TouchableOpacity
-      style={[styles.scoreButton, rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue]}
+      style={[
+        styles.scoreButton,
+        rowIndex === 0 ? styles.scoreButtonRed : rowIndex === 1 ? styles.scoreButtonGreen : styles.scoreButtonBlue,
+      ]}
       onPress={() => {
         if (players[currentPlayerIndex].isOut) {
-          return;
+          return
         }
         setScore((prevScore) => {
-          const newScore = prevScore + Number.parseInt(value);
+          const newScore = prevScore + Number.parseInt(value)
           if (newScore > target) {
-            console.log(`${players[currentPlayerIndex].name} won!`);
+            console.log(`${players[currentPlayerIndex].name} won!`)
           }
-          return newScore;
-        });
+          return newScore
+        })
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls];
-          const nextIndex = prevBalls.findIndex((ball) => ball === "");
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = value;
+            newBalls[nextIndex] = value
           }
-          return newBalls;
-        });
+          return newBalls
+        })
         setBallsFaced((prevBallsFaced) => {
-          const newBallsFaced = [...prevBallsFaced];
-          newBallsFaced[currentPlayerIndex] += 1;
-          return newBallsFaced;
-        });
+          const newBallsFaced = [...prevBallsFaced]
+          newBallsFaced[currentPlayerIndex] += 1
+          return newBallsFaced
+        })
 
         if (ballsFaced[currentPlayerIndex] + 1 > 6) {
           setCompletedOvers((prevCompleted) => [
             ...prevCompleted,
-            { player: players[currentPlayerIndex].name, score: score, balls: [...balls], overNumber: playerOvers[currentPlayerIndex] + 1 }
-          ]);
-          setBalls(["", "", "", "", "", ""]);
+            {
+              player: players[currentPlayerIndex].name,
+              score: score,
+              balls: [...balls],
+              overNumber: playerOvers[currentPlayerIndex] + 1,
+            },
+          ])
+          setBalls(["", "", "", "", "", ""])
           setBallsFaced((prevBallsFaced) => {
-            const newBallsFaced = [...prevBallsFaced];
-            newBallsFaced[currentPlayerIndex] = 0;
+            const newBallsFaced = [...prevBallsFaced]
+            newBallsFaced[currentPlayerIndex] = 0
             setPlayerOvers((prevOvers) => {
-              const newOvers = [...prevOvers];
-              newOvers[currentPlayerIndex] += 1;
-              return newOvers;
-            });
+              const newOvers = [...prevOvers]
+              newOvers[currentPlayerIndex] += 1
+              return newOvers
+            })
             if (playerOvers[currentPlayerIndex] + 1 >= overs) {
-              setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length);
-              setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id);
+              setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length)
+              setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id)
             }
-            return newBallsFaced;
-          });
+            return newBallsFaced
+          })
         }
 
-        const totalBalls = overs * 6;
-        const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length;
-        console.log(`Total Balls: ${totalBalls}, Balls Played: ${ballsPlayed}, Balls Left: ${Math.max(0, totalBalls - ballsPlayed)}`);
+        const totalBalls = overs * 6
+        const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
+        console.log(
+          `Total Balls: ${totalBalls}, Balls Played: ${ballsPlayed}, Balls Left: ${Math.max(0, totalBalls - ballsPlayed)}`,
+        )
       }}
     >
       <Text style={styles.scoreButtonText}>{value}</Text>
     </TouchableOpacity>
-  );
+  )
 
   const handleDispute = (index: number) => {
     if (disputes[index] > 0) {
-      const newDisputes = [...disputes];
-      newDisputes[index] -= 1;
-      console.log("Current Disputes: ", disputes);
+      const newDisputes = [...disputes]
+      newDisputes[index] -= 1
+      console.log("Current Disputes: ", disputes)
 
-      setDisputes(newDisputes);
+      setDisputes(newDisputes)
       if (newDisputes[index] === 0) {
-        console.log("You're out of disputes");
-        Alert.alert("You're out of disputes");
+        console.log("You're out of disputes")
+        Alert.alert("You're out of disputes")
       }
     }
-  };
+  }
 
   const onGestureEvent = (event: PanGestureHandlerGestureEvent) => {
-    setIconPosition(event.nativeEvent.translationX);
+    setIconPosition(event.nativeEvent.translationX)
     if (event.nativeEvent.translationX >= 100) {
-      console.log("game stopped");
+      console.log("game stopped")
     }
-  };
+  }
 
-  const totalBalls = overs * 6;
-  const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length;
-  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00";
-  const oversRemaining = overs * 6 - ballsPlayed;
-  const requiredRunRate = oversRemaining > 0
-    ? ((target - score) / oversRemaining).toFixed(2)
-    : score >= target
-      ? "Target Achieved"
-      : "N/A";
+  const totalBalls = overs * 6
+  const ballsPlayed = balls.filter((ball) => ball !== "" && ball !== "NB" && ball !== "+1").length
+  const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
+  const oversRemaining = overs * 6 - ballsPlayed
+  const requiredRunRate =
+    oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "Target Achieved" : "N/A"
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
       case "Out":
-        console.log(`${players[currentPlayerIndex].name} got out`);
-        players[currentPlayerIndex].isOut = true;
-        setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id]);
-        setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id);
-        setScore(0);
-        setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length);
+        console.log(`${players[currentPlayerIndex].name} got out`)
+        players[currentPlayerIndex].isOut = true
+        setOutPlayers((prevOutPlayers) => [...prevOutPlayers, players[currentPlayerIndex].id])
+        setPlayerOnStrike(players[(currentPlayerIndex + 1) % players.length].id)
+        setScore(0)
+        setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % players.length)
         setPlayerOvers((prevOvers) => {
-          const newOvers = [...prevOvers];
-          newOvers[currentPlayerIndex] += 1;
-          return newOvers;
-        });
-        break;
+          const newOvers = [...prevOvers]
+          newOvers[currentPlayerIndex] += 1
+          return newOvers
+        })
+        break
       case "No Ball":
       case "Wide":
-        setScore((prevScore) => prevScore + 1);
-        setExtras((prevExtras) => prevExtras + 1);
+        setScore((prevScore) => prevScore + 1)
+        setExtras((prevExtras) => prevExtras + 1)
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls];
-          const nextIndex = prevBalls.findIndex((ball) => ball === "");
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1";
+            newBalls[nextIndex] = action === "No Ball" ? "NB" : "+1"
           }
-          return newBalls;
-        });
+          return newBalls
+        })
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls, ""];
-          return newBalls;
-        });
-        break;
+          const newBalls = [...prevBalls, ""]
+          return newBalls
+        })
+        break
       case "No Runs":
         setBalls((prevBalls) => {
-          const newBalls = [...prevBalls];
-          const nextIndex = prevBalls.findIndex((ball) => ball === "");
+          const newBalls = [...prevBalls]
+          const nextIndex = prevBalls.findIndex((ball) => ball === "")
           if (nextIndex !== -1) {
-            newBalls[nextIndex] = "•";
+            newBalls[nextIndex] = "•"
           }
-          return newBalls;
-        });
-        break;
+          return newBalls
+        })
+        break
     }
-  };
+  }
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
@@ -205,11 +225,25 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         <View>
           <View style={styles.scrollContent}>
             {players.map((player, index) => (
-              <View key={player.id} style={[styles.playerRow, outPlayers.includes(player.id) ? styles.disabledRow : playerOnStrike === player.id ? styles.activeRow : styles.inactiveRow]}>
+              <View
+                key={player.id}
+                style={[
+                  styles.playerRow,
+                  outPlayers.includes(player.id)
+                    ? styles.disabledRow
+                    : playerOnStrike === player.id
+                      ? styles.activeRow
+                      : styles.inactiveRow,
+                ]}
+              >
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
-                  <Text style={styles.overText}>{playerOvers[index] + 1}{getOrdinalSuffix(playerOvers[index] + 1)} Over</Text>
-                  {playerOnStrike === player.id && balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
+                  <Text style={styles.overText}>
+                    {playerOvers[index] + 1}
+                    {getOrdinalSuffix(playerOvers[index] + 1)} Over
+                  </Text>
+                  {playerOnStrike === player.id &&
+                    balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
                 <View style={styles.disputeBox}>
                   <TouchableOpacity onPress={() => handleDispute(index)}>
@@ -219,7 +253,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             ))}
             {completedOvers.map((over, index) => (
-              <PlayerRow key={index} playerName={over.player} balls={over.balls} overNumber={over.overNumber} isOut={false} />
+              <PlayerRow
+                key={index}
+                playerName={over.player}
+                balls={over.balls}
+                overNumber={over.overNumber}
+                isOut={false}
+              />
             ))}
           </View>
           <View style={styles.scoreEntrySection}>
@@ -227,16 +267,20 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <Text>Score Entry</Text>
               <View style={styles.switchContainer}>
                 <Text>Auto</Text>
-                <Switch value={isAutoMode} onValueChange={setIsAutoMode} trackColor={{ false: "#767577", true: "#00A3B4" }} />
+                <Switch
+                  value={isAutoMode}
+                  onValueChange={setIsAutoMode}
+                  trackColor={{ false: "#767577", true: "#00A3B4" }}
+                />
                 <Text>Manual</Text>
               </View>
             </View>
             <View style={styles.scoreEntryContent}>
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("2", 0)}
-                  {renderScoreButton("2", 1)}
-                  {renderScoreButton("2", 2)}
+                  {renderScoreButton("1", 0)}
+                  {renderScoreButton("1", 1)}
+                  {renderScoreButton("1", 2)}
                 </View>
                 <View style={styles.scoreButtonRow}>
                   {renderScoreButton("4", 0)}
@@ -251,7 +295,11 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
               <View style={styles.actionButtonsContainer}>
                 <View style={styles.actionButtonRow}>
-                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Out")} disabled={players[currentPlayerIndex].isOut}>
+                  <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => handleActionButtonPress("Out")}
+                    disabled={players[currentPlayerIndex].isOut}
+                  >
                     <Text style={styles.actionButtonText}>Out</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
@@ -323,7 +371,12 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             </TouchableOpacity>
             <PanGestureHandler onGestureEvent={onGestureEvent}>
               <TouchableOpacity style={styles.stopGameButton}>
-                <Icon style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]} name="rightcircle" color="#FFFFFF" size={45} />
+                <Icon
+                  style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]}
+                  name="rightcircle"
+                  color="#FFFFFF"
+                  size={45}
+                />
                 <Text style={styles.buttonText}>Slide to Stop</Text>
               </TouchableOpacity>
             </PanGestureHandler>
@@ -332,7 +385,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         <CameraControlModal isVisible={isCameraControlVisible} onClose={() => setIsCameraControlVisible(false)} />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -612,4 +665,5 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 700,
   },
-});
+})
+
