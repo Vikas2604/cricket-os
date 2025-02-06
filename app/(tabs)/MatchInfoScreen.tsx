@@ -73,150 +73,153 @@ export default function MatchInfo({
     <View style={styles.matchInfoScreenContainer}>
       <HeaderComponent title="Match Info" />
       <View>
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Choose your Category</Text>
-              <View style={styles.radioGroup}>
-                <TouchableOpacity
-                  style={[styles.radio, category === "adults" && styles.radioSelected]}
-                  onPress={() => setCategory("adults")}
-                >
-                  <Text style={[styles.radioText, category === "adults" && styles.radioTextSelected]}>Adults</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.radio, category === "kids" && styles.radioSelected]}
-                  onPress={() => setCategory("kids")}
-                >
-                  <Text style={[styles.radioText, category === "kids" && styles.radioTextSelected]}>Kids</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Choose Game Difficulty</Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={difficulty}
-                  onValueChange={(value) => setDifficulty(value)}
-                  style={styles.picker}
-                >
-                  <Picker.Item label="Backyard" value="Backyard" />
-                  <Picker.Item label="Beginner" value="Beginner" />
-                  <Picker.Item label="Intermediate" value="Intermediate" />
-                  <Picker.Item label="Expert" value="Expert" />
-                </Picker>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Select No. of Overs</Text>
-              <View style={styles.oversSelector}>
-                <TouchableOpacity style={styles.oversButton} onPress={() => setOvers(Math.max(1, overs - 1))}>
-                  <Text style={styles.oversButtonText}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.oversCount}>{overs}</Text>
-                <TouchableOpacity style={styles.oversButton} onPress={() => setOvers(overs + 1)}>
-                  <Text style={styles.oversButtonText}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Bowler Selection Type</Text>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.toggleText}>Auto</Text>
-                <Switch
-                  value={isAutoSelection}
-                  onValueChange={setIsAutoSelection}
-                  trackColor={{ false: "#767577", true: "#00A3B4" }}
-                  thumbColor={isAutoSelection ? "#fff" : "#f4f3f4"}
-                />
-                <Text style={styles.toggleText}>Manual</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <View style={styles.scoreContainer}>
-                <View style={styles.scoreBox}>
-                  <Text style={styles.scoreLabel}>Target</Text>
-                  <TextInput
-                    style={styles.targetInput}
-                    value={target.toString()}
-                    onChangeText={(value) => {
-                      const newTarget = Number(value)
-                      setTarget(newTarget)
-                      setTargetState(newTarget)
-                      setTarget(newTarget)
-                    }}
-                    keyboardType="numeric"
-                  />
-                </View>
-                <View style={styles.scoreBox}>
-                  <Text style={styles.scoreLabel}>Balls</Text>
-                  <Text style={styles.scoreValue}>{overs * 6}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Select Bowlers</Text>
-              <View style={styles.bowlersGrid}>
-                {bowlers.map((bowler) => (
+        <View style={styles.matchInfoScreenEntity}>
+          <View style={styles.row}>
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Choose your Category</Text>
+                <View style={styles.radioGroup}>
                   <TouchableOpacity
-                    key={bowler.id}
-                    style={styles.bowlerCard}
-                    onPress={() => {
-                      setSelectedBowlers((prev) =>
-                        prev.includes(bowler.id) ? prev.filter((id) => id !== bowler.id) : [...prev, bowler.id],
-                      )
-                    }}
+                    style={[styles.radio, category === "adults" && styles.radioSelected]}
+                    onPress={() => setCategory("adults")}
                   >
-                    <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
-                    {selectedBowlers.includes(bowler.id) && (
-                      <View style={styles.checkCircleBackground}>
-                        <Icon name="checkcircleo" size={35} color="green" />
-                      </View>
-                    )}
-                    <Text style={[styles.bowlerName, selectedBowlers.includes(bowler.id) && styles.bowlerNameSelected]}>
-                      {bowler.name}
-                    </Text>
+                    <Text style={[styles.radioText, category === "adults" && styles.radioTextSelected]}>Adults</Text>
                   </TouchableOpacity>
-                ))}
+                  <TouchableOpacity
+                    style={[styles.radio, category === "kids" && styles.radioSelected]}
+                    onPress={() => setCategory("kids")}
+                  >
+                    <Text style={[styles.radioText, category === "kids" && styles.radioTextSelected]}>Kids</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Choose Game Difficulty</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={difficulty}
+                    onValueChange={(value) => setDifficulty(value)}
+                    style={styles.picker}
+                  >
+                    <Picker.Item label="Backyard" value="Backyard" />
+                    <Picker.Item label="Beginner" value="Beginner" />
+                    <Picker.Item label="Intermediate" value="Intermediate" />
+                    <Picker.Item label="Expert" value="Expert" />
+                  </Picker>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Select No. of Overs</Text>
+                <View style={styles.oversSelector}>
+                  <TouchableOpacity style={styles.oversButton} onPress={() => setOvers(Math.max(1, overs - 1))}>
+                    <Text style={styles.oversButtonText}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.oversCount}>{overs}</Text>
+                  <TouchableOpacity style={styles.oversButton} onPress={() => setOvers(overs + 1)}>
+                    <Text style={styles.oversButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
 
-          <View style={styles.column}>
-            <View style={styles.actionButtons}>
-              <TouchableOpacity style={styles.goBackButton} onPress={() => setActiveTab("1")}>
-                <Icon style={styles.startGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
-                <Text style={styles.buttonText}>Go Back</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.startGameButton}
-                onPress={() => {
-                  console.log("Overs being passed:", overs)
-                  navigation.navigate("MatchDetailsScreen", { overs: overs })
-                }}
-              >
-                <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />
-                <Text style={styles.buttonText}>Start Game</Text>
-              </TouchableOpacity>
+          <View style={styles.row}>
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Bowler Selection Type</Text>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.toggleText}>Auto</Text>
+                  <Switch
+                    value={isAutoSelection}
+                    onValueChange={setIsAutoSelection}
+                    trackColor={{ false: "#767577", true: "#00A3B4" }}
+                    thumbColor={isAutoSelection ? "#fff" : "#f4f3f4"}
+                  />
+                  <Text style={styles.toggleText}>Manual</Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <View style={styles.scoreContainer}>
+                  <View style={styles.scoreBox}>
+                    <Text style={styles.scoreLabel}>Target</Text>
+                    <TextInput
+                      style={styles.targetInput}
+                      value={target.toString()}
+                      onChangeText={(value) => {
+                        const newTarget = Number(value)
+                        setTarget(newTarget)
+                        setTargetState(newTarget)
+                        setTarget(newTarget)
+                      }}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                  <View style={styles.scoreBox}>
+                    <Text style={styles.scoreLabel}>Balls</Text>
+                    <Text style={styles.scoreValue}>{overs * 6}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <View style={styles.column}>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Select Bowlers</Text>
+                <View style={styles.bowlersGrid}>
+                  {bowlers.map((bowler) => (
+                    <TouchableOpacity
+                      key={bowler.id}
+                      style={styles.bowlerCard}
+                      onPress={() => {
+                        setSelectedBowlers((prev) =>
+                          prev.includes(bowler.id) ? prev.filter((id) => id !== bowler.id) : [...prev, bowler.id],
+                        )
+                      }}
+                    >
+                      <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
+                      {selectedBowlers.includes(bowler.id) && (
+                        <View style={styles.checkCircleBackground}>
+                          <Icon name="checkcircleo" size={55} color="green" />
+                        </View>
+                      )}
+                      <Text style={[styles.bowlerName, selectedBowlers.includes(bowler.id) && styles.bowlerNameSelected]}>
+                        {bowler.name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            </View>
+            <View style={styles.verticalLine}></View>
+
+            <View style={styles.column}>
+              <View style={styles.actionButtons}>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => setActiveTab("1")}>
+                  <Icon style={styles.backGameButtonSlider} name="arrowleft" color="#FFFFFF" size={45} />
+                  <Text style={styles.buttonText}>Go Back</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.startGameButton}
+                  onPress={() => {
+                    console.log("Overs being passed:", overs)
+                    navigation.navigate("MatchDetailsScreen", { overs: overs })
+                  }}
+                >
+                  <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />
+                  <Text style={styles.buttonText}>Start Game</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
@@ -230,21 +233,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  matchInfoScreenEntity: {
+    marginTop: 111,
+    marginLeft: 40,
+  },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
   column: {
     flex: 1,
-    marginTop: 20,
+    // marginTop: 20,
   },
   section: {
     backgroundColor: "#fff",
     padding: 15,
     borderRadius: 8,
+
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: "700",
     marginBottom: 15,
     color: "#2D3748",
@@ -274,20 +282,20 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     overflow: "hidden",
-    width: 200,
   },
   picker: {
     height: 50,
-    width: 150,
+    width: 356,
     borderColor: "#00A3B4",
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderRadius: 8,
   },
   oversSelector: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    gap: 10,
+    gap: 11.5,
+
   },
   oversButton: {
     backgroundColor: "#00A3B4",
@@ -303,14 +311,16 @@ const styles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: 120,
   },
   scoreBox: {
     borderWidth: 1,
     borderColor: "#00A3B4",
     borderRadius: 8,
     height: 150,
-    width: "45%",
+    width: 355,
+    position: "relative",
+    right: 255,
   },
   scoreLabel: {
     textAlign: "center",
@@ -330,7 +340,8 @@ const styles = StyleSheet.create({
   oversCount: {
     fontSize: 22,
     fontWeight: 400,
-    borderWidth: 1,
+    borderWidth: 1.5,
+    opacity: 0.5,
     width: 100,
     height: 70,
     alignContent: "center",
@@ -345,17 +356,19 @@ const styles = StyleSheet.create({
   },
   bowlersGrid: {
     flexDirection: "row",
-    width: 150,
-    gap: 10,
+    width: 200,
+    height: 150,
+    // gap: 10,
   },
   bowlerCard: {
-    width: "80%",
+    width: "90%",
+    marginTop: 30,
     alignItems: "center",
   },
   bowlerImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 112,
+    height: 112,
+    borderRadius: 100,
     borderWidth: 4,
     borderColor: "#00A2B4",
   },
@@ -364,7 +377,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 35,
+    bottom: 0,
     justifyContent: "center",
     textAlign: "center",
     alignItems: "center",
@@ -372,6 +385,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   bowlerName: {
+    fontFamily: 'Poppins',
     fontSize: 26,
     fontWeight: "500",
     color: "#FFFFFF",
@@ -391,19 +405,27 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 100,
     marginLeft: 100,
+    textAlign: 'center',
   },
   goBackButton: {
     backgroundColor: "#00A3B4",
     padding: 16,
     borderRadius: 50,
     alignItems: "center",
+    height: 84,
   },
   startGameButton: {
     backgroundColor: "#00A3B4",
-    padding: 16,
+    paddingTop: 23,
+    paddingBottom: 23,
     borderRadius: 50,
-    flexDirection: "row",
-    justifyContent: "center",
+    alignItems: 'center',
+    height: 84,
+
+  },
+  backGameButtonSlider: {
+    position: "absolute",
+    left: 80,
   },
   startGameButtonSlider: {
     position: "absolute",
@@ -423,6 +445,13 @@ const styles = StyleSheet.create({
   toggleText: {
     fontSize: 22,
     color: "#000000",
+  },
+  verticalLine: {
+    borderLeftWidth: 3,
+    height: 270,
+    marginTop: 70,
+    marginRight: 76,
+    marginLeft: 140,
   },
 })
 

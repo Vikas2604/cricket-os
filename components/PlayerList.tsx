@@ -60,7 +60,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
   return (
     <View style={styles.playerListContainer}>
       <View style={styles.playerInfoHeadersTitle}>
-        <Text style={styles.headerText}>Player Name</Text>
+        <Text style={styles.headerText}>Enter your name</Text>
         <Text style={styles.headerText}>Batting Style</Text>
         <Text style={styles.headerText}>Player ID</Text>
       </View>
@@ -75,7 +75,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
           />
           <BattingStyleSelector playerId={player.id} currentStyle={player.battingStyle} />
           <View style={styles.playerIdContent}>
-            <Text>{player.id}</Text>
+            <Text style={styles.playerIdText}>{player.id}</Text>
             {allowEditing && (
               <TouchableOpacity onPress={() => removePlayer(player.id)}>
                 <Icon name="minuscircle" color="#F67676" size={30} />
@@ -86,7 +86,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
       ))}
       {allowEditing && (
         <TouchableOpacity onPress={addPlayer} style={styles.addButtonContainer}>
-          <Icon name="pluscircleo" color="#00A2B4" size={40} />
+          <Icon name="pluscircleo" color="#00A2B4" size={70} />
         </TouchableOpacity>
       )}
     </View>
@@ -96,31 +96,36 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
 const styles = StyleSheet.create({
   playerListContainer: {
     flex: 1,
-    paddingTop: 20,
-    paddingLeft: 20,
+    paddingTop: 103,
+    paddingLeft: 204,
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
-    gap: 60,
-    width: 940,
-    marginBottom: 10,
+    gap: 70,
+    // width: 940,
+    // marginBottom: 10,
   },
   headerText: {
-    fontWeight: 700,
+    fontWeight: '700',
     fontSize: 30,
   },
   playerInfoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 110,
+    gap: 75,
     marginVertical: 10,
+    marginTop: 34,
+
   },
   input: {
-    height: 40,
-    width: 150,
-    borderWidth: 1,
+    height: 84,
+    width: 273,
+    borderWidth: 1.5,
     padding: 5,
     borderRadius: 5,
+    fontSize: 23,
+    marginTop: 26,
+
   },
   battingStyleWrapper: {
     flexDirection: 'row',
@@ -143,7 +148,7 @@ const styles = StyleSheet.create({
   battingStyleText: {
     fontSize: 35,
     color: '#00A2B4',
-    fontWeight: 700,
+    fontWeight: '700',
     width: 42,
     height: 42,
     borderWidth: 1,
@@ -155,12 +160,16 @@ const styles = StyleSheet.create({
   playerIdContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 35,
+  },
+  playerIdText: {
+    fontSize: 23,
+    fontWeight: 400,
   },
   addButtonContainer: {
     marginTop: 10,
-    marginLeft: 50,
-    marginRight: 200,
+    marginLeft: 113,
+    // marginRight: 200,
   },
 });
 

@@ -47,7 +47,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             text="Go Back"
             icon="arrowleft"
             onPress={() => { }}
-            style={{ backgroundColor: '#000000', marginBottom: 30, }}
+            style={{ backgroundColor: '#000000', marginBottom: 24, marginRight: 40, }}
             textColor="#FFFFFF"
             iconColor="#FFFFFF"
             disabled={true}
@@ -58,7 +58,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             text="Continue"
             icon="arrowright"
             onPress={() => setActiveTab("2")}
-            style={{ backgroundColor: '#00A2B4', }}
+            style={{ backgroundColor: '#00A2B4', marginRight: 40 }}
             textColor="#FFFFFF"
             iconColor="#FFFFFF"
           />
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   playerInfoContainer: {
     flex: 1,
     backgroundColor: '#fff',
+    fontFamily: 'Roboto',
   },
   mainContainer: {
     flexDirection: 'row',
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     alignItems: 'center',
-    marginLeft: 'auto',
-    paddingTop: 100,
+    marginRight: 40,
+    marginTop: 100,
   },
   numberOfPlayersInfo: {
     backgroundColor: '#00A2B4',
@@ -97,19 +98,25 @@ const styles = StyleSheet.create({
   numberOfPlayersInfoContainer: {
     borderWidth: 1,
     borderRadius: 14,
-    marginBottom: 30,
+    marginTop: 100,
+    marginBottom: 197,
     marginRight: 40,
+    width: 300,
+    height: 200,
   },
   numberOfPlayers: {
     fontWeight: '700',
     fontSize: 73,
     textAlign: 'center',
-    paddingBottom: 30,
+    justifyContent: 'center',
+    width: 300,
+    height: 200,
+
   },
   verticalLine: {
     borderLeftWidth: 3,
-    height: 600,
-    marginTop: 20,
-    paddingRight: 20,
+    height: 698,
+    marginTop: 70,
+    marginRight: 76,
   },
 });
