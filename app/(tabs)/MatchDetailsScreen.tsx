@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Switch, Alert } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"
@@ -666,4 +664,3 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
 })
-
