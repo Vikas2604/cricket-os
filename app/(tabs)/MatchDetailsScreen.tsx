@@ -349,7 +349,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           <View style={styles.controlsSection}>
             <View style={styles.cameraControls}>
               <TouchableOpacity style={styles.cameraButton} onPress={() => setIsCameraControlVisible(true)}>
-                <Icon name="left" size={24} color="#fff" />
+                <Icon name="left" size={32} color="#fff" />
               </TouchableOpacity>
               <View style={styles.cameraControlValues}>
                 <View style={styles.cameraControlValuesDisplay}>
