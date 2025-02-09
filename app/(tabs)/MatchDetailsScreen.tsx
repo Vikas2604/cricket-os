@@ -172,7 +172,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
   const oversRemaining = (overs * 6) - ballsPlayed
   const requiredRunRate =
-    oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "Target Achieved" : "N/A"
+    oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "0" : "N/A"
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
@@ -241,8 +241,8 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>
                     {playerOvers[index] + 1}
-                    {getOrdinalSuffix(playerOvers[index] + 1)} Over
-                  </Text>
+                    {getOrdinalSuffix(playerOvers[index] + 1)}
+                  </Text><Text style={styles.overTextOver}>Over</Text>
                   {playerOnStrike === player.id &&
                     balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
                 </View>
@@ -267,13 +267,13 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             <View style={styles.autoManualSwitch}>
               <Text style={styles.scoreEntryText}>Score Entry</Text>
               <View style={styles.switchContainer}>
-                <Text>Auto</Text>
+                <Text style={styles.switchContainerText}>Auto</Text>
                 <Switch
                   value={isAutoMode}
                   onValueChange={setIsAutoMode}
                   trackColor={{ false: "rgba(0, 162, 180, 0.5)", true: "rgba(0, 162, 180, 0.5)" }}
                 />
-                <Text>Manual</Text>
+                <Text style={styles.switchContainerText}>Manual</Text>
               </View>
             </View>
             <View style={styles.scoreEntryContent}>
@@ -323,26 +323,37 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
           <View style={styles.scoreSection}>
             <Text style={styles.nextTarget}>Next Target : {target}</Text>
             <Text style={styles.mainScore}>
-              <Text style={styles.scoreNumber}>{score}</Text>
-              <Text style={styles.scoreSlash}> / </Text>
-              <Text style={styles.maxScore}>{target}</Text>
+              <Text style={styles.mainScoreText}>Score</Text>
+              <View style={styles.mainScoreBoard}>
+                <Text style={styles.scoreNumber}>{score}</Text>
+                <Text style={styles.scoreSlash}> / </Text>
+                <Text style={styles.maxScore}>{target}</Text>
+              </View>
             </Text>
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Extras</Text>
-                <Text style={styles.statValue}>{extras}</Text>
+                <View style={styles.statItemGroupExtras}>
+                  <Text style={styles.statLabel}>Extras</Text>
+                  <Text style={styles.statValue}>{extras}</Text>
+                </View>
               </View>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Balls Left</Text>
-                <Text style={styles.statValue}>{Math.max(0, totalBalls - ballsPlayed)}</Text>
+                <View style={styles.statItemGroupBalls}>
+                  <Text style={styles.statLabel}>Balls Left</Text>
+                  <Text style={styles.statValue}>{Math.max(0, totalBalls - ballsPlayed)}</Text>
+                </View>
               </View>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Req. Rate</Text>
-                <Text style={styles.statValue}>{requiredRunRate}/over</Text>
+                <View style={styles.statItemGroupReq}>
+                  <Text style={styles.statLabel}>Req. Rate</Text>
+                  <Text style={styles.statValue}>{requiredRunRate}/over</Text>
+                </View>
               </View>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Strike Rate</Text>
-                <Text style={styles.statValue}>{strikeRate}</Text>
+                <View style={styles.statItemGroupStrRate}>
+                  <Text style={styles.statLabel}>Strike Rate</Text>
+                  <Text style={styles.statValue}>{strikeRate}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -367,7 +378,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             </View>
             <TouchableOpacity style={styles.pauseButton}>
-              <Icon name="pausecircleo" size={24} color="#fff" />
+              <Icon name="pausecircleo" size={46} color="#fff" />
               <Text style={styles.pauseButtonText}>Pause</Text>
             </TouchableOpacity>
             <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -402,7 +413,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flex: 1,
     overflowY: "auto",
-    padding: 5,
+    marginTop: 42,
     width: 831,
   },
   playerRow: {
@@ -430,7 +441,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   playerName: {
-    fontSize: 24,
+    fontWeight: 700,
+    fontSize: 36,
     marginBottom: 10,
   },
   overContainer: {
@@ -440,21 +452,32 @@ const styles = StyleSheet.create({
   },
   overText: {
     backgroundColor: "#333",
+    fontWeight: 700,
+    fontSize: 36,
     color: "#fff",
-    padding: 4,
+    paddingLeft: 26,
+    paddingRight: 26,
     borderRadius: 4,
     marginRight: 10,
     textAlign: "center",
   },
+  overTextOver: {
+    position: 'absolute',
+    top: 69,
+    left: 27,
+    fontWeight: 700,
+    fontSize: 22,
+  },
   ball: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    width: 86,
+    height: 86,
+    borderRadius: 86,
+    borderWidth: 3,
+    borderColor: "#000000",
+    opacity: 0.4,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 4,
+    marginHorizontal: 12,
   },
   activeBall: {
     borderColor: "#00A3B4",
@@ -467,12 +490,23 @@ const styles = StyleSheet.create({
     color: "#00A3B4",
   },
   disputeBox: {
+    position: 'absolute',
+    top: -2,
+    right: -3,
+    width: 201,
+    height: 59,
+    textAlign: 'center',
     alignSelf: "flex-end",
   },
   disputeText: {
-    color: "#666",
-    borderWidth: 1,
-    padding: 5,
+    color: "#F67676",
+    borderWidth: 3,
+    padding: 8,
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 12,
+    textAlign: 'center',
+    fontWeight: 700,
+    fontSize: 26,
     borderColor: "#F67676",
   },
   scoreEntrySection: {
@@ -494,6 +528,12 @@ const styles = StyleSheet.create({
   switchContainer: {
     flexDirection: "row",
     gap: 10,
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  switchContainerText: {
+    fontWeight: 400,
+    fontSize: 22,
   },
   scoreButtonRow: {
     flexDirection: "row",
@@ -563,61 +603,113 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   scorePanel: {
-    width: "40%",
-    backgroundColor: "#f5f5f5",
-    padding: 20,
-    borderRadius: 10,
+    // width: "40%",
+    // backgroundColor: "#",
+    // padding: 20,
+    // borderRadius: 10,
   },
   scoreSection: {
-    marginBottom: 30,
+    width: 381,
+    height: 458,
+    marginBottom: 23,
+    borderWidth: 3,
+    borderRadius: 16,
+    borderColor: '#00BDD2',
+    marginTop: 40,
+    marginLeft: 130,
+    color: '#00000'
   },
   nextTarget: {
-    fontSize: 21,
-    color: "#00A3B4",
-    marginBottom: 10,
+    fontSize: 22,
+    fontWeight: 700,
+    color: "#FFFFFF",
+    width: 196,
+    height: 58,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 16,
+    paddingRight: 16,
+    textAlign: 'center',
+    backgroundColor: '#00A2B4',
+    position: 'absolute',
+    right: 0,
+    borderTopRightRadius: 13,
+    borderBottomLeftRadius: 13,
   },
   mainScore: {
-    marginBottom: 20,
+    fontWeight: 700,
+    fontSize: 35,
+  },
+  mainScoreText: {
+    position: 'absolute',
+    top: 17,
+    left: 26,
+  },
+  mainScoreBoard: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 68,
+    left: 26,
   },
   scoreNumber: {
-    fontSize: 40,
+    fontSize: 87,
     color: "#00A3B4",
-    fontWeight: "600",
+    fontWeight: 700,
   },
   scoreSlash: {
-    fontSize: 40,
+    fontSize: 87,
+    fontWeight: 700,
     color: "#333",
   },
   maxScore: {
-    fontSize: 40,
+    fontSize: 87,
+    fontWeight: 700,
     color: "#333",
   },
   statsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
   },
   statItem: {
-    width: "60%",
-    marginBottom: 15,
+    width: "100%",
+  },
+  statItemGroupExtras: {
+    position: 'absolute',
+    left: 21,
+    top: 216,
+  },
+  statItemGroupBalls: {
+    position: 'absolute',
+    left: 185,
+    top: 218,
+  },
+  statItemGroupReq: {
+    position: 'absolute',
+    top: 336,
+    left: 21,
+  },
+  statItemGroupStrRate: {
+    position: 'absolute',
+    top: 336,
+    left: 185,
   },
   statLabel: {
-    color: "#666",
-    marginBottom: 5,
+    color: "#00000",
+    fontWeight: 500,
+    fontSize: 27,
   },
   statValue: {
-    fontSize: 18,
+    fontWeight: 700,
+    fontSize: 44,
     color: "#00A3B4",
-    fontWeight: "500",
   },
   controlsSection: {
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-    paddingTop: 20,
+    left: 47,
   },
   cameraControls: {
     flexDirection: "row",
-    marginBottom: 57,
+    justifyContent: 'space-between',
+    marginBottom: 15,
     borderWidth: 3,
     borderRadius: 15,
     borderColor: "#00A2B4",
@@ -650,11 +742,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cameraControlValuesDisplay: {
-    // flexDirection: "column",
-    // justifyContent: "flex-start",
-    // textAlign: 'center',
     alignItems: 'center',
-    // flex: 1,
     rowGap: 10,
     padding: 20
   },
@@ -667,7 +755,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
     height: 77,
-    width: 400,
+    width: 461,
+    marginLeft: 44,
   },
   pauseButtonText: {
     color: "#fff",
@@ -685,7 +774,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     height: 77,
-    width: 400,
+    width: 461,
+    marginLeft: 44,
   },
   stopGameButtonSlider: {
     position: "absolute",

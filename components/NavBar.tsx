@@ -8,7 +8,7 @@ const NavBar = () => {
             <Icon
                 name="bars"
                 color="#000000"
-                size={30}
+                size={42}
             />
             <Text style={styles.text}>
                 CLIENT LOGO
@@ -16,7 +16,7 @@ const NavBar = () => {
             <Icon
                 name="setting"
                 color="#000000"
-                size={30}
+                size={42}
             />
         </View>
     );
