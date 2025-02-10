@@ -31,8 +31,8 @@ export default SideBarComponent;
 const styles = StyleSheet.create({
   sidebar: {
     width: 151,
-    height: 831,
-    marginTop: 86,
+    height: 916,
+    marginTop: 0,
     backgroundColor: '#00A3B4',
   },
   sideTab: {

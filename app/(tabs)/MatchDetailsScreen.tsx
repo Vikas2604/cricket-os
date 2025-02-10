@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
   scoreEntrySection: {
     width: 783,
     height: 329,
-    borderTopWidth: 1,
+    borderTopWidth: 3,
     borderColor: "#ddd",
     paddingTop: 20,
   },
