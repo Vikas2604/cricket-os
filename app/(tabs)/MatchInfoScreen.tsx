@@ -181,7 +181,6 @@ export default function MatchInfo({
               </View>
             </View>
           </View>
-
           <View style={styles.row}>
             <View style={styles.column}>
               <View style={styles.section}>
@@ -212,7 +211,6 @@ export default function MatchInfo({
               </View>
             </View>
             <View style={styles.verticalLine}></View>
-
             <View style={styles.column}>
               <View style={styles.actionButtons}>
                 <TouchableOpacity style={styles.goBackButton} onPress={() => setActiveTab("1")}>
@@ -367,6 +365,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 8,
+    textAlign: 'center',
     height: 150,
     width: 355,
     position: "relative",
@@ -381,6 +380,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 6,
     backgroundColor: "#00A2B4",
     height: 45,
+    padding: 5,
   },
   oversCount: {
     fontSize: 22,
@@ -467,7 +467,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     height: 84,
-
   },
   backGameButtonSlider: {
     position: "absolute",
@@ -476,6 +475,7 @@ const styles = StyleSheet.create({
   startGameButtonSlider: {
     position: "absolute",
     left: 10,
+    top: 17,
   },
   buttonText: {
     color: "#fff",

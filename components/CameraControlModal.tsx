@@ -23,7 +23,7 @@ export default function CameraControlModal({ isVisible, onClose }: CameraControl
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Icon name="close" size={24} color="#333" />
+            <Icon style={styles.closeButtonX} name="close" size={32} color="#FFFFFF" />
           </TouchableOpacity>
 
           <View style={styles.controlsContainer}>
@@ -91,22 +91,32 @@ export default function CameraControlModal({ isVisible, onClose }: CameraControl
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
     justifyContent: "center",
     alignItems: "center",
   },
   modalContent: {
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: 7,
     padding: 20,
-    width: "80%",
-    maxWidth: 500,
+    width: 1375,
+    height: 883,
   },
   closeButton: {
     position: "absolute",
-    right: 15,
-    top: 15,
+    top: 6,
+    left: 9,
     zIndex: 1,
+    backgroundColor: '#444444',
+    color: '#FFFFFF',
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+  },
+  closeButtonX: {
+    position: 'absolute',
+    top: 7,
+    left: 9
   },
   controlsContainer: {
     flexDirection: "row",

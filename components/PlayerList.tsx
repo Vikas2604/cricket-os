@@ -66,9 +66,9 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
         <Text style={styles.headerText}>Player ID</Text>
       </View>
       <ScrollView>
-        {players.map((player) => (
+        {players.map((player, index) => (
           <View key={player.id} style={styles.playerInfoRow}>
-            <Text style={styles.playerNumberDisplay}>Player {players.length}</Text>
+            <Text style={styles.playerNumberDisplay}>Player {index + 1}</Text>
             <TextInput
               style={styles.input}
               onChangeText={(text) => updatePlayerName(player.id, text)}
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     marginLeft: 113,
     marginRight: 200,
+    marginBottom: 10,
   },
 });
 
