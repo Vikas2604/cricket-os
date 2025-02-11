@@ -1,6 +1,6 @@
 import React, { useState, createContext, ReactNode } from 'react';
 import NavBar from '../../components/NavBar';
-import SideBar from '../../components/SideBar'; // Corrected import path
+import SideBar from '../../components/SideBar';
 
 interface MatchInfoContextType {
   category: string;
@@ -48,17 +48,12 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 };
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("1"); // Default to "MATCH DETAILS"
-  const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '', isOut: false }]); // Lifted state
-  const [target, setTarget] = useState(0); // Added target state
-  const [overs] = useState(0); // Added overs state
 
   return (
     <MatchInfoProvider>
       <React.Fragment>
         <NavBar />
         <SideBar />
-
       </React.Fragment>
     </MatchInfoProvider>
   );
