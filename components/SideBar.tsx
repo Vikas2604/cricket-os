@@ -7,8 +7,8 @@ interface SideBarProps {
   label: string;
   style: object;
   color: string;
-  activeTab: string; // New prop
-  onTabSelect: (tab: string) => void; // New prop
+  activeTab: string;
+  onTabSelect: (tab: string) => void;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTab, onTabSelect }) => {
@@ -18,7 +18,7 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTa
         <Svg width="150" height="920" style={styles.svg}>
           <Defs>
             <ClipPath id="clipPath">
-              <Path d="M 0,0 L 130,0 L 149,20 L 149,250 L 74.5,350 L 74.5,920 L 0,920 L 0,0 Z" />
+              <Path d="M 0,0 L 110,0 L 149,20 L 149,250 L 74.5,350 L 74.5,920 L 0,920 L 0,0 Z" />
             </ClipPath>
           </Defs>
 

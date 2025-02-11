@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import SideBar from './SideBar'; // Updated import statement
 import PlayerInfoScreen from '../app/(tabs)/PlayerInfoScreen';
@@ -6,8 +6,8 @@ import MatchInfoScreen from '../app/(tabs)/MatchInfoScreen';
 import MatchDetailsScreen from '../app/(tabs)/MatchDetailsScreen';
 
 interface TabNavigatorProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: string; // Added activeTab
+  setActiveTab: (tab: string) => void; // Added setActiveTab
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
   setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
   target: number;
@@ -40,11 +40,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
         {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} playerOnStrike={null} setPlayerOnStrike={function (id: number | null): void {
           throw new Error('Function not implemented.');
         }} />}
-        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} route={{
-          params: {
-            overs: 0
-          }
-        }} />}
+        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} route={{ params: { overs } }} />} {/* Pass route prop */}
       </View>
     </View>
   );
