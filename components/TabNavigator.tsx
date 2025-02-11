@@ -8,8 +8,8 @@ import MatchDetailsScreen from '../app/(tabs)/MatchDetailsScreen';
 interface TabNavigatorProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  players: Array<{ id: number; name: string; battingStyle: string }>;
-  setPlayers: (players: Array<{ id: number; name: string; battingStyle: string }>) => void;
+  players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
+  setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
   target: number;
   setTarget: (target: number) => void;
   overs: number;
@@ -25,7 +25,11 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
         {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} playerOnStrike={null} setPlayerOnStrike={function (id: number | null): void {
           throw new Error('Function not implemented.');
         }} />}
-        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} />}
+        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} route={{
+          params: {
+            overs: 0
+          }
+        }} />}
       </View>
     </View>
   );

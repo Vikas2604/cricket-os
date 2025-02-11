@@ -49,7 +49,7 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState("1"); // Default to "MATCH DETAILS"
-  const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '' }]); // Lifted state
+  const [players, setPlayers] = useState([{ id: 1, name: '', battingStyle: '', isOut: false }]); // Lifted state
   const [target, setTarget] = useState(0); // Added target state
   const [overs] = useState(0); // Added overs state
 
@@ -67,6 +67,7 @@ const App: React.FC = () => {
           setTarget={setTarget}
           overs={overs}
         />
+
       </React.Fragment>
     </MatchInfoProvider>
   );

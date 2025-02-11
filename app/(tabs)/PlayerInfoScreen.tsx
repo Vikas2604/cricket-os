@@ -1,4 +1,3 @@
-// PlayerInfoScreen.tsx
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent';

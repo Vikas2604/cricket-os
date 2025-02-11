@@ -235,8 +235,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                     : playerOnStrike === player.id
                       ? styles.activeRow
                       : styles.inactiveRow,
-                ]}
-              >
+                ]}>
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>
@@ -299,8 +298,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                   <TouchableOpacity
                     style={styles.actionButton}
                     onPress={() => handleActionButtonPress("Out")}
-                    disabled={players[currentPlayerIndex].isOut}
-                  >
+                    disabled={players[currentPlayerIndex].isOut}>
                     <Text style={styles.actionButtonText}>Out</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
