@@ -346,7 +346,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               <View style={styles.statItem}>
                 <View style={styles.statItemGroupReq}>
                   <Text style={styles.statLabel}>Req. Rate</Text>
-                  <Text style={styles.statValue}>{requiredRunRate}/over</Text>
+                  <Text style={styles.statValue}>{requiredRunRate}/0</Text>
                 </View>
               </View>
               <View style={styles.statItem}>
@@ -460,6 +460,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginRight: 10,
     textAlign: "center",
+    transform: [{ skewX: '20deg' }],
   },
   overTextOver: {
     position: 'absolute',
@@ -572,7 +573,6 @@ const styles = StyleSheet.create({
   actionButtonsContainer: {
     marginVertical: 79,
     gap: 10
-    // justifyContent: "space-around",
   },
   actionButton: {
     backgroundColor: "#6ABBC4",

@@ -67,7 +67,6 @@ const App: React.FC = () => {
           setTarget={setTarget}
           overs={overs}
         />
-
       </React.Fragment>
     </MatchInfoProvider>
   );
