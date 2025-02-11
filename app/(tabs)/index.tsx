@@ -1,6 +1,6 @@
 import React, { useState, createContext, ReactNode } from 'react';
 import NavBar from '../../components/NavBar';
-import SideBar from '../../components/SideBar';
+import TabNavigator from 'components/TabNavigator';
 
 interface MatchInfoContextType {
   category: string;
@@ -48,11 +48,24 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 };
 
 const App: React.FC = () => {
+  const [players, setPlayers] = useState<Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>>([]);
+  const [activeTab, setActiveTab] = useState('');
+
   return (
     <MatchInfoProvider>
       <React.Fragment>
         <NavBar />
-        <SideBar />
+        <TabNavigator
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          players={players}
+          setPlayers={setPlayers}
+          target={0}
+          setTarget={function (target: number): void {
+            throw new Error('Function not implemented.');
+          }}
+          overs={0}
+        />
       </React.Fragment>
     </MatchInfoProvider>
   );
