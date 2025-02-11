@@ -10,7 +10,6 @@ interface PlayerInfoScreenProps {
   setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
 }
 
-
 const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, players, setPlayers }) => {
   const generatePlayerId = () => {
     let id: number;
@@ -41,7 +40,6 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             <Text style={styles.numberOfPlayers}>{players.length}</Text>
           </View>
 
-          {/* StyledButton for "Go Back" button */}
           <StyledButton
             text="Go Back"
             icon="arrowleft"
@@ -52,7 +50,6 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             disabled={true}
           />
 
-          {/* StyledButton for "Continue" button */}
           <StyledButton
             text="Continue"
             icon="arrowright"
@@ -110,7 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 300,
     height: 200,
-
   },
   verticalLine: {
     borderLeftWidth: 3,

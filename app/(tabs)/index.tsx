@@ -48,7 +48,6 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 };
 
 const App: React.FC = () => {
-
   return (
     <MatchInfoProvider>
       <React.Fragment>
