@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Switch, TextInput, Image } fr
 import { Picker } from "@react-native-picker/picker"
 import Icon from "react-native-vector-icons/AntDesign"
 import HeaderComponent from "../../components/HeaderComponent"
+import React from "react"
 
 interface MatchInfoProps {
   setActiveTab: (tab: string) => void

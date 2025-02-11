@@ -1,3 +1,4 @@
+import React from "react"
 import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native"
 import Icon from "react-native-vector-icons/AntDesign"

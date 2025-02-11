@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/AntDesign"
 import HeaderComponent from "../../components/HeaderComponent"
 import { PanGestureHandler, type PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
 import CameraControlModal from "components/CameraControlModal";
+import React from "react"
 
 interface MatchDetailsScreenProps {
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flex: 1,
-    overflowY: "auto",
+    overflow: "scroll",
     marginTop: 42,
     width: 831,
   },

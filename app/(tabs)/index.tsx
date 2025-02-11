@@ -1,6 +1,6 @@
 import React, { useState, createContext, ReactNode } from 'react';
 import NavBar from '../../components/NavBar';
-import TabNavigator from '../../components/TabNavigator';
+import SideBar from '../../components/SideBar'; // Corrected import path
 
 interface MatchInfoContextType {
   category: string;
@@ -53,20 +53,11 @@ const App: React.FC = () => {
   const [target, setTarget] = useState(0); // Added target state
   const [overs] = useState(0); // Added overs state
 
-
   return (
     <MatchInfoProvider>
       <React.Fragment>
         <NavBar />
-        <TabNavigator
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          players={players}
-          setPlayers={setPlayers}
-          target={target}
-          setTarget={setTarget}
-          overs={overs}
-        />
+        <SideBar />
 
       </React.Fragment>
     </MatchInfoProvider>
