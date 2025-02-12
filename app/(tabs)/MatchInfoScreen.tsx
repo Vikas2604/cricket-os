@@ -143,7 +143,7 @@ export default function MatchInfoScreen({
                   <Text style={styles.toggleText}>Auto</Text>
                   <Switch
                     value={isAutoSelection}
-                    onValueChange={setIsAutoSelection}
+                    style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }} onValueChange={setIsAutoSelection}
                     trackColor={{ false: "rgba(0, 162, 180, 0.5)", true: "rgba(0, 162, 180, 0.5)" }}
                     thumbColor={isAutoSelection ? "rgb(0, 162, 180)" : "rgb(0, 162, 180)"}
                   />
