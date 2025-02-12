@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     textAlign: 'center',
     color: '#fff',
-    marginRight: 150,
+    marginRight: 30,
+    textTransform: 'uppercase',
   },
 });
 
