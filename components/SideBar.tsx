@@ -25,13 +25,13 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTa
           {/* Clipped Rectangle with dynamic color */}
           <Rect width="150" height="920" fill={color} clipPath="url(#clipPath)" />
 
-          {/* Arch Path */}
+          {/* Arch Path
           <Path
             d="M 110,0 A 75 75 0 0 1 149 20"
             fill={color}
             stroke={color}
             strokeWidth="1"
-          />
+          /> */}
 
           {/* Number Text */}
           <Text x="85" y="170" fontSize="90" fontWeight="500" fill="white" textAnchor="start">

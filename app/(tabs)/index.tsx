@@ -50,6 +50,8 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 const App: React.FC = () => {
   const [players, setPlayers] = useState<Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>>([]);
   const [activeTab, setActiveTab] = useState('1');
+  const [target, setTarget] = useState(0);
+  const [overs, setOvers] = useState(0);
 
   return (
     <MatchInfoProvider>
@@ -60,11 +62,9 @@ const App: React.FC = () => {
           setActiveTab={setActiveTab}
           players={players}
           setPlayers={setPlayers}
-          target={0}
-          setTarget={function (target: number): void {
-            throw new Error('Function not implemented.');
-          }}
-          overs={0}
+          target={target}
+          setTarget={setTarget}
+          overs={overs}
         />
       </React.Fragment>
     </MatchInfoProvider>

@@ -173,7 +173,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
   const strikeRate = ballsPlayed > 0 ? ((score / ballsPlayed) * 100).toFixed(2) : "0.00"
   const oversRemaining = (overs * 6) - ballsPlayed
   const requiredRunRate =
-    oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "0" : "N/A"
+    oversRemaining > 0 ? ((target - score) / oversRemaining).toFixed(2) : score >= target ? "0" : "0"
 
   const handleActionButtonPress = (action: string) => {
     switch (action) {
@@ -276,6 +276,46 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <Text style={styles.switchContainerText}>Manual</Text>
               </View>
             </View>
+            <View style={styles.scoreEntryContent}>
+              <View style={styles.scoreButtonsContainer}>
+                <View style={styles.scoreButtonRow}>
+                  {renderScoreButton("1", 0)}
+                  {renderScoreButton("1", 1)}
+                  {renderScoreButton("1", 2)}
+                </View>
+                <View style={styles.scoreButtonRow}>
+                  {renderScoreButton("4", 0)}
+                  {renderScoreButton("4", 1)}
+                  {renderScoreButton("4", 2)}
+                </View>
+                <View style={styles.scoreButtonRow}>
+                  {renderScoreButton("6", 0)}
+                  {renderScoreButton("6", 1)}
+                  {renderScoreButton("6", 2)}
+                </View>
+              </View>
+              <View style={styles.actionButtonsContainer}>
+                <View style={styles.actionButtonRow}>
+                  <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => handleActionButtonPress("Out")}
+                    disabled={players[currentPlayerIndex].isOut}>
+                    <Text style={styles.actionButtonText}>Out</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
+                    <Text style={styles.actionButtonText}>No Ball</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.actionButtonRow}>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Runs")}>
+                    <Text style={styles.actionButtonText}>Dot</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Wide")}>
+                    <Text style={styles.actionButtonText}>Wide</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
         <View style={styles.scorePanel}>
@@ -346,7 +386,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                   style={[styles.stopGameButtonSlider, { transform: [{ translateX: iconPosition }] }]}
                   name="rightcircle"
                   color="#FFFFFF"
-                  size={45}
+                  size={55}
                 />
                 <Text style={styles.buttonText}>Slide to Stop</Text>
               </TouchableOpacity>
@@ -371,6 +411,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flex: 1,
+    overflowY: "auto",
     overflow: "scroll",
     marginTop: 42,
     width: 831,
@@ -476,6 +517,30 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     paddingTop: 20,
   },
+  autoManualSwitch: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  scoreEntryText: {
+    fontSize: 30,
+    fontWeight: 700
+  },
+  switchContainer: {
+    flexDirection: "row",
+    gap: 10,
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  switchContainerText: {
+    fontWeight: 400,
+    fontSize: 22,
+  },
+  scoreButtonRow: {
+    flexDirection: "row",
+    gap: 2,
+    paddingBottom: 20
+  },
   scoreButton: {
     width: 74,
     height: 68,
@@ -505,24 +570,37 @@ const styles = StyleSheet.create({
     fontSize: 33,
     fontWeight: 500,
   },
-  scoreEntryText: {
-    fontSize: 30,
-    fontWeight: 700
+  actionButtonsContainer: {
+    marginVertical: 79,
+    gap: 10
   },
-  switchContainer: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  autoManualSwitch: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  actionButton: {
+    backgroundColor: "#6ABBC4",
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 33,
+    width: 228,
+    height: 68,
     alignItems: "center",
   },
-  switchContainerText: {
-    fontWeight: 400,
-    fontSize: 22,
+  actionButtonText: {
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontSize: 33,
+    fontWeight: 500,
+  },
+  actionButtonRow: {
+    flexDirection: "row",
+    gap: 17,
+    marginTop: 10,
+  },
+  scoreButtonsContainer: {
+
+  },
+  scoreEntryContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
   },
   scorePanel: {
     // width: "40%",
@@ -549,7 +627,7 @@ const styles = StyleSheet.create({
     height: 58,
     paddingTop: 15,
     paddingBottom: 15,
-    paddingLeft: 16,
+    paddingLeft: 10,
     paddingRight: 16,
     textAlign: 'center',
     backgroundColor: '#00A2B4',
@@ -700,7 +778,9 @@ const styles = StyleSheet.create({
     marginLeft: 44,
   },
   stopGameButtonSlider: {
+    elevation: 5,
     position: "absolute",
+    bottom: 7.5,
     left: 10,
   },
   buttonText: {

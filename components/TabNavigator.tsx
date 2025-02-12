@@ -22,6 +22,10 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
     { number: 1, label: "PLAYER INFO", style: styles.playerInfo, color: "#0091A1" },
   ];
 
+  const setPlayerOnStrike = (id: number | null) => {
+    // Implement logic for setting player on strike
+  };
+
   return (
     <View style={styles.container}>
       {sideBarData.map((data) => (
@@ -37,10 +41,8 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
       ))}
       <View style={styles.tabContent}>
         {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} players={players} setPlayers={setPlayers} />}
-        {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} playerOnStrike={null} setPlayerOnStrike={function (id: number | null): void {
-          throw new Error('Function not implemented.');
-        }} />}
-        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} route={{ params: { overs } }} />} {/* Pass route prop */}
+        {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} playerOnStrike={null} setPlayerOnStrike={setPlayerOnStrike} />}
+        {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} />}
       </View>
     </View>
   );
