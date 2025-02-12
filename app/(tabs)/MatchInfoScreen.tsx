@@ -170,7 +170,7 @@ export default function MatchInfoScreen({
                   </View>
                   <View style={styles.scoreBox}>
                     <Text style={styles.scoreLabel}>Balls</Text>
-                    <Text style={styles.targetInput}>{overs * 6}</Text>
+                    <Text style={styles.overInput}>{overs * 6}</Text>
                   </View>
                 </View>
               </View>
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   matchInfoScreenEntity: {
     marginTop: 100,
-    marginLeft: 40,
+    marginLeft: 160,
   },
   row: {
     flexDirection: "row",
@@ -316,10 +316,10 @@ const styles = StyleSheet.create({
     height: 66,
     width: 356,
     borderColor: "#00A3B4",
-    borderWidth: 1.5,
-    borderRadius: 8,
+    borderWidth: 2.5,
+    borderRadius: 3.75,
     paddingLeft: 14,
-    fontSize: 21
+    fontSize: 21.5,
   },
   oversSelector: {
     flexDirection: "row",
@@ -387,6 +387,7 @@ const styles = StyleSheet.create({
     height: 70,
     alignContent: "center",
     textAlign: "center",
+
   },
   targetInput: {
     textAlign: "center",
@@ -396,6 +397,16 @@ const styles = StyleSheet.create({
     height: 105,
     padding: 'auto',
     alignItems: 'center',
+  },
+  overInput: {
+    textAlign: "center",
+    fontSize: 55,
+    fontWeight: 700,
+    color: "#2D3748",
+    height: 105,
+    padding: 'auto',
+    alignItems: 'center',
+    paddingTop: 13
   },
   bowlersGrid: {
     flexDirection: "row",

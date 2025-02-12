@@ -457,7 +457,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     paddingLeft: 26,
     paddingRight: 26,
-    borderRadius: 4,
     marginRight: 10,
     textAlign: "center",
     transform: [{ skewX: '20deg' }],

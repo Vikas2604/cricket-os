@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   },
   sidebarContainer: {},
   svg: {},
-  playerInfo: {},
+  playerInfo: {
+  },
   matchInfo: {
     position: "absolute",
     left: 70,
