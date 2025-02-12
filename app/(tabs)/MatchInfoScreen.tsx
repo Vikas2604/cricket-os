@@ -354,8 +354,9 @@ const styles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: "row",
-    gap: 101,
+    gap: 80,
     marginTop: 8,
+    marginLeft: 10,
   },
   scoreBox: {
     borderWidth: 1,
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
   },
   bowlersGrid: {
     flexDirection: "row",
-    width: 200,
+    width: 170,
     height: 150,
   },
   bowlerCard: {
