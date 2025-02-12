@@ -13,7 +13,7 @@ interface MatchInfoProps {
   setPlayerOnStrike: (id: number | null) => void
 }
 
-export default function MatchInfo({
+export default function MatchInfoScreen({
   setActiveTab,
   navigation,
   setTarget,
@@ -25,8 +25,9 @@ export default function MatchInfo({
   const [overs, setOvers] = useState(0)
   const [isAutoSelection, setIsAutoSelection] = useState(true)
   const [selectedBowlers, setSelectedBowlers] = useState<number[]>([])
-  const [target, setTargetState] = useState(0)
+  const [target, setTargetState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("adults") // Updated state variable
+  const players: never[] = [];
 
   const bowlers =
     category === "kids"
@@ -166,11 +167,12 @@ export default function MatchInfo({
                       style={styles.targetInput}
                       value={target.toString()}
                       onChangeText={(value) => {
-                        const newTarget = Number(value)
-                        setTarget(newTarget)
-                        setTargetState(newTarget)
-                        setTarget(newTarget)
+                        const newTarget = Number(value);
+                        setTarget(newTarget);
+                        setTargetState(newTarget);
                       }}
+
+
                       keyboardType="numeric"
                     />
                   </View>
@@ -222,7 +224,7 @@ export default function MatchInfo({
                   style={styles.startGameButton}
                   onPress={() => {
                     console.log("Overs being passed:", overs)
-                    navigation.navigate("MatchDetailsScreen", { overs: overs })
+                    navigation.navigate("MatchDetailsScreen", { overs, target, players });
                   }}
                 >
                   <Icon style={styles.startGameButtonSlider} name="rightcircle" color="#FFFFFF" size={45} />

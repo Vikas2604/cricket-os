@@ -276,46 +276,6 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <Text style={styles.switchContainerText}>Manual</Text>
               </View>
             </View>
-            <View style={styles.scoreEntryContent}>
-              <View style={styles.scoreButtonsContainer}>
-                <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("1", 0)}
-                  {renderScoreButton("1", 1)}
-                  {renderScoreButton("1", 2)}
-                </View>
-                <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("4", 0)}
-                  {renderScoreButton("4", 1)}
-                  {renderScoreButton("4", 2)}
-                </View>
-                <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("6", 0)}
-                  {renderScoreButton("6", 1)}
-                  {renderScoreButton("6", 2)}
-                </View>
-              </View>
-              <View style={styles.actionButtonsContainer}>
-                <View style={styles.actionButtonRow}>
-                  <TouchableOpacity
-                    style={styles.actionButton}
-                    onPress={() => handleActionButtonPress("Out")}
-                    disabled={players[currentPlayerIndex].isOut}>
-                    <Text style={styles.actionButtonText}>Out</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Ball")}>
-                    <Text style={styles.actionButtonText}>No Ball</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.actionButtonRow}>
-                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("No Runs")}>
-                    <Text style={styles.actionButtonText}>Dot</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton} onPress={() => handleActionButtonPress("Wide")}>
-                    <Text style={styles.actionButtonText}>Wide</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
           </View>
         </View>
         <View style={styles.scorePanel}>
@@ -516,30 +476,6 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     paddingTop: 20,
   },
-  autoManualSwitch: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  scoreEntryText: {
-    fontSize: 30,
-    fontWeight: 700
-  },
-  switchContainer: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  switchContainerText: {
-    fontWeight: 400,
-    fontSize: 22,
-  },
-  scoreButtonRow: {
-    flexDirection: "row",
-    gap: 2,
-    paddingBottom: 20
-  },
   scoreButton: {
     width: 74,
     height: 68,
@@ -569,37 +505,24 @@ const styles = StyleSheet.create({
     fontSize: 33,
     fontWeight: 500,
   },
-  actionButtonsContainer: {
-    marginVertical: 79,
-    gap: 10
+  scoreEntryText: {
+    fontSize: 30,
+    fontWeight: 700
   },
-  actionButton: {
-    backgroundColor: "#6ABBC4",
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 33,
-    width: 228,
-    height: 68,
-    alignItems: "center",
-  },
-  actionButtonText: {
-    color: "#FFFFFF",
-    textAlign: "center",
-    fontSize: 33,
-    fontWeight: 500,
-  },
-  actionButtonRow: {
+  switchContainer: {
     flexDirection: "row",
-    gap: 17,
-    marginTop: 10,
+    gap: 10,
+    alignItems: 'center',
+    marginTop: 2,
   },
-  scoreButtonsContainer: {
-
-  },
-  scoreEntryContent: {
+  autoManualSwitch: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
+    alignItems: "center",
+  },
+  switchContainerText: {
+    fontWeight: 400,
+    fontSize: 22,
   },
   scorePanel: {
     // width: "40%",

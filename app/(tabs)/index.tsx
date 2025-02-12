@@ -49,7 +49,7 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 
 const App: React.FC = () => {
   const [players, setPlayers] = useState<Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>>([]);
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState('1');
 
   return (
     <MatchInfoProvider>
