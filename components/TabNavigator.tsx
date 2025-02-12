@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import SideBar from './SideBar'; // Updated import statement
+import SideBar from './SideBar';
 import PlayerInfoScreen from '../app/(tabs)/PlayerInfoScreen';
 import MatchInfoScreen from '../app/(tabs)/MatchInfoScreen';
 import MatchDetailsScreen from '../app/(tabs)/MatchDetailsScreen';
 
 interface TabNavigatorProps {
-  activeTab: string; // Added activeTab
-  setActiveTab: (tab: string) => void; // Added setActiveTab
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
   setPlayers: (players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>) => void;
   target: number;
