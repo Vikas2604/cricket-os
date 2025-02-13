@@ -57,7 +57,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             style={{ backgroundColor: '#00A2B4', marginRight: 40 }}
             textColor="#FFFFFF"
             iconColor="#FFFFFF"
-            iconStyle={{ position: 'absolute', right: 85, top: 20, color: "white" }} // Custom icon styles
+            iconStyle={{ position: 'absolute', right: 85, top: 20, color: "white" }}
           />
         </View>
       </View>

@@ -10,7 +10,7 @@ interface StyledButtonProps {
   textColor: string;
   iconColor: string;
   disabled?: boolean;
-  iconStyle?: TextStyle;  // New prop for icon styling
+  iconStyle?: TextStyle;
 }
 
 const StyledButton: React.FC<StyledButtonProps> = ({
@@ -21,7 +21,7 @@ const StyledButton: React.FC<StyledButtonProps> = ({
   textColor,
   iconColor,
   disabled = false,
-  iconStyle = {},  // Default empty object
+  iconStyle = {},
 }) => {
   return (
     <TouchableOpacity

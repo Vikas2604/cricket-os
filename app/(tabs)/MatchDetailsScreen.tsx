@@ -372,7 +372,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 </View>
                 <View style={styles.cameraControlValuesDisplay}>
                   <Text style={styles.controlLabel}>Speed</Text>
-                  <Text style={styles.controlValue}>80 (km/h)</Text>
+                  <Text style={styles.controlValue}>N/A</Text>
                 </View>
               </View>
             </View>
