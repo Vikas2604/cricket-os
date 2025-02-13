@@ -35,7 +35,6 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTa
             {label}
           </Text>
         </Svg>
-
       </View>
     </TouchableOpacity>
   );

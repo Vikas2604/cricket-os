@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import SideBar from './SideBar';
 import PlayerInfoScreen from '../app/(tabs)/PlayerInfoScreen';
@@ -23,7 +23,6 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
       <View style={styles.tabContent}>
         {activeTab === "3" && <MatchDetailsScreen players={players} target={target} overs={overs} route={{ params: { overs: 0 } }} />}
         {activeTab === "2" && <MatchInfoScreen setActiveTab={setActiveTab} navigation={{ navigate: (screen: string) => screen === 'MatchDetailsScreen' && setActiveTab("3") }} setTarget={setTarget} playerOnStrike={null} setPlayerOnStrike={setPlayerOnStrike} />}
-
         {activeTab === "1" && <PlayerInfoScreen setActiveTab={setActiveTab} players={players} setPlayers={setPlayers} />}
       </View>
       <View style={styles.sideBarContainer}>
@@ -39,7 +38,6 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ activeTab, setActiveTab, pl
         {activeTab === "2" && (
           <>
             <SideBar number={2} label="MATCH INFO" style={styles.matchInfo2} color="#00808F" activeTab={activeTab} onTabSelect={setActiveTab} />
-
             <SideBar number={1} label="PLAYER INFO" style={styles.playerInfo2} color="#0091A1" activeTab={activeTab} onTabSelect={setActiveTab} />
             <View>
               <SideBar number={3} label="MATCH DETAILS" style={styles.matchDetails2} color="#02626C" activeTab={activeTab} onTabSelect={setActiveTab} />
