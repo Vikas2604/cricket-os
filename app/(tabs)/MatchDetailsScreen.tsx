@@ -608,7 +608,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   scoreButtonsContainer: {
-
+    //To not get an error
   },
   scoreEntryContent: {
     flexDirection: "row",
