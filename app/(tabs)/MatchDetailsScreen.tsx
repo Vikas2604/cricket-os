@@ -34,8 +34,7 @@ const PlayerRow = ({
 }: { playerName: string; balls: string[]; overNumber: number; isOut: boolean }) => (
   <View style={[styles.playerRow, isOut && styles.disabledRow]}>
     <Text style={styles.playerName}>
-      {playerName}'s {overNumber}
-      {getOrdinalSuffix(overNumber)} Over:
+      {playerName}'s {overNumber}{getOrdinalSuffix(overNumber)} Over:
     </Text>
     <View style={styles.overContainer}>
       {balls.map((ball, index) => (
@@ -48,6 +47,7 @@ const PlayerRow = ({
 )
 
 export default function MatchDetailsScreen({ players, target, overs }: MatchDetailsScreenProps) {
+  const [selectedSpeed, setSelectedSpeed] = useState<number>(80); // Default speed value
 
   if (typeof target !== 'number' || typeof overs !== 'number') {
     Alert.alert("Error", "Target and overs must be valid numbers.");
@@ -240,8 +240,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 <Text style={styles.playerName}>{player.name}'s</Text>
                 <View style={styles.overContainer}>
                   <Text style={styles.overText}>
-                    {playerOvers[index] + 1}
-                    {getOrdinalSuffix(playerOvers[index] + 1)}
+                    {playerOvers[index] + 1}{getOrdinalSuffix(playerOvers[index] + 1)}
                   </Text><Text style={styles.overTextOver}>Over</Text>
                   {playerOnStrike === player.id &&
                     balls.map((ball, index) => renderBall(ball, ball !== "" && playerOnStrike === player.id))}
@@ -372,7 +371,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
                 </View>
                 <View style={styles.cameraControlValuesDisplay}>
                   <Text style={styles.controlLabel}>Speed</Text>
-                  <Text style={styles.controlValue}>N/A</Text>
+                  <Text style={styles.controlValue}>{selectedSpeed !== null ? selectedSpeed : "N/A"}(km/h)</Text>
                 </View>
               </View>
             </View>
@@ -393,7 +392,12 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             </PanGestureHandler>
           </View>
         </View>
-        <CameraControlModal isVisible={isCameraControlVisible} onClose={() => setIsCameraControlVisible(false)} />
+        <CameraControlModal
+          isVisible={isCameraControlVisible}
+          onClose={() => setIsCameraControlVisible(false)}
+          selectedSpeed={selectedSpeed}
+          onSpeedChange={setSelectedSpeed} // Pass the speed change callback
+        />
       </View>
     </View>
   )
@@ -410,7 +414,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginLeft: 320,
-
   },
   scrollContent: {
     flex: 1,
@@ -493,7 +496,6 @@ const styles = StyleSheet.create({
     color: "#00A3B4",
     fontSize: 50.5,
     fontWeight: 600,
-
   },
   disputeBox: {
     position: 'absolute',

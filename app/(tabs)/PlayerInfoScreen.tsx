@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   numberOfPlayersInfoContainer: {
     borderWidth: 1,
     borderRadius: 14,
-    marginTop: 100,
-    marginBottom: 197,
+    marginTop: 150,
+    marginBottom: 157,
     marginRight: 40,
     width: 300,
     height: 200,

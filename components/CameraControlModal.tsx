@@ -6,16 +6,17 @@ import Icon from "react-native-vector-icons/AntDesign"
 interface CameraControlModalProps {
   isVisible: boolean
   onClose: () => void
+  selectedSpeed: number // New prop for selected speed
+  onSpeedChange: (newSpeed: number) => void // New prop for speed change callback
 }
 
-export default function CameraControlModal({ isVisible, onClose }: CameraControlModalProps) {
+export default function CameraControlModal({ isVisible, onClose, selectedSpeed, onSpeedChange }: CameraControlModalProps) {
   const [tilt, setTilt] = useState("Short")
   const [pan, setPan] = useState("Line 1")
-  const [speed, setSpeed] = useState(80)
 
   const handleSpeedChange = (newSpeed: number) => {
     if (newSpeed >= 70 && newSpeed <= 90) {
-      setSpeed(newSpeed)
+      onSpeedChange(newSpeed) // Call the callback to update speed in MatchDetailsScreen
     }
   }
 
@@ -65,7 +66,6 @@ export default function CameraControlModal({ isVisible, onClose }: CameraControl
                 {/* Bottom P Button */}
                 <TouchableOpacity style={[styles.bottomButton]}>
                   <Icon name="caretup" size={140} color="#00A3B4" />
-
                   <Text style={[styles.buttonText, styles.topButtonText, styles.bottomButtonText]}>P</Text>
                 </TouchableOpacity>
 
@@ -78,19 +78,19 @@ export default function CameraControlModal({ isVisible, onClose }: CameraControl
             <View style={styles.speedSection}>
               <Text style={[styles.sectionTitle, styles.sectionTitleSpeed]}>Speed</Text>
               <View style={styles.speedControls}>
-                <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(speed - 5)}>
+                <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(selectedSpeed - 5)}>
                   <Icon name="caretup" size={120} color="#00A3B4" />
                 </TouchableOpacity>
 
                 <View style={styles.speedScale}>
                   {[70, 75, 80, 85, 90].map((value) => (
                     <View key={value} style={styles.speedMark}>
-                      <Text style={[styles.speedValue, speed === value && styles.activeSpeedValue]}>{value}</Text>
+                      <Text style={[styles.speedValue, selectedSpeed === value && styles.activeSpeedValue]}>{value}</Text>
                     </View>
                   ))}
                 </View>
 
-                <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(speed + 5)}>
+                <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(selectedSpeed + 5)}>
                   <Icon name="caretdown" size={120} color="#00A3B4" />
                 </TouchableOpacity>
 
@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 100,
     left: 106,
-
   },
   tiltPanControls: {
     alignItems: "center",
@@ -226,11 +225,9 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
   bottomButton: {
-
     transform: [{ rotate: "180deg" }],
   },
   positionText: {
-    // marginTop: 10,
     fontSize: 38,
     fontWeight: 700,
     color: "#333",
@@ -249,9 +246,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   speedScale: {
-    // height: 00,
     justifyContent: "space-between",
-    // marginVertical: 10,
   },
   speedMark: {
     flexDirection: "row",
@@ -394,4 +389,3 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
 })
-

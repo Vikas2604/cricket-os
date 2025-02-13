@@ -102,6 +102,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 103,
     paddingLeft: 204,
+    backgroundColor: '#F7F7F7',
+
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
   },
   playerNumberDisplay: {
     position: 'absolute',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F7F7F7',
     left: 20,
     bottom: 72,
     paddingLeft: 4,
