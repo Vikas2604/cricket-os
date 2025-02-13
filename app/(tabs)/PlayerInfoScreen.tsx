@@ -4,6 +4,8 @@ import HeaderComponent from '../../components/HeaderComponent';
 import PlayerList from '../../components/PlayerList';
 import StyledButton from '../../components/StyledButton';
 
+
+
 interface PlayerInfoScreenProps {
   setActiveTab: (tab: string) => void;
   players: Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>;
@@ -33,7 +35,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
       <HeaderComponent title="Player Info" />
       <View style={styles.mainContainer}>
         <PlayerList players={players} setPlayers={setPlayers} allowEditing={true} />
-        <View style={styles.verticalLine}></View>
+        <View style={styles.verticalLine} />
         <View style={styles.rightContainer}>
           <View style={styles.numberOfPlayersInfoContainer}>
             <Text style={styles.numberOfPlayersInfo}>Number of Players</Text>
@@ -120,4 +122,3 @@ const styles = StyleSheet.create({
   },
 });
 
-// background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
