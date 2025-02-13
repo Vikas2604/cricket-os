@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   matchInfo3: {
     right: 1620,
-    top: 62
+    top: 62,
   },
   playerInfo3: {
     position: 'absolute',
