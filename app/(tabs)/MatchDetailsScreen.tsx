@@ -475,22 +475,25 @@ const styles = StyleSheet.create({
     width: 86,
     height: 86,
     borderRadius: 86,
-    borderWidth: 3,
-    borderColor: "#000000",
-    opacity: 0.4,
+    borderWidth: 4,
+    borderColor: "rgba(0,0,0, 0.4)",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 12,
+    paddingBottom: 7,
   },
   activeBall: {
-    borderColor: "#00A3B4",
+    borderColor: "rgba(0,0,0, 0.4)",
   },
   ballText: {
-    fontSize: 24,
+    fontSize: 50.5,
     color: "#666",
   },
   activeBallText: {
     color: "#00A3B4",
+    fontSize: 50.5,
+    fontWeight: 600,
+
   },
   disputeBox: {
     position: 'absolute',

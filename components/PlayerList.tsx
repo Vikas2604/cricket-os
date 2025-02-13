@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
     fontWeight: 400,
   },
   addButtonContainer: {
-    marginLeft: 113,
-    marginRight: 200,
-    marginBottom: 10,
+    width: 70,
+    left: 110,
+    bottom: 20,
   },
 });
 

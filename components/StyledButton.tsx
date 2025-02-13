@@ -1,15 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 interface StyledButtonProps {
   text: string;
   icon: string;
   onPress: () => void;
-  style?: object;
+  style?: ViewStyle;
   textColor: string;
   iconColor: string;
   disabled?: boolean;
+  iconStyle?: TextStyle;  // New prop for icon styling
 }
 
 const StyledButton: React.FC<StyledButtonProps> = ({
@@ -20,6 +21,7 @@ const StyledButton: React.FC<StyledButtonProps> = ({
   textColor,
   iconColor,
   disabled = false,
+  iconStyle = {},  // Default empty object
 }) => {
   return (
     <TouchableOpacity
@@ -27,7 +29,7 @@ const StyledButton: React.FC<StyledButtonProps> = ({
       onPress={onPress}
       disabled={disabled}
     >
-      <Icon name={icon} color={iconColor} size={43} />
+      <Icon name={icon} color={iconColor} size={43} style={iconStyle} />
       <Text style={[styles.buttonText, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>
   );
@@ -41,11 +43,13 @@ const styles = StyleSheet.create({
     width: 398,
     borderRadius: 96,
     justifyContent: 'center',
+    textAlign: 'center',
     gap: 10,
   },
   buttonText: {
     fontSize: 32,
     fontWeight: '500',
+    paddingBottom: 5,
   },
   disabled: {
     opacity: 0.2,

@@ -57,6 +57,7 @@ const PlayerInfoScreen: React.FC<PlayerInfoScreenProps> = ({ setActiveTab, playe
             style={{ backgroundColor: '#00A2B4', marginRight: 40 }}
             textColor="#FFFFFF"
             iconColor="#FFFFFF"
+            iconStyle={{ position: 'absolute', right: 85, top: 20, color: "white" }} // Custom icon styles
           />
         </View>
       </View>
@@ -69,8 +70,8 @@ export default PlayerInfoScreen;
 const styles = StyleSheet.create({
   playerInfoContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    fontFamily: 'Roboto',
+    backgroundColor: '#F7F7F7',
+    borderWidth: 1,
   },
   mainContainer: {
     flexDirection: 'row',
@@ -108,10 +109,15 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
   },
+  arrowStyle: {
+    // position: 'absolute'
+  },
   verticalLine: {
     borderLeftWidth: 3,
-    height: 698,
-    marginTop: 70,
-    marginRight: 96,
+    height: 600,
+    top: 140,
+    marginRight: 66,
   },
 });
+
+// background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);

@@ -234,8 +234,8 @@ export default function MatchInfoScreen({
 const styles = StyleSheet.create({
   matchInfoScreenContainer: {
     flex: 1,
-    backgroundColor: "#fff",
     fontFamily: 'Poppins',
+    backgroundColor: '#F7F7F7',
     borderWidth: 1,
   },
   matchInfoScreenEntity: {
@@ -248,13 +248,10 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    // marginTop: 20,
   },
   section: {
-    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 8,
-
   },
   sectionTitle: {
     fontSize: 30,
@@ -302,7 +299,7 @@ const styles = StyleSheet.create({
   },
   pickerDifficultyText: {
     position: 'absolute',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F7F7F7',
     left: 10,
     bottom: 50,
     paddingLeft: 4,
@@ -314,6 +311,8 @@ const styles = StyleSheet.create({
   picker: {
     height: 66,
     width: 356,
+    backgroundColor: '#F7F7F7',
+
     borderColor: "#00A3B4",
     borderWidth: 2.5,
     borderRadius: 3.75,
