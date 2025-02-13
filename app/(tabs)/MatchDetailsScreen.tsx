@@ -279,9 +279,9 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
             <View style={styles.scoreEntryContent}>
               <View style={styles.scoreButtonsContainer}>
                 <View style={styles.scoreButtonRow}>
-                  {renderScoreButton("1", 0)}
-                  {renderScoreButton("1", 1)}
-                  {renderScoreButton("1", 2)}
+                  {renderScoreButton("2", 0)}
+                  {renderScoreButton("2", 1)}
+                  {renderScoreButton("2", 2)}
                 </View>
                 <View style={styles.scoreButtonRow}>
                   {renderScoreButton("4", 0)}

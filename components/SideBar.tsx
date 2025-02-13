@@ -34,7 +34,7 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTa
           /> */}
 
           {/* Number Text */}
-          <Text x="85" y="170" fontSize="90" fontWeight="500" fill="white" textAnchor="start">
+          <Text x="95" y="200" fontSize="90" fontWeight="500" fill="white" textAnchor="start">
             {number}
           </Text>
 
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 62,
     marginLeft: 93,
+    fontFamily: 'Inter',
   },
   sidebarContainer: {},
   svg: {},

@@ -22,7 +22,7 @@ export default function MatchInfoScreen({
 }: MatchInfoProps) {
   const [category, setCategory] = useState("adults")
   const [difficulty, setDifficulty] = useState("Beginner")
-  const [overs, setOvers] = useState(3)
+  const [overs, setOvers] = useState(1)
   const [isAutoSelection, setIsAutoSelection] = useState(true)
   const [selectedBowlers, setSelectedBowlers] = useState<number[]>([])
   const [target, setTargetState] = useState(0);
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 
   },
   matchInfoScreenEntity: {
-    marginTop: 100,
+    marginTop: 90,
     marginLeft: 160,
   },
   row: {
@@ -411,8 +411,9 @@ const styles = StyleSheet.create({
   },
   bowlersGrid: {
     flexDirection: "row",
-    width: 170,
+    width: 180,
     height: 150,
+    marginTop: 19,
   },
   bowlerCard: {
     width: '100%',
@@ -429,7 +430,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    right: 90,
+    right: 70,
     bottom: 40,
     justifyContent: "center",
     textAlign: "center",
