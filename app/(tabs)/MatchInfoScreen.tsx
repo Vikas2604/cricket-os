@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     fontFamily: 'Poppins',
-
+    borderWidth: 1,
   },
   matchInfoScreenEntity: {
     marginTop: 90,
-    marginLeft: 160,
+    marginLeft: 260,
   },
   row: {
     flexDirection: "row",

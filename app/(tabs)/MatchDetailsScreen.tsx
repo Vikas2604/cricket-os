@@ -403,11 +403,14 @@ const styles = StyleSheet.create({
   MatchDetailsScreenContainer: {
     flex: 1,
     backgroundColor: "#fff",
+    width: 1750,
+    borderWidth: 1,
   },
   content: {
     flex: 1,
     flexDirection: "row",
-    marginLeft: 100,
+    marginLeft: 320,
+
   },
   scrollContent: {
     flex: 1,
@@ -538,13 +541,19 @@ const styles = StyleSheet.create({
   scoreButtonRow: {
     flexDirection: "row",
     gap: 2,
-    paddingBottom: 20
+    paddingBottom: 20,
+    elevation: 1,
   },
   scoreButton: {
     width: 74,
     height: 68,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   scoreButtonRed: {
     backgroundColor: '#F67676',
@@ -581,6 +590,11 @@ const styles = StyleSheet.create({
     width: 228,
     height: 68,
     alignItems: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   actionButtonText: {
     color: "#FFFFFF",

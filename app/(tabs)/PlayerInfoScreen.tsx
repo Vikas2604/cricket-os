@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     alignItems: 'center',
-    marginRight: 40,
+    marginRight: 80,
     marginTop: 100,
   },
   numberOfPlayersInfo: {
@@ -112,6 +112,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     height: 698,
     marginTop: 70,
-    marginRight: 76,
+    marginRight: 96,
   },
 });
