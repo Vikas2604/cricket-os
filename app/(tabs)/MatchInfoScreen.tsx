@@ -35,34 +35,34 @@ export default function MatchInfoScreen({
         {
           id: 1,
           name: "PANDA",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/324363d5a8b5e3bd3a5cae0a1718d06b0bd4aa37"
+          image: require("../../assets/images/panda.jpeg")
         },
         {
           id: 2,
           name: "SANTA",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/9f6d45e156a2182ff04d2da79acc0626acdb8037"
+          image: require("../../assets/images/santa.jpeg")
         },
       ]
       : [
         {
           id: 1,
           name: "Aswin",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/06d7eb42bc32e31670510c58a73c382f45d5a835"
+          image: require("../../assets/images/aswin.jpeg")
         },
         {
           id: 2,
           name: "Ishant",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/3633d9a3a51b7c2952b662aff20c36e7cbe25ec9"
+          image: require("../../assets/images/ishant.png")
         },
         {
           id: 3,
           name: "Deepak",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/32b66c9d4a3bb662f0c29b884693b649b19754ea"
+          image: require("../../assets/images/deepak.jpeg")
         },
         {
           id: 4,
           name: "Shakib",
-          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/91a8d13b22e18bfda83e874482f206e2adde113a"
+          image: require("../../assets/images/shakib.jpeg")
         },
       ]
 
@@ -189,7 +189,7 @@ export default function MatchInfoScreen({
                         )
                       }}
                     >
-                      <Image source={{ uri: bowler.image }} style={styles.bowlerImage} />
+                      <Image source={bowler.image} style={styles.bowlerImage} />
                       {selectedBowlers.includes(bowler.id) && (
                         <View style={styles.checkCircleBackground}>
                           <Icon name="checkcircleo" size={55} color="green" />
