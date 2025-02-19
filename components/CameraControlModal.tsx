@@ -35,7 +35,7 @@ export default function CameraControlModal({ isVisible, onClose, selectedSpeed, 
               <View style={styles.tiltPanControls}>
                 {/* Top P Button */}
                 <TouchableOpacity>
-                  <Icon name="caretup" size={140} color="#00A3B4" />
+                  <Icon name="caretup" size={100} color="#00A3B4" />
                   <Text style={[styles.buttonText, styles.topButtonText]}>P</Text>
                 </TouchableOpacity>
                 <View style={styles.verticalLine} />
@@ -47,7 +47,7 @@ export default function CameraControlModal({ isVisible, onClose, selectedSpeed, 
                 {/* Middle Row */}
                 <View style={styles.middleRow}>
                   <TouchableOpacity style={[styles.leftButton]}>
-                    <Icon name="caretup" size={140} color="#00A3B4" />
+                    <Icon name="caretup" size={100} color="#00A3B4" />
                     <Text style={[styles.buttonText, styles.topButtonText, styles.leftButtonText]}>T</Text>
                   </TouchableOpacity>
                   <View style={styles.horizontalLine} />
@@ -58,14 +58,14 @@ export default function CameraControlModal({ isVisible, onClose, selectedSpeed, 
 
                   <View style={styles.centerPoint} />
                   <TouchableOpacity style={[styles.rightButton]}>
-                    <Icon name="caretup" size={140} color="#00A3B4" />
+                    <Icon name="caretup" size={100} color="#00A3B4" />
                     <Text style={[styles.buttonText, styles.topButtonText, styles.rightButtonText]}>T</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.horizontalcenterPoint} />
                 {/* Bottom P Button */}
                 <TouchableOpacity style={[styles.bottomButton]}>
-                  <Icon name="caretup" size={140} color="#00A3B4" />
+                  <Icon name="caretup" size={100} color="#00A3B4" />
                   <Text style={[styles.buttonText, styles.topButtonText, styles.bottomButtonText]}>P</Text>
                 </TouchableOpacity>
 
@@ -79,7 +79,7 @@ export default function CameraControlModal({ isVisible, onClose, selectedSpeed, 
               <Text style={[styles.sectionTitle, styles.sectionTitleSpeed]}>Speed</Text>
               <View style={styles.speedControls}>
                 <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(selectedSpeed - 5)}>
-                  <Icon name="caretup" size={120} color="#00A3B4" />
+                  <Icon name="caretup" size={80} color="#00A3B4" />
                 </TouchableOpacity>
 
                 <View style={styles.speedScale}>
@@ -91,7 +91,7 @@ export default function CameraControlModal({ isVisible, onClose, selectedSpeed, 
                 </View>
 
                 <TouchableOpacity style={styles.speedButton} onPress={() => handleSpeedChange(selectedSpeed + 5)}>
-                  <Icon name="caretdown" size={120} color="#00A3B4" />
+                  <Icon name="caretdown" size={80} color="#00A3B4" />
                 </TouchableOpacity>
 
                 <Text style={styles.speedUnit}>(km/h)</Text>
@@ -114,9 +114,9 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     borderRadius: 7,
-    padding: 20,
+    padding: 10,
     width: 1000,
-    height: 683,
+    height: 583,
   },
   closeButton: {
     position: "absolute",
@@ -125,31 +125,31 @@ const styles = StyleSheet.create({
     zIndex: 1,
     backgroundColor: '#444444',
     color: '#FFFFFF',
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     borderRadius: 50,
   },
   closeButtonX: {
     position: 'absolute',
-    top: 7,
-    left: 9
+    top: 3,
+    left: 5
   },
   controlsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 30,
+    marginTop: 10,
   },
   sectionTitle: {
-    fontSize: 51,
+    fontSize: 40,
     fontWeight: 700,
   },
   sectionTitlePan: {
     marginTop: -100,
-    marginBottom: 100,
+    // marginBottom: 100,
     marginLeft: 100,
   },
   sectionTitleSpeed: {
-    marginLeft: 250,
+    marginLeft: 200,
   },
   tiltPanSection: {
     flex: 1,
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     left: 106,
   },
   tiltPanControls: {
-    alignItems: "center",
+    // marginLeft:-70,
+    // alignItems: "center",
     width: 450,
     height: 450,
   },
@@ -167,10 +168,10 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
   middleRow: {
-    flexDirection: "row",
-    width: 450,
-    height: 150,
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // width: 450,
+    // height: 150,
+    // justifyContent: "space-between",
   },
   centerPoint: {
     position: 'absolute',
@@ -190,22 +191,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#00A3B4",
     borderRadius: 21,
   },
-  topButton: {
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 49,
-    borderRightWidth: 49,
-    borderBottomWidth: 100,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "#00A3B4",
-  },
   topButtonText: {
     position: 'absolute',
-    top: 45,
-    left: 60,
+    top: 25,
+    left: 40,
     fontSize: 32,
     fontWeight: 700,
   },
@@ -228,14 +217,14 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
   positionText: {
-    fontSize: 38,
+    fontSize: 28,
     fontWeight: 700,
     color: "#333",
   },
   lineText: {
     left: 275,
-    bottom: "68%",
-    fontSize: 38,
+    bottom: "62%",
+    fontSize: 28,
     fontWeight: 700,
     color: "#333",
   },
@@ -256,8 +245,8 @@ const styles = StyleSheet.create({
     width: 130,
     textAlign: 'center',
     fontWeight: 500,
-    fontSize: 32,
-    padding: 20,
+    fontSize: 28,
+    padding: 10,
     color: "#666",
   },
   activeSpeedValue: {
@@ -265,17 +254,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     fontWeight: 600,
-    fontSize: 27,
+    fontSize: 32,
   },
   speedButton: {
     // padding: 10,
   },
   speedUnit: {
     position: 'absolute',
-    top: 300,
-    right: 100,
+    top: 200,
+    right: 50,
     color: "#666",
-    fontSize: 46,
+    fontSize: 36,
     fontWeight: 600,
   },
   leftButton: {
@@ -287,17 +276,16 @@ const styles = StyleSheet.create({
   verticalLine: {
     position: 'absolute',
     top: 120,
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 217,
-    borderColor: '#000000',
     opacity: 0.2,
   },
   verticalLine1: {
     position: 'absolute',
     top: 220,
     left: 138,
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -307,7 +295,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 220,
     left: 178,
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -317,7 +305,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 220,
     left: 268,
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -327,7 +315,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 220,
     left: 298,
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -338,7 +326,7 @@ const styles = StyleSheet.create({
     bottom: -40,
     left: 220,
     transform: [{ rotate: "90deg" }],
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 217,
     borderColor: '#000000',
@@ -349,7 +337,7 @@ const styles = StyleSheet.create({
     bottom: 135,
     left: 222,
     transform: [{ rotate: "90deg" }],
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -360,7 +348,7 @@ const styles = StyleSheet.create({
     top: 25,
     left: 222,
     transform: [{ rotate: "90deg" }],
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -371,7 +359,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     left: 222,
     transform: [{ rotate: "90deg" }],
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
@@ -382,7 +370,7 @@ const styles = StyleSheet.create({
     bottom: -20,
     left: 222,
     transform: [{ rotate: "90deg" }],
-    borderWidth: 3,
+    borderWidth: 1,
     width: 1,
     height: 29,
     borderColor: '#000000',
