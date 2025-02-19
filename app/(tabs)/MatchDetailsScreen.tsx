@@ -376,7 +376,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
               </View>
             </View>
             <TouchableOpacity style={styles.pauseButton}>
-              <Icon name="pausecircleo" size={35} color="#fff" />
+              <Icon name="pausecircleo" size={30} color="#fff" />
               <Text style={styles.pauseButtonText}>Pause</Text>
             </TouchableOpacity>
             <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
     borderRadius: 33,
     width: 168,
     height: 48,
-    textAlign:'center',
+    textAlign: 'center',
     alignItems: "center",
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -598,7 +598,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 28,
     fontWeight: 500,
-    padding:5,
+    padding: 5,
   },
   actionButtonRow: {
     flexDirection: "row",
@@ -654,8 +654,8 @@ const styles = StyleSheet.create({
   },
   mainScoreBoard: {
     flexDirection: 'row',
-    left:20,
-    top:10,
+    left: 20,
+    top: 10,
   },
   scoreNumber: {
     fontSize: 65,
@@ -725,8 +725,8 @@ const styles = StyleSheet.create({
   cameraButton: {
     width: 22,
     height: 85,
-    borderTopLeftRadius:14,
-    borderBottomLeftRadius:14,
+    borderTopLeftRadius: 14,
+    borderBottomLeftRadius: 14,
     backgroundColor: "#00A3B4",
     justifyContent: "center",
   },
@@ -767,7 +767,7 @@ const styles = StyleSheet.create({
   pauseButtonText: {
     color: "#fff",
     marginLeft: 8,
-    fontSize: 19,
+    fontSize: 20,
     fontWeight: 500,
     flexDirection: "row",
     justifyContent: "center",
@@ -775,7 +775,7 @@ const styles = StyleSheet.create({
   },
   stopGameButton: {
     backgroundColor: "#00A3B4",
-    padding:10,
+    padding: 10,
     borderRadius: 50,
     flexDirection: "row",
     justifyContent: "center",
