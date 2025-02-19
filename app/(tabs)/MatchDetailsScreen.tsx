@@ -616,14 +616,14 @@ const styles = StyleSheet.create({
     //To not get an error
   },
   scoreSection: {
-    width: 280,
+    width: 250,
     height: 290,
     marginBottom: 10,
     borderWidth: 3,
     borderRadius: 16,
     borderColor: '#00BDD2',
     marginTop: 10,
-    marginLeft: 60,
+    marginLeft: 90,
     color: '#00000'
   },
   nextTarget: {
@@ -681,23 +681,23 @@ const styles = StyleSheet.create({
   },
   statItemGroupExtras: {
     position: 'absolute',
-    left: 21,
-    top: 30,
+    left: 20,
+    top: 20,
   },
   statItemGroupBalls: {
     position: 'absolute',
-    left: 165,
-    top: 30,
+    left: 150,
+    top: 20,
   },
   statItemGroupReq: {
     position: 'absolute',
-    top: 100,
+    top: 90,
     left: 21,
   },
   statItemGroupStrRate: {
     position: 'absolute',
-    top: 100,
-    left: 165,
+    top: 90,
+    left: 150,
   },
   statLabel: {
     color: "#00000",
@@ -760,7 +760,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 50,
     marginBottom: 10,
-    height: 56,
+    height: 50,
     width: 261,
     marginLeft: 44,
   },
@@ -775,11 +775,11 @@ const styles = StyleSheet.create({
   },
   stopGameButton: {
     backgroundColor: "#00A3B4",
-    padding: 16,
+    padding:10,
     borderRadius: 50,
     flexDirection: "row",
     justifyContent: "center",
-    height: 56,
+    height: 50,
     width: 261,
     marginLeft: 44,
   },
@@ -791,7 +791,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 19,
+    fontSize: 20,
     fontWeight: 700,
   },
 })

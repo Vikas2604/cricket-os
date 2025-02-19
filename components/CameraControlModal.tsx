@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   tiltPanControls: {
     // marginLeft:-70,
-    // alignItems: "center",
+    alignItems: "center",
     width: 450,
     height: 450,
   },
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
   middleRow: {
-    // flexDirection: "row",
-    // width: 450,
-    // height: 150,
-    // justifyContent: "space-between",
+    flexDirection: "row",
+    width: 450,
+    height: 150,
+    justifyContent: "space-between",
   },
   centerPoint: {
     position: 'absolute',
