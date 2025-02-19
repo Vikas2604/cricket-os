@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Svg, { Path, ClipPath, Defs, Rect, Text } from "react-native-svg";
 
 interface SideBarProps {

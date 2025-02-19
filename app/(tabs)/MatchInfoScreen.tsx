@@ -35,29 +35,29 @@ export default function MatchInfoScreen({
         {
           id: 1,
           name: "PANDA",
-          image: "https://s3-alpha-sig.figma.com/img/3243/63d5/a8b5e3bd3a5cae0a1718d06b0bd4aa37?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Izrn4cOa9SOwfE0EiZsLbCSoTzQzBzfMQgN6FkkcifFP7ckhFSYhKNHJPf1lu0RbhFCYrohSsboWV4T3uIEEt~JXlA4RyXLi9tqGkrlvKvoGfWNlQdaHS664AmQZPMNhhst7AW~sMjbe2naIHzH-mhs2h7IROcCRbpX-Oj~Za1438oAza8yLY~5E4fY9firVjx~vc1haICRG9iaLPlLMmVos2rJlkvT1LD82zjgzRuanybNOGYmFcTH7uNQAqTIV1O~g1aQuEDRB7qwUxNfQebHPmhOq209SJFvpZVOknvIOtVruibzjm1EOFN4ABprpSexJgzfjB9LtbWelBu~2lQ"
+          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/324363d5a8b5e3bd3a5cae0a1718d06b0bd4aa37"
         },
         {
           id: 2,
           name: "SANTA",
-          image: "https://s3-alpha-sig.figma.com/img/9f6d/45e1/56a2182ff04d2da79acc0626acdb8037?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MEdnvSJW9FSb3UoustqtxrxGMgk8OA-4X0ELFzEONx8YtMF70whKo2WC3hSYp0RaCPlpz6kw6FpT24SD2IzvwJ6SE0aCSye4WnyqZpTpeSrVPnqnElrw1cx58VipibR4oBJ2h8-8MdHYQwHMNnt77aandCBG-brY4bl6V2~V7pNe4AYdriMR-PoZOoQd6lAD6Esnx90xZG9o2v7i-X3fs-blE5dUwm-4GoYHx--MPDdp6JbsIvLAFdf2e3ue8VYXoIAvqJyCgIZZaNSxNfUjtcZpVPRYfzXMuVozEqGBFGv32T4hN6Q5AuVkzMF61mE7WlFc8WQ0SJznPID-t7NlRA"
+          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/9f6d45e156a2182ff04d2da79acc0626acdb8037"
         },
       ]
       : [
         {
           id: 1,
           name: "Aswin",
-          image: "https://s3-alpha-sig.figma.com/img/06d7/eb42/bc32e31670510c58a73c382f45d5a835?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=CifsbHqdPxkLXOL-Q0VF2-7QCvxCYLorHfNPO36h2KakTUSMHaour~OBZ90Qc8SokjvBsMKr3Hoay6ipe5hT0D65RQ4cIQUtRzacs4xOdfGMdACrX5mG79~vcbo7h-6QccErU86S7pHWlZe3YLS7Pyw2QuLCjv~~EKUisvigOoJnfeqt2KtDB2YDT3zEu6j0WDLCncWsXuAlKfvsLpC6-eAmhpWVvHDQHZumDtrIX5SqSPFv1~U-nsdhuPbE7L5E422n8wadkOew7SIh-VzHgC30m5BZxbW0ybAuUgkCJH6188TgQEzDJK-InzB-Dxq4IE30GO5LvDl3omJ~6-k6WQ__"
+          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/06d7eb42bc32e31670510c58a73c382f45d5a835"
         },
         {
           id: 2,
           name: "Ishant",
-          image: "https://s3-alpha-sig.figma.com/img/3633/d9a3/a51b7c2952b662aff20c36e7cbe25ec9?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=LfYI6LdU-B8GUFhO-9vDtlsuumg2rsYJ~N3WLKWpBGHB8EmvV1tYFIsmH8FHATQMN-o3VIFGPMU8oW9pN60Twjzl7PoaMhdmX6-fGCR2AlFe3oWDKu2aCaDbrr~WTke8vNqt8aqNw49Hg4dTIpxVf5S-asmyuDd42f-JB8sYjq0ujLtkHCIP70PEHpVHawd4RcaVw0iJPN1mXUaGODvR9Xm13hPA8WJxpgyhuWGFDipMd~6Xny9bjhqu7g6zs3Hl5Cs37t70KWFxrAETwenV-rj9oa7cKrM0JqvI1S8~q-qB0kflVb27cMoKo2eClrOiF1ByfGv07mqGiYvdNxlIRw__"
+          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/3633d9a3a51b7c2952b662aff20c36e7cbe25ec9"
         },
         {
           id: 3,
           name: "Deepak",
-          image: "https://s3-alpha-sig.figma.com/img/32b6/6c9d/4a3bb662f0c29b884693b649b19754ea?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RQU97dgqdkdkg8IsqOFUEONe7xJC2nRsHm~zRLVg5H1nHlH~xMef6Ovr4mbaG2VxLExdWSJmw2cEV0Hw0-A5mbx8s13ifLt5q0KlUJj2jguxRst7KJyRwDySbVsrbuisj5t2tWlgMbQ~kFk0Conwgoz1rpF5JqW-j~w0J7yOFmtCxAvyq4-mSUc0MwEFXhzmxMUXhksXlMHCSWy4fLuM4Mbn4QqKLcaE1Rp7UDwLGoebPKYh48aeXNp3wPv6Jy6BxtUrgS9BvPXgsMmVY6l9swGmiZ4S3e-NDOgm1Po6MCxWrmmYj1nFNjJeZ785okoC0zljQtOH2l7onkB8SeGoAw__"
+          image: "https://www.figma.com/file/NbSw89Q7fCsjf0DRYeaO35/image/32b66c9d4a3bb662f0c29b884693b649b19754ea"
         },
         {
           id: 4,
