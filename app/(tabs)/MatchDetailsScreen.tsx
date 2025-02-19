@@ -187,6 +187,8 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
         setPlayerOvers((prevOvers) => {
           const newOvers = [...prevOvers]
           newOvers[currentPlayerIndex] += 1
+          console.log("You're out")
+          Alert.alert("You're out")
           return newOvers
         })
         break
@@ -222,7 +224,7 @@ export default function MatchDetailsScreen({ players, target, overs }: MatchDeta
 
   return (
     <View style={styles.MatchDetailsScreenContainer}>
-      <HeaderComponent title="Match Details" />
+      <HeaderComponent textStyle={{ marginRight: 200, }} title="Match Details" />
       <View style={styles.content}>
         <View>
           <View style={styles.scrollContent}>
@@ -411,6 +413,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginLeft: 120,
   },
+
   content: {
     flex: 1,
     flexDirection: "row",

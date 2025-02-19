@@ -236,8 +236,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     backgroundColor: '#F7F7F7',
     borderWidth: 1,
+    width: 1070,
   },
   matchInfoScreenEntity: {
+    width: 930,
     marginTop: 50,
     marginLeft: 160,
   },
@@ -363,7 +365,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 40,
     marginTop: 8,
-    marginLeft: 10,
+    marginLeft:10,
   },
   scoreBox: {
     borderWidth: 1,
@@ -371,7 +373,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     textAlign: 'center',
     height: 120,
-    width: 255,
+    width: 236,
     position: "relative",
     right: 164,
   },
@@ -497,7 +499,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderLeftWidth: 3,
     height: 150,
-    right: 380,
+    right: 400,
     top: 30,
   },
 })

@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 interface HeaderComponentProps {
   title: string;
+  textStyle?: TextStyle;
 }
 
-const HeaderComponent: React.FC<HeaderComponentProps> = ({ title }) => {
+const HeaderComponent: React.FC<HeaderComponentProps> = ({ title, textStyle }) => {
   return (
-    <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
+    <View style={[styles.header]}>
+      <Text style={[styles.title, textStyle]}>{title}</Text>
     </View>
   );
 };
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     alignItems:'center',
     textTransform: 'uppercase',
-    marginRight:100,
+    marginLeft:100,
   },
 });
 

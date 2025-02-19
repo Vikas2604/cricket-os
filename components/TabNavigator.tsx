@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     marginLeft: 60,
   },
   playerInfo: {
+    position:'absolute',
     right: 1080,
     top: 20,
   },
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   matchInfo2: {
+    position:'absolute',
     right: 1020,
     top: 20,
   },
@@ -99,10 +101,12 @@ const styles = StyleSheet.create({
     right: 0,
   },
   matchDetails3: {
-    right: 820,
+    position:'absolute',
+    right: 970,
     top: 20,
   },
   matchInfo3: {
+    position:'absolute',
     right: 1020,
     top: 20,
   },

@@ -11,9 +11,9 @@ interface SideBarProps {
   onTabSelect: (tab: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTab, onTabSelect }) => {
+const SideBar: React.FC<SideBarProps> = ({ number, label, style, color}) => {
   return (
-    <TouchableOpacity onPress={() => onTabSelect(number.toString())}>
+    <View>
       <View style={[styles.sidebarContainer, style]}>
         <Svg width="150" height="920" style={styles.svg}>
           <Defs>
@@ -31,12 +31,12 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color, activeTa
           </Text>
 
           {/* Rotated Label Text */}
-          <Text x="175" y="517" fontSize="24" fontWeight="600" fill="white" transform="rotate(-90, 95, 580)">
+          <Text x="185" y="517" fontSize="20" fontWeight="600" fill="white" transform="rotate(-90, 95, 580)">
             {label}
           </Text>
         </Svg>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
