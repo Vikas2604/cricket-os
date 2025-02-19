@@ -1,5 +1,5 @@
 import React, { useState, createContext, ReactNode } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import GestureHandlerRootView
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import NavBar from '../../components/NavBar';
 import TabNavigator from 'components/TabNavigator';
 
@@ -12,8 +12,8 @@ interface MatchInfoContextType {
   setOvers: (overs: number) => void;
   isAutoSelection: boolean;
   setIsAutoSelection: (value: boolean) => void;
-  selectedBowler: number | null;
-  setSelectedBowler: (id: number | null) => void;
+  selectedBowler: string | null;
+  setSelectedBowler: (phoneNumber: string | null) => void;
   target: number;
   setTarget: (target: number) => void;
 }
@@ -25,7 +25,7 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
   const [difficulty, setDifficulty] = useState('Beginner');
   const [overs, setOvers] = useState(0);
   const [isAutoSelection, setIsAutoSelection] = useState(true);
-  const [selectedBowler, setSelectedBowler] = useState<number | null>(null);
+  const [selectedBowler, setSelectedBowler] = useState<string | null>(null);
   const [target, setTarget] = useState(0);
 
   return (
@@ -49,13 +49,13 @@ export const MatchInfoProvider: React.FC<{ children: ReactNode }> = ({ children 
 };
 
 const App: React.FC = () => {
-  const [players, setPlayers] = useState<Array<{ id: number; name: string; battingStyle: string; isOut: boolean }>>([]);
+  const [players, setPlayers] = useState<Array<{ phoneNumber: string; name: string; battingStyle: string; isOut: boolean }>>([]);
   const [activeTab, setActiveTab] = useState('1');
   const [target, setTarget] = useState(0);
   const [overs, setOvers] = useState(0);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}> {/* Wrap your app with GestureHandlerRootView */}
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <MatchInfoProvider>
         <React.Fragment>
           <NavBar />

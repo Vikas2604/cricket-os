@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -10,9 +10,17 @@ const NavBar = () => {
                 color="#000000"
                 size={42}
             />
-            <Text style={styles.text}>
-                CLIENT LOGO
-            </Text>
+            
+            <View style={styles.titleContainer}>
+                <Image 
+                    source={require('../assets/images/icon.png')} // Replace with the actual path or URL to your logo
+                    style={styles.logo}
+                />
+                <Text style={styles.text}>
+                    STRAIGHT DRIVE
+                </Text>
+            </View>
+
             <Icon
                 name="setting"
                 color="#000000"
@@ -37,10 +45,19 @@ const styles = StyleSheet.create({
         paddingLeft: 24,
         paddingRight: 24,
     },
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10, // Add a gap between the logo and the text
+    },
+    logo: {
+        width: 40, // Set the logo width
+        height: 40, // Set the logo height
+        resizeMode: 'contain', // Maintain aspect ratio
+    },
     text: {
         color: '#00A2B4',
         fontWeight: '600',
-        gap: 20,
         fontSize: 35,
     }
 });

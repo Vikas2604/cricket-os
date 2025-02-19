@@ -1,10 +1,10 @@
 import { ScrollView } from 'react-native';
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 interface Player {
-  id: number;
+  phoneNumber: string;
   name: string;
   battingStyle: string;
   isOut: boolean;
@@ -13,42 +13,45 @@ interface Player {
 interface PlayerListProps {
   players: Player[];
   setPlayers: (players: Player[]) => void;
-  allowEditing?: boolean; // Allow adding/removing players if true, ensure renderBall is always enabled
+  allowEditing?: boolean;
 }
 
+const { width } = Dimensions.get('window'); // Get screen width
+
 const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditing = true }) => {
-  const generatePlayerId = () => {
-    let id: number;
+  const generatePhoneNumber = () => {
+    let phoneNumber: string;
     do {
-      id = Math.floor(100000 + Math.random() * 900000);
-    } while (players.some(player => player.id === id));
-    return id;
+      const randomNum = Math.floor(1000000000 + Math.random() * 9000000000);
+      phoneNumber = `+91${randomNum}`;
+    } while (players.some(player => player.phoneNumber === phoneNumber));
+    return phoneNumber;
   };
 
   const addPlayer = () => {
-    setPlayers([...players, { id: generatePlayerId(), name: '', battingStyle: '', isOut: false }]);
+    setPlayers([...players, { phoneNumber: generatePhoneNumber(), name: '', battingStyle: '', isOut: false }]);
   };
 
-  const removePlayer = (id: number) => {
-    setPlayers(players.filter(player => player.id !== id));
+  const removePlayer = (phoneNumber: string) => {
+    setPlayers(players.filter(player => player.phoneNumber !== phoneNumber));
   };
 
-  const updatePlayerName = (id: number, name: string) => {
-    setPlayers(players.map(player => (player.id === id ? { ...player, name } : player)));
+  const updatePlayerName = (phoneNumber: string, name: string) => {
+    setPlayers(players.map(player => (player.phoneNumber === phoneNumber ? { ...player, name } : player)));
   };
 
-  const updateBattingStyle = (id: number, style: string) => {
-    setPlayers(players.map(player => (player.id === id ? { ...player, battingStyle: style } : player)));
+  const updateBattingStyle = (phoneNumber: string, style: string) => {
+    setPlayers(players.map(player => (player.phoneNumber === phoneNumber ? { ...player, battingStyle: style } : player)));
   };
 
-  const BattingStyleSelector = ({ playerId, currentStyle }: { playerId: number; currentStyle: string }) => {
+  const BattingStyleSelector = ({ phoneNumber, currentStyle }: { phoneNumber: string; currentStyle: string }) => {
     return (
       <View style={styles.battingStyleWrapper}>
         {['L', 'R'].map(style => (
           <TouchableOpacity
             key={style}
             style={[styles.battingStyleButton]}
-            onPress={() => updateBattingStyle(playerId, style)}
+            onPress={() => updateBattingStyle(phoneNumber, style)}
             disabled={!allowEditing}
           >
             <Text style={[styles.battingStyleText, currentStyle === style && styles.activeStyleButton]}>{style}</Text>
@@ -67,21 +70,21 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, setPlayers, allowEditi
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         {players.map((player, index) => (
-          <View key={player.id} style={styles.playerInfoRow}>
+          <View key={player.phoneNumber} style={styles.playerInfoRow}>
             <TextInput
               style={styles.input}
-              onChangeText={(text) => updatePlayerName(player.id, text)}
+              onChangeText={(text) => updatePlayerName(player.phoneNumber, text)}
               value={player.name}
               placeholder="Enter Name"
               editable={allowEditing}
             />
             <Text style={styles.playerNumberDisplay}>Player {index + 1}</Text>
 
-            <BattingStyleSelector playerId={player.id} currentStyle={player.battingStyle} />
+            <BattingStyleSelector phoneNumber={player.phoneNumber} currentStyle={player.battingStyle} />
             <View style={styles.playerIdContent}>
-              <Text style={styles.playerIdText}>{player.id}</Text>
+              <Text style={styles.playerIdText}>{player.phoneNumber}</Text>
               {allowEditing && (
-                <TouchableOpacity onPress={() => removePlayer(player.id)}>
+                <TouchableOpacity onPress={() => removePlayer(player.phoneNumber)}>
                   <Icon name="minuscircle" color="#F67676" size={27} />
                 </TouchableOpacity>
               )}
@@ -102,30 +105,30 @@ const styles = StyleSheet.create({
   playerListContainer: {
     flex: 1,
     paddingTop: 50,
-    paddingLeft: 150,
+    paddingLeft: width * 0.1, // Use percentage of screen width for padding
+    paddingRight: width * 0.1, // Use percentage of screen width for padding
     backgroundColor: '#F7F7F7',
-
   },
   playerInfoHeadersTitle: {
     flexDirection: 'row',
-    gap: 80,
+    gap: width * 0.1, // Adjust gap based on screen size
     marginBottom: 10,
+    justifyContent: 'space-between', // Ensure headers are spaced correctly
   },
   headerText: {
     fontWeight: '700',
-    fontSize: 20,
+    fontSize: width > 350 ? 20 : 16, // Adjust font size based on screen width
   },
   playerInfoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 65,
+    gap: width * 0.2, // Adjust gap based on screen width
     marginVertical: 10,
   },
   input: {
     height: 54,
-    width: 173,
+    width: width * 0.4, // Set width relative to screen size
     borderWidth: 2,
-    // padding: 5,
     paddingLeft: 17,
     borderRadius: 5,
     fontSize: 23,
@@ -140,7 +143,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: '#F7F7F7',
     color: '#00A2B4',
-
   },
   battingStyleWrapper: {
     flexDirection: 'row',
@@ -155,7 +157,6 @@ const styles = StyleSheet.create({
     borderColor: '#00A2B4',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   activeStyleButton: {
     backgroundColor: '#00A2B4',
@@ -181,11 +182,11 @@ const styles = StyleSheet.create({
   },
   playerIdText: {
     fontSize: 18,
-    fontWeight: 400,
+    fontWeight: '400',
   },
   addButtonContainer: {
     width: 50,
-    left: 40,
+    left: width * 0.1, // Adjust position based on screen size
     bottom: 20,
   },
 });

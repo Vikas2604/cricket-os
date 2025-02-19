@@ -18,12 +18,12 @@ const SideBar: React.FC<SideBarProps> = ({ number, label, style, color}) => {
         <Svg width="150" height="920" style={styles.svg}>
           <Defs>
             <ClipPath id="clipPath">
-              <Path d="M 0,0 L 70,0 L 100,40 L 100,200 L 50,275 L 50,620 L 0,620 Z" />
+              <Path d="M 0,0 L 70,0 L 100,40 L 100,200 L 50,275 L 50,920 L 0,920 Z" />
             </ClipPath>
           </Defs>
 
           {/* Clipped Rectangle with dynamic color */}
-          <Rect width="100" height="620" fill={color} clipPath="url(#clipPath)" />
+          <Rect width="100" height="920" fill={color} clipPath="url(#clipPath)" />
 
           {/* Number Text */}
           <Text x="57" y="155" fontSize="70" fontWeight="500" fill="white" textAnchor="start">
